@@ -18,7 +18,7 @@ class SkQuadReranking(AbsTaskReranking):
         eval_splits=["test"],
         eval_langs=["slk-Latn"],
         main_score="map",
-        date=("2025-10-09"),
+        date=("2025-10-09","2025-10-09"),
         license="cc-by-sa-4.0",
         annotations_creators="derived",
         dialect=[],
