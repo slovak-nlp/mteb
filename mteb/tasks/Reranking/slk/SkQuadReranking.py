@@ -4,7 +4,7 @@ from mteb.abstasks.AbsTaskReranking import AbsTaskReranking
 from mteb.abstasks.TaskMetadata import TaskMetadata
 
 
-class AskUbuntuDupQuestionsVN(AbsTaskReranking):
+class SkQuadReranking(AbsTaskReranking):
     metadata = TaskMetadata(
         name="SkQuadReranking",
         description=""" From Retrieval Sk QUAD """,
@@ -18,7 +18,7 @@ class AskUbuntuDupQuestionsVN(AbsTaskReranking):
         eval_splits=["test"],
         eval_langs=["slk-Latn"],
         main_score="map",
-        date=("2025-07-29", "2025-07-30"),
+        date=("2025-10-09"),
         license="cc-by-sa-4.0",
         annotations_creators="derived",
         dialect=[],
