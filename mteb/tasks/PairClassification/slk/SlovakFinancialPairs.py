@@ -10,10 +10,10 @@ class SlovakFinancialPairs(AbsTaskPairClassification):
         name="SlovakFinancialPairs",
         dataset={
             "path": "TUKE-KEMT/slovak-financial-pairs",
-            "revision": "d3a2fdfaf58de09485fcee8357e78a151f667cf3",
+            "revision": "6a028bbac0ee1558e43b535bba2b8ced09a127d9",
         },
         description="Question Aswer Pairs from Slovak Financial Exam Corpus",
-        reference="",
+        reference="https://huggingface.co/datasets/TUKE-KEMT/slovak-financial-pairs/",
         category="s2s",
         modalities=["text"],
         type="PairClassification",
