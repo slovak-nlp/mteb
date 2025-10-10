@@ -694,6 +694,45 @@ two novel clustering tasks.""",  # Rephrased from the abstract
     contacts=["rafalposwiata"],
 )
 
+MTEB_SLK = Benchmark(
+    name="MTEB(slk, v1)",
+    display_name="Slovak",
+    icon="https://github.com/lipis/flag-icons/raw/59d15a43b2e643fc94e519904d148c616dec20e7/flags/4x3/sk.svg",
+    tasks=MTEBTasks(
+        get_tasks(
+            languages=["slk"],
+            tasks=[
+                # Retrieval
+                "SlovakSumRetrieval",
+                # TODO: SMESum
+                "SKQuadRetrieval",
+                "WebFAQRetrieval",
+                # STS
+                "SlovakSTS",
+                # Pair Classification
+                # TODO: SlovakNLI
+                # TODO: slovak-financial-exam
+                # Classification
+                "SlovakHateSpeechClassification.v2",
+                "SlovakMovieReviewSentimentClassification.v2",
+                "SIB200Classification",
+                "MultilingualSentimentClassification",
+                # Reranking
+                # TODO: SkQuadReranking
+                # TODO: SlovakFactCheckReranking
+                # Clustering
+                # TODO: SlovakSumClustering
+                # TODO: SMESumClustering
+                # TODO: PravdaTagsClustering
+            ],
+        )
+    ),
+    description="""Slovak Massive Text Embedding Benchmark (SK-MTEB), ...""",
+    reference=None,
+    citation=None,
+    contacts=[],
+)
+
 MTEB_code = Benchmark(
     name="MTEB(Code, v1)",
     display_name="Code",
