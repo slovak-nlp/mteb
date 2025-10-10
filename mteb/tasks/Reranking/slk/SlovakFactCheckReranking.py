@@ -1,8 +1,5 @@
 from __future__ import annotations
 
-import datasets
-from datasets import Dataset, DatasetDict
-
 from mteb.abstasks.TaskMetadata import TaskMetadata
 from mteb.abstasks.AbsTaskReranking import AbsTaskReranking
 
@@ -20,9 +17,8 @@ class SlovakFactCheckReranking(AbsTaskReranking):
         ),
         reference="https://zenodo.org/records/15413169",
         dataset={
-            "path": r"/home/user/workspace/slovak-nlp/mteb/slovak_factcheck_reranking_dummy.jsonl",
-            "revision": "local",
-            "trust_remote_code": True,
+            "path": "kinit/sk-factcheck-reranking",
+            "revision": "0ee24363ae8328448093d0d6784cbf0fde499469",
         },
         type="Reranking",
         category="s2s",
@@ -33,7 +29,7 @@ class SlovakFactCheckReranking(AbsTaskReranking):
         date=("2020-01-01", "2025-03-31"),
         domains=["News", "Social", "Written"],
         task_subtypes=["Article retrieval"],
-        license="not specified",
+        license="cc-by-nc-nd-4.0",
         annotations_creators="derived",
         dialect=[],
         sample_creation="found",
@@ -53,20 +49,3 @@ class SlovakFactCheckReranking(AbsTaskReranking):
 }
 """,
     )
-
-    def load_data(self, **kwargs):
-        if self.data_loaded:
-            return
-
-        dataset_path = self.metadata.dataset["path"]
-
-        if dataset_path.endswith(".jsonl"):
-            print(f"🔍 Loading local JSONL dataset from {dataset_path}")
-            dataset = Dataset.from_json(dataset_path)
-        else:
-            print(f"🔍 Loading dataset via Hugging Face Datasets hub: {dataset_path}")
-            dataset = datasets.load_dataset(dataset_path, split=_EVAL_SPLIT)
-
-        self.dataset = DatasetDict({"test": dataset})
-        self.dataset_transform()
-        self.data_loaded = True
