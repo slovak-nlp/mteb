@@ -2,9 +2,8 @@ from __future__ import annotations
 
 from datasets import Dataset, DatasetDict
 
-from ....abstasks.AbsTaskClusteringFast import AbsTaskClusteringFast
-from ....abstasks.TaskMetadata import TaskMetadata
-
+from mteb.abstasks.AbsTaskClusteringFast import AbsTaskClusteringFast
+from mteb.abstasks.TaskMetadata import TaskMetadata
 
 _MAX_DOCUMENT_TO_EMBED = 2048
 
@@ -30,7 +29,7 @@ class PravdaSKTagClustering(AbsTaskClusteringFast):
         date=("2014-01-01", "2024-12-31"),
         domains=["News", "Written"],
         task_subtypes=["Thematic clustering", "Topic classification"],
-        license="not-specified",
+        license="not specified",
         annotations_creators="derived",
         dialect=[],
         sample_creation="found",
@@ -39,9 +38,7 @@ class PravdaSKTagClustering(AbsTaskClusteringFast):
     )
 
     def dataset_transform(self):
-        """
-        Transform the dataset to create sentences (title + summary) and labels (assigned_label).
-        """
+        """Transform the dataset to create sentences (title + summary) and labels (assigned_label)."""
         ds = {}
         for split in self.metadata.eval_splits:
             # Combine title and summary to create sentences
@@ -55,10 +52,7 @@ class PravdaSKTagClustering(AbsTaskClusteringFast):
 
             labels = self.dataset[split]["assigned_label"]
 
-            ds[split] = Dataset.from_dict({
-                "sentences": sentences,
-                "labels": labels
-            })
+            ds[split] = Dataset.from_dict({"sentences": sentences, "labels": labels})
 
         self.dataset = DatasetDict(ds)
 
@@ -84,7 +78,7 @@ class PravdaSKURLClustering(AbsTaskClusteringFast):
         date=("2014-01-01", "2024-12-31"),
         domains=["News", "Written"],
         task_subtypes=["Thematic clustering", "Topic classification"],
-        license="not-specified",
+        license="not specified",
         annotations_creators="derived",
         dialect=[],
         sample_creation="found",
@@ -93,9 +87,7 @@ class PravdaSKURLClustering(AbsTaskClusteringFast):
     )
 
     def dataset_transform(self):
-        """
-        Transform the dataset to create sentences (title + summary) and labels (url_category).
-        """
+        """Transform the dataset to create sentences (title + summary) and labels (url_category)."""
         ds = {}
         for split in self.metadata.eval_splits:
             # Combine title and summary to create sentences
@@ -109,9 +101,6 @@ class PravdaSKURLClustering(AbsTaskClusteringFast):
 
             labels = self.dataset[split]["url_category"]
 
-            ds[split] = Dataset.from_dict({
-                "sentences": sentences,
-                "labels": labels
-            })
+            ds[split] = Dataset.from_dict({"sentences": sentences, "labels": labels})
 
         self.dataset = DatasetDict(ds)

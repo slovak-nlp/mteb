@@ -51,9 +51,8 @@ from .rom.RomaniBibleClustering import *
 from .rus.GeoreviewClusteringP2P import *
 from .rus.RuSciBenchGRNTIClusteringP2P import *
 from .rus.RuSciBenchOECDClusteringP2P import *
+from .slk.PravdaSKClustering import *
 from .spa.SpanishNewsClusteringP2P import *
-from .slk.PravdaSKTagClustering import *
-from .slk.PravdaSKURLClustering import *
 from .swe.swedn_clustering import *
 from .swe.SwednClustering import *
 from .vie.RedditClusteringP2PVN import *
