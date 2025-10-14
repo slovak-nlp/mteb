@@ -34,7 +34,7 @@ class PravdaSKTagClustering(AbsTaskClusteringFast):
         dialect=[],
         sample_creation="found",
         bibtex_citation="",
-        prompt="Identify topic categories based on article tags in Slovak news",
+        prompt="Identify the topic or theme of the given text.",
     )
 
     def dataset_transform(self):
@@ -83,7 +83,7 @@ class PravdaSKURLClustering(AbsTaskClusteringFast):
         dialect=[],
         sample_creation="found",
         bibtex_citation="",
-        prompt="Identify editorial categories based on URL structure in Slovak news",
+        prompt="Identify the topic or theme of the given text.",
     )
 
     def dataset_transform(self):
