@@ -710,20 +710,25 @@ MTEB_SLK = Benchmark(
                 # STS
                 "SlovakSTS",
                 # Pair Classification
-                # TODO: SlovakNLI
-                # TODO: slovak-financial-exam
+                "SlovakNLI",
+                # TODO: SlovakRTE
                 # Classification
                 "SlovakHateSpeechClassification.v2",
                 "SlovakMovieReviewSentimentClassification.v2",
                 "SIB200Classification",
                 "MultilingualSentimentClassification",
+                "MultiEURLEXMultilabelClassification",  # TODO ??
+                # TODO: DGurgurovSlovakSentiment
                 # Reranking
-                # TODO: SkQuadReranking
+                "SkQuadReranking",
                 # TODO: SlovakFactCheckReranking
                 # Clustering
-                # TODO: SlovakSumClustering
-                # TODO: SMESumClustering
-                # TODO: PravdaTagsClustering
+                "PravdaSKTagClustering",
+                "PravdaSKURLClustering",
+                # TODO: SlovakSumURLClustering
+                # TODO: SMESumURLClustering
+                # BitexMining
+                # TODO: OpusSlovakEnglishBitextMining
             ],
         )
     ),
