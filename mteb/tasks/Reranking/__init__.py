@@ -28,6 +28,7 @@ from .multilingual.WikipediaRerankingMultilingual import *
 from .multilingual.XGlueWPRReranking import *
 from .rus.RuBQReranking import *
 from .slk.SkQuadReranking import *
+from .slk.SlovakFactCheckReranking import *
 from .vie.AskUbuntuDupQuestionsVN import *
 from .vie.SciDocsRerankingVN import *
 from .vie.StackOverflowDupQuestionsVN import *
