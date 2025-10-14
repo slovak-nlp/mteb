@@ -15,7 +15,7 @@ class SlovakFactCheckReranking(AbsTaskReranking):
         reference="https://zenodo.org/records/15413169",
         dataset={
             "path": "kinit/sk-factcheck-reranking",
-            "revision": "0ee24363ae8328448093d0d6784cbf0fde499469",
+            "revision": "80be0018ee6781a4a7ced99649f7c79857883951",
         },
         type="Reranking",
         category="s2s",
