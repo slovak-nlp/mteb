@@ -25,11 +25,11 @@ from .multilingual.RTE3 import *
 from .multilingual.XNLI import *
 from .multilingual.XStance import *
 from .pol.PolishPC import *
-from .slk.SlovakRTE import *
 from .por.Assin2RTE import *
 from .por.SickBrPC import *
 from .rus.TERRa import *
 from .slk.SlovakNLI import *
+from .slk.SlovakRTE import *
 from .vie.SprintDuplicateQuestionsPCVN import *
 from .vie.TwitterSemEval2015PCVN import *
 from .vie.TwitterURLCorpusPCVN import *
