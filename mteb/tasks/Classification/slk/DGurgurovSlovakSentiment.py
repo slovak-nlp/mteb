@@ -11,7 +11,7 @@ class DGurgurovSlovakSentiment(AbsTaskClassification):
         reference="https://aclanthology.org/W19-3716/",
         dataset={
             "path": "DGurgurov/slovak_sa",
-            "revision": "c96cf94e6fdf19611a078075de00c8fc3b0f613c",
+            "revision": "250a73199a3013bf9bf6b73b3fbdf83279b40375",
         },
         type="Classification",
         category="s2s",
