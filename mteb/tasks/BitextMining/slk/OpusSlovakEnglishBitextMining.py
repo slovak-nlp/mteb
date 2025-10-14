@@ -9,7 +9,7 @@ class OpusSlovakEnglishBitextMining(AbsTaskBitextMining):
         name="OpusSlovakEnglishBitextMining",
         dataset={
             "path": "Helsinki-NLP/opus-100",
-            "revision": "805090d116cbfbb8a4808d8b091fe1f99b7a9679",
+            "revision": "805090dc28bf78897da9641cdf08b61287580df9",
             "name": "en-sk",
         },
         description="Slovak-English parallel sentences from OPUS-100, a multilingual dataset with 100 languages for evaluating massively multilingual neural machine translation and zero-shot translation performance.",
@@ -23,25 +23,25 @@ class OpusSlovakEnglishBitextMining(AbsTaskBitextMining):
         date=("2000-01-01", "2020-12-31"),  # OPUS collection timeframe
         domains=["Web", "Subtitles", "Fiction", "Non-fiction"],
         task_subtypes=[],
-        license="unknown",
+        license="not specified",
         annotations_creators="derived",
         dialect=[],
         sample_creation="found",
         bibtex_citation=r"""
 @inproceedings{zhang2020improving,
-    title = "Improving Massively Multilingual Neural Machine Translation and Zero-Shot Translation",
-    author = "Zhang, Biao  and
-      Williams, Philip  and
-      Titov, Ivan  and
-      Sennrich, Rico",
-    booktitle = "Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics",
-    month = jul,
-    year = "2020",
-    address = "Online",
-    publisher = "Association for Computational Linguistics",
-    url = "https://aclanthology.org/2020.acl-main.148",
-    doi = "10.18653/v1/2020.acl-main.148",
-    pages = "1628--1639",
+  address = {Online},
+  author = {Zhang, Biao  and
+Williams, Philip  and
+Titov, Ivan  and
+Sennrich, Rico},
+  booktitle = {Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics},
+  doi = {10.18653/v1/2020.acl-main.148},
+  month = jul,
+  pages = {1628--1639},
+  publisher = {Association for Computational Linguistics},
+  title = {Improving Massively Multilingual Neural Machine Translation and Zero-Shot Translation},
+  url = {https://aclanthology.org/2020.acl-main.148},
+  year = {2020},
 }
 """,
         prompt="Retrieve parallel sentences.",
