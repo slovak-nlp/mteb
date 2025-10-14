@@ -728,7 +728,7 @@ MTEB_SLK = Benchmark(
                 # TODO: SlovakSumURLClustering
                 # TODO: SMESumURLClustering
                 # BitexMining
-                # TODO: OpusSlovakEnglishBitextMining
+                "OpusSlovakEnglishBitextMining",
             ],
         )
     ),
