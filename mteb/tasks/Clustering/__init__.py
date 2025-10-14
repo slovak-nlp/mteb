@@ -52,7 +52,7 @@ from .rus.GeoreviewClusteringP2P import *
 from .rus.RuSciBenchGRNTIClusteringP2P import *
 from .rus.RuSciBenchOECDClusteringP2P import *
 from .slk.PravdaSKClustering import *
-from .SlovakSumURLClustering import *
+from .slk.SlovakSumURLClustering import *
 from .spa.SpanishNewsClusteringP2P import *
 from .swe.swedn_clustering import *
 from .swe.SwednClustering import *
