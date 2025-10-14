@@ -703,6 +703,7 @@ MTEB_SLK = Benchmark(
             languages=["slk"],
             tasks=[
                 # Retrieval
+                "BelebeleRetrieval",
                 "SlovakSumRetrieval",
                 # TODO: SMESum
                 "SKQuadRetrieval",
@@ -711,21 +712,22 @@ MTEB_SLK = Benchmark(
                 "SlovakSTS",
                 # Pair Classification
                 "SlovakNLI",
-                # TODO: SlovakRTE
+                "SlovakRTE",
                 # Classification
                 "SlovakHateSpeechClassification.v2",
                 "SlovakMovieReviewSentimentClassification.v2",
                 "SIB200Classification",
                 "MultilingualSentimentClassification",
-                "MultiEURLEXMultilabelClassification",  # TODO ??
-                # TODO: DGurgurovSlovakSentiment
+                "MultiEURLEXMultilabelClassification",
+                "DGurgurovSlovakSentiment",
                 # Reranking
                 "SkQuadReranking",
-                # TODO: SlovakFactCheckReranking
+                "SlovakFactCheckReranking",
                 # Clustering
+                "SIB200ClusteringS2S",
                 "PravdaSKTagClustering",
                 "PravdaSKURLClustering",
-                # TODO: SlovakSumURLClustering
+                "SlovakSumURLClustering",
                 # TODO: SMESumURLClustering
                 # BitexMining
                 "OpusSlovakEnglishBitextMining",
