@@ -151,6 +151,7 @@ from .sin.SinhalaNewsSourceClassification import *
 from .slk.CSFDSKMovieReviewSentimentClassification import *
 from .slk.SlovakHateSpeechClassification import *
 from .slk.SlovakMovieReviewSentimentClassification import *
+from .slk.SlovakParlaSentClassification import *
 from .slv.FrenkSlClassification import *
 from .spa.SpanishNewsClassification import *
 from .spa.SpanishSentimentClassification import *
