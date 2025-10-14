@@ -29,8 +29,8 @@ class SlovakSumURLClustering(AbsTaskClusteringFast):
         annotations_creators="derived",
         dialect=[],
         sample_creation="found",
-        bibtex_citation="",
-        prompt="Identify editorial categories based on URL structure in Slovak news",
+        bibtex_citation="https://aclanthology.org/2024.lrec-main.1298/",
+        prompt="Identify the topic or theme of the given text.",
     )
 
     def dataset_transform(self):
