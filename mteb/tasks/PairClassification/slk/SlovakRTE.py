@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from datasets import DatasetDict
+
 from mteb.abstasks.AbsTaskPairClassification import AbsTaskPairClassification
 from mteb.abstasks.TaskMetadata import TaskMetadata
 
@@ -57,8 +59,17 @@ class SlovakRTE(AbsTaskPairClassification):
     )
 
     def dataset_transform(self):
-        # Rename columns from text1/text2 to sentence1/sentence2 for MTEB compatibility
-        self.dataset = self.dataset.rename_column("text1", "sentence1")
-        self.dataset = self.dataset.rename_column("text2", "sentence2")
-        # Rename label to labels (plural) for MTEB compatibility
-        self.dataset = self.dataset.rename_column("label", "labels")
+        _dataset = {}
+
+        for split in self.dataset:
+            hf_dataset = self.dataset[split]
+
+            _dataset[split] = [
+                {
+                    "sentence1": hf_dataset["text1"],
+                    "sentence2": hf_dataset["text2"],
+                    "labels": hf_dataset["label"],
+                }
+            ]
+
+        self.dataset = DatasetDict(_dataset)
