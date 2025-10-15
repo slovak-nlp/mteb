@@ -17,6 +17,7 @@ class SlovakNLI(AbsTaskPairClassification):
         },
         type="PairClassification",
         category="s2s",
+        domains=["News", "Web", "Written"],
         eval_splits=["test"],
         eval_langs=["slk-Latn"],
         main_score="max_ap",
