@@ -1,0 +1,95 @@
+{
+    "dataset_revision": "250a73199a3013bf9bf6b73b3fbdf83279b40375",
+    "task_name": "DGurgurovSlovakSentiment",
+    "mteb_version": "1.39.7",
+    "scores": {
+        "test": [
+            {
+                "accuracy": 0.932438,
+                "f1": 0.870515,
+                "f1_weighted": 0.938027,
+                "ap": 0.986345,
+                "ap_weighted": 0.986345,
+                "scores_per_experiment": [
+                    {
+                        "accuracy": 0.948177,
+                        "f1": 0.894865,
+                        "f1_weighted": 0.951338,
+                        "ap": 0.987975,
+                        "ap_weighted": 0.987975
+                    },
+                    {
+                        "accuracy": 0.947217,
+                        "f1": 0.891408,
+                        "f1_weighted": 0.950131,
+                        "ap": 0.985011,
+                        "ap_weighted": 0.985011
+                    },
+                    {
+                        "accuracy": 0.941459,
+                        "f1": 0.883488,
+                        "f1_weighted": 0.945481,
+                        "ap": 0.987035,
+                        "ap_weighted": 0.987035
+                    },
+                    {
+                        "accuracy": 0.897313,
+                        "f1": 0.81996,
+                        "f1_weighted": 0.908978,
+                        "ap": 0.983705,
+                        "ap_weighted": 0.983705
+                    },
+                    {
+                        "accuracy": 0.941459,
+                        "f1": 0.884111,
+                        "f1_weighted": 0.945605,
+                        "ap": 0.987983,
+                        "ap_weighted": 0.987983
+                    },
+                    {
+                        "accuracy": 0.928023,
+                        "f1": 0.863296,
+                        "f1_weighted": 0.934252,
+                        "ap": 0.987053,
+                        "ap_weighted": 0.987053
+                    },
+                    {
+                        "accuracy": 0.948177,
+                        "f1": 0.894865,
+                        "f1_weighted": 0.951338,
+                        "ap": 0.987975,
+                        "ap_weighted": 0.987975
+                    },
+                    {
+                        "accuracy": 0.945298,
+                        "f1": 0.888716,
+                        "f1_weighted": 0.948572,
+                        "ap": 0.985683,
+                        "ap_weighted": 0.985683
+                    },
+                    {
+                        "accuracy": 0.912668,
+                        "f1": 0.841213,
+                        "f1_weighted": 0.921562,
+                        "ap": 0.985856,
+                        "ap_weighted": 0.985856
+                    },
+                    {
+                        "accuracy": 0.914587,
+                        "f1": 0.84323,
+                        "f1_weighted": 0.923012,
+                        "ap": 0.985171,
+                        "ap_weighted": 0.985171
+                    }
+                ],
+                "main_score": 0.932438,
+                "hf_subset": "default",
+                "languages": [
+                    "slk-Latn"
+                ]
+            }
+        ]
+    },
+    "evaluation_time": 20.46308922767639,
+    "kg_co2_emissions": null
+}

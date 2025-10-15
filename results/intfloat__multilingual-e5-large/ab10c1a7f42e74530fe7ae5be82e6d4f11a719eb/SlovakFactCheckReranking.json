@@ -1,0 +1,30 @@
+{
+    "dataset_revision": "80be0018ee6781a4a7ced99649f7c79857883951",
+    "task_name": "SlovakFactCheckReranking",
+    "mteb_version": "1.39.7",
+    "scores": {
+        "test": [
+            {
+                "map": 0.967098,
+                "mrr": 0.972486,
+                "recall_at_10": 1.0,
+                "nAUC_map_max": 0.480115,
+                "nAUC_map_std": 0.51554,
+                "nAUC_map_diff1": 0.934292,
+                "nAUC_mrr_max": 0.543202,
+                "nAUC_mrr_std": 0.642001,
+                "nAUC_mrr_diff1": 0.942716,
+                "nAUC_recall_at_10_max": NaN,
+                "nAUC_recall_at_10_std": NaN,
+                "nAUC_recall_at_10_diff1": NaN,
+                "main_score": 0.967098,
+                "hf_subset": "default",
+                "languages": [
+                    "slk-Latn"
+                ]
+            }
+        ]
+    },
+    "evaluation_time": 3.9069442749023438,
+    "kg_co2_emissions": null
+}
