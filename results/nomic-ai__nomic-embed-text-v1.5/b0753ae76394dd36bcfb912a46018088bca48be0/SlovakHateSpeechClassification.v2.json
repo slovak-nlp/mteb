@@ -1,0 +1,95 @@
+{
+    "dataset_revision": "691fe861df0ffa25066cbf6da8e64ebd296af6ab",
+    "task_name": "SlovakHateSpeechClassification.v2",
+    "mteb_version": "1.39.7",
+    "scores": {
+        "test": [
+            {
+                "accuracy": 0.517381,
+                "f1": 0.495818,
+                "f1_weighted": 0.538745,
+                "ap": 0.295252,
+                "ap_weighted": 0.295252,
+                "scores_per_experiment": [
+                    {
+                        "accuracy": 0.537591,
+                        "f1": 0.503756,
+                        "f1_weighted": 0.561055,
+                        "ap": 0.28962,
+                        "ap_weighted": 0.28962
+                    },
+                    {
+                        "accuracy": 0.564268,
+                        "f1": 0.517263,
+                        "f1_weighted": 0.583874,
+                        "ap": 0.292194,
+                        "ap_weighted": 0.292194
+                    },
+                    {
+                        "accuracy": 0.48747,
+                        "f1": 0.466543,
+                        "f1_weighted": 0.513265,
+                        "ap": 0.277739,
+                        "ap_weighted": 0.277739
+                    },
+                    {
+                        "accuracy": 0.561843,
+                        "f1": 0.531046,
+                        "f1_weighted": 0.584188,
+                        "ap": 0.30618,
+                        "ap_weighted": 0.30618
+                    },
+                    {
+                        "accuracy": 0.455133,
+                        "f1": 0.453625,
+                        "f1_weighted": 0.46632,
+                        "ap": 0.294914,
+                        "ap_weighted": 0.294914
+                    },
+                    {
+                        "accuracy": 0.538399,
+                        "f1": 0.517064,
+                        "f1_weighted": 0.56195,
+                        "ap": 0.303791,
+                        "ap_weighted": 0.303791
+                    },
+                    {
+                        "accuracy": 0.552951,
+                        "f1": 0.524215,
+                        "f1_weighted": 0.57592,
+                        "ap": 0.303258,
+                        "ap_weighted": 0.303258
+                    },
+                    {
+                        "accuracy": 0.466451,
+                        "f1": 0.453139,
+                        "f1_weighted": 0.490868,
+                        "ap": 0.276551,
+                        "ap_weighted": 0.276551
+                    },
+                    {
+                        "accuracy": 0.483428,
+                        "f1": 0.477837,
+                        "f1_weighted": 0.501729,
+                        "ap": 0.298444,
+                        "ap_weighted": 0.298444
+                    },
+                    {
+                        "accuracy": 0.526273,
+                        "f1": 0.513687,
+                        "f1_weighted": 0.548283,
+                        "ap": 0.309832,
+                        "ap_weighted": 0.309832
+                    }
+                ],
+                "main_score": 0.517381,
+                "hf_subset": "default",
+                "languages": [
+                    "slk-Latn"
+                ]
+            }
+        ]
+    },
+    "evaluation_time": 20.006653547286987,
+    "kg_co2_emissions": null
+}

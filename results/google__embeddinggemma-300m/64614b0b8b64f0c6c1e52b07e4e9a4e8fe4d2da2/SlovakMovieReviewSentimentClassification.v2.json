@@ -1,0 +1,95 @@
+{
+    "dataset_revision": "29a7405aabcfd4860a51ae6f65a5650d63108f26",
+    "task_name": "SlovakMovieReviewSentimentClassification.v2",
+    "mteb_version": "1.39.7",
+    "scores": {
+        "test": [
+            {
+                "accuracy": 0.721464,
+                "f1": 0.7078,
+                "f1_weighted": 0.716735,
+                "ap": 0.585348,
+                "ap_weighted": 0.585348,
+                "scores_per_experiment": [
+                    {
+                        "accuracy": 0.801793,
+                        "f1": 0.78801,
+                        "f1_weighted": 0.797486,
+                        "ap": 0.683871,
+                        "ap_weighted": 0.683871
+                    },
+                    {
+                        "accuracy": 0.770418,
+                        "f1": 0.766595,
+                        "f1_weighted": 0.771832,
+                        "ap": 0.635497,
+                        "ap_weighted": 0.635497
+                    },
+                    {
+                        "accuracy": 0.791335,
+                        "f1": 0.779511,
+                        "f1_weighted": 0.788461,
+                        "ap": 0.665972,
+                        "ap_weighted": 0.665972
+                    },
+                    {
+                        "accuracy": 0.668327,
+                        "f1": 0.664588,
+                        "f1_weighted": 0.670796,
+                        "ap": 0.529259,
+                        "ap_weighted": 0.529259
+                    },
+                    {
+                        "accuracy": 0.625996,
+                        "f1": 0.62409,
+                        "f1_weighted": 0.628782,
+                        "ap": 0.496288,
+                        "ap_weighted": 0.496288
+                    },
+                    {
+                        "accuracy": 0.75249,
+                        "f1": 0.741777,
+                        "f1_weighted": 0.750997,
+                        "ap": 0.613523,
+                        "ap_weighted": 0.613523
+                    },
+                    {
+                        "accuracy": 0.706175,
+                        "f1": 0.697184,
+                        "f1_weighted": 0.706331,
+                        "ap": 0.561457,
+                        "ap_weighted": 0.561457
+                    },
+                    {
+                        "accuracy": 0.700697,
+                        "f1": 0.700695,
+                        "f1_weighted": 0.700826,
+                        "ap": 0.568336,
+                        "ap_weighted": 0.568336
+                    },
+                    {
+                        "accuracy": 0.743028,
+                        "f1": 0.741038,
+                        "f1_weighted": 0.745017,
+                        "ap": 0.605481,
+                        "ap_weighted": 0.605481
+                    },
+                    {
+                        "accuracy": 0.654382,
+                        "f1": 0.574509,
+                        "f1_weighted": 0.606826,
+                        "ap": 0.493798,
+                        "ap_weighted": 0.493798
+                    }
+                ],
+                "main_score": 0.721464,
+                "hf_subset": "default",
+                "languages": [
+                    "slk-Latn"
+                ]
+            }
+        ]
+    },
+    "evaluation_time": 24.025618076324463,
+    "kg_co2_emissions": null
+}

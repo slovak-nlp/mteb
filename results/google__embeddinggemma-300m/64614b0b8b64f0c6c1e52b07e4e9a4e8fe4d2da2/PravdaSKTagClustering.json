@@ -1,0 +1,34 @@
+{
+    "dataset_revision": "dd0a6c077151b8c8bc2fd6abcd746b34fde80bf8",
+    "task_name": "PravdaSKTagClustering",
+    "mteb_version": "1.39.7",
+    "scores": {
+        "test": [
+            {
+                "v_measures": {
+                    "Level 0": [
+                        0.600151,
+                        0.624686,
+                        0.600514,
+                        0.594409,
+                        0.60248,
+                        0.608521,
+                        0.586993,
+                        0.590801,
+                        0.612758,
+                        0.600776
+                    ]
+                },
+                "v_measure": 0.602209,
+                "v_measure_std": 0.010431,
+                "main_score": 0.602209,
+                "hf_subset": "default",
+                "languages": [
+                    "slk-Latn"
+                ]
+            }
+        ]
+    },
+    "evaluation_time": 10.48017406463623,
+    "kg_co2_emissions": null
+}
