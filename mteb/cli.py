@@ -121,7 +121,11 @@ def run(args: argparse.Namespace) -> None:
     else:
         device = args.device
 
-    model = mteb.get_model(args.model, args.model_revision, device=device)
+    model_kwargs: dict[str, object] = {"device": device}
+    if args.trust_remote_code:
+        model_kwargs["trust_remote_code"] = True
+
+    model = mteb.get_model(args.model, args.model_revision, **model_kwargs)
 
     if args.benchmarks:
         tasks = mteb.get_benchmarks(names=args.benchmarks)
@@ -299,6 +303,12 @@ def add_run_parser(subparsers) -> None:
         action="store_true",
         default=False,
         help="For retrieval tasks. Saves the predictions file in output_folder.",
+    )
+    parser.add_argument(
+        "--trust_remote_code",
+        action="store_true",
+        default=False,
+        help="Allow running custom model code from the Hugging Face Hub while loading the model.",
     )
 
     parser.set_defaults(func=run)

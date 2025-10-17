@@ -332,7 +332,7 @@ class JinaV4Wrapper(Wrapper):
             task_name, prompt_type
         )
 
-        if task_type.startswith("DocumentUnderstanding"):
+        if task_type and task_type.startswith("DocumentUnderstanding"):
             self.vector_type = "multi_vector"
         else:
             self.vector_type = "single_vector"
@@ -364,7 +364,7 @@ class JinaV4Wrapper(Wrapper):
         # Resolve task parameters
         base_task, _, task_type = self._resolve_task_parameters(task_name, prompt_type)
 
-        if task_type.startswith("DocumentUnderstanding"):
+        if task_type and task_type.startswith("DocumentUnderstanding"):
             self.vector_type = "multi_vector"
         else:
             self.vector_type = "single_vector"
