@@ -1,4 +1,4 @@
-"""EuroParlVote Slovak classification tasks.
+"""Slovak EuroParlVote classification tasks.
 
 This module implements two classification tasks based on the EuroParlVote dataset,
 using Slovak speeches from the European Parliament to predict:
@@ -107,13 +107,15 @@ class _EuroParlVoteSlovakMixin:
             del self.dataset["validation"]
 
 
-class EuroParlVoteGenderClassification(_EuroParlVoteSlovakMixin, AbsTaskClassification):
+class SlovakEuroParlVoteGenderClassification(
+    _EuroParlVoteSlovakMixin, AbsTaskClassification
+):
     """Gender classification task using EuroParlVote Slovak speeches."""
 
     target_column: ClassVar[str] = "gender"
 
     metadata = TaskMetadata(
-        name="EuroParlVoteGenderClassification",
+        name="SlovakEuroParlVoteGenderClassification",
         description="Binary classification task to predict the gender of Members of the European Parliament from Slovak speeches in the EuroParlVote dataset. Uses only speeches delivered in Slovak.",
         reference="https://arxiv.org/abs/2509.06164",
         dataset={
@@ -137,7 +139,7 @@ class EuroParlVoteGenderClassification(_EuroParlVoteSlovakMixin, AbsTaskClassifi
     )
 
 
-class EuroParlVotePositionClassification(
+class SlovakEuroParlVotePositionClassification(
     _EuroParlVoteSlovakMixin, AbsTaskClassification
 ):
     """Vote position classification task using EuroParlVote Slovak speeches."""
@@ -145,7 +147,7 @@ class EuroParlVotePositionClassification(
     target_column: ClassVar[str] = "position"
 
     metadata = TaskMetadata(
-        name="EuroParlVotePositionClassification",
+        name="SlovakEuroParlVotePositionClassification",
         description="Binary classification task to predict the vote position (FOR/AGAINST) from Slovak speeches in the EuroParlVote dataset. Uses only speeches delivered in Slovak.",
         reference="https://arxiv.org/abs/2509.06164",
         dataset={

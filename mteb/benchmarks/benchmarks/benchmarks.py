@@ -723,6 +723,8 @@ MTEB_SLK = Benchmark(
                 "SlovakParlaSentClassification",
                 "MultiEupSlovakPartyClassification",
                 "MultiEupSlovakGenderClassification",
+                "SlovakEuroParlVoteGenderClassification",
+                "SlovakEuroParlVotePositionClassification",
                 # Reranking
                 "SkQuadReranking",
                 "SlovakFactCheckReranking",
