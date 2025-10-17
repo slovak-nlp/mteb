@@ -7,7 +7,6 @@ from mteb.abstasks.TaskMetadata import TaskMetadata
 
 
 class SlovakSumURLClustering(AbsTaskClusteringFast):
-
     metadata = TaskMetadata(
         name="SlovakSumURLClustering",
         description="Clustering of Slovak news articles from SlovakSum dataset based on the URL structure. Articles are organized into 12 editorial categories including sports, culture, economy, health, travel, politics, and technology sections.",
@@ -24,7 +23,7 @@ class SlovakSumURLClustering(AbsTaskClusteringFast):
         main_score="v_measure",
         domains=["News", "Written"],
         task_subtypes=["Thematic clustering", "Topic classification"],
-        license="not-specified",
+        license="not specified",
         annotations_creators="derived",
         dialect=[],
         sample_creation="found",
@@ -52,9 +51,7 @@ Xue, Nianwen},
     )
 
     def dataset_transform(self):
-        """
-        Transform the dataset to create sentences (title + summary) and labels (url_category).
-        """
+        """Transform the dataset to create sentences (title + summary) and labels (url_category)."""
         ds = {}
         for split in self.metadata.eval_splits:
             # Combine title and summary to create sentences
@@ -68,9 +65,6 @@ Xue, Nianwen},
 
             labels = self.dataset[split]["theme"]
 
-            ds[split] = Dataset.from_dict({
-                "sentences": sentences,
-                "labels": labels
-            })
+            ds[split] = Dataset.from_dict({"sentences": sentences, "labels": labels})
 
         self.dataset = DatasetDict(ds)

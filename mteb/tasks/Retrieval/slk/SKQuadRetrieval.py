@@ -26,7 +26,7 @@ class SKQuadRetrieval(AbsTaskRetrieval):
         eval_splits=["test"],
         eval_langs=["slk-Latn"],
         main_score="ndcg_at_10",
-        date=("2025-10-09","2025-10-09"),
+        date=("2025-10-09", "2025-10-09"),
         domains=["Encyclopaedic"],
         task_subtypes=["Question answering"],
         license="cc-by-nc-sa-4.0",
