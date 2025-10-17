@@ -1,0 +1,73 @@
+{
+    "dataset_revision": "382817850e097286b3fa9d874fb1b5128d0a430c",
+    "task_name": "MultiEupSlovakPartyClassification",
+    "mteb_version": "1.39.7",
+    "scores": {
+        "test": [
+            {
+                "accuracy": 0.415079,
+                "f1": 0.411262,
+                "f1_weighted": 0.408328,
+                "scores_per_experiment": [
+                    {
+                        "accuracy": 0.484127,
+                        "f1": 0.477212,
+                        "f1_weighted": 0.488263
+                    },
+                    {
+                        "accuracy": 0.468254,
+                        "f1": 0.463242,
+                        "f1_weighted": 0.473457
+                    },
+                    {
+                        "accuracy": 0.388889,
+                        "f1": 0.402531,
+                        "f1_weighted": 0.387344
+                    },
+                    {
+                        "accuracy": 0.47619,
+                        "f1": 0.461765,
+                        "f1_weighted": 0.465682
+                    },
+                    {
+                        "accuracy": 0.365079,
+                        "f1": 0.364869,
+                        "f1_weighted": 0.342169
+                    },
+                    {
+                        "accuracy": 0.507937,
+                        "f1": 0.492668,
+                        "f1_weighted": 0.51018
+                    },
+                    {
+                        "accuracy": 0.349206,
+                        "f1": 0.334479,
+                        "f1_weighted": 0.344583
+                    },
+                    {
+                        "accuracy": 0.428571,
+                        "f1": 0.432696,
+                        "f1_weighted": 0.420399
+                    },
+                    {
+                        "accuracy": 0.34127,
+                        "f1": 0.357306,
+                        "f1_weighted": 0.317539
+                    },
+                    {
+                        "accuracy": 0.34127,
+                        "f1": 0.325856,
+                        "f1_weighted": 0.333665
+                    }
+                ],
+                "main_score": 0.415079,
+                "hf_subset": "default",
+                "languages": [
+                    "slk-Latn"
+                ]
+            }
+        ]
+    },
+    "evaluation_time": 20.830085039138794,
+    "kg_co2_emissions": null
+}
