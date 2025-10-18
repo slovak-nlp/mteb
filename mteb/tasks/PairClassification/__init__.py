@@ -28,6 +28,7 @@ from .pol.PolishPC import *
 from .por.Assin2RTE import *
 from .por.SickBrPC import *
 from .rus.TERRa import *
+from .slk.DemagogSKNLI import *
 from .slk.SlovakNLI import *
 from .slk.SlovakRTE import *
 from .vie.SprintDuplicateQuestionsPCVN import *

@@ -713,6 +713,7 @@ MTEB_SLK = Benchmark(
                 # Pair Classification
                 "SlovakNLI",
                 "SlovakRTE",
+                "DemagogSKNLI",
                 # Classification
                 "SlovakHateSpeechClassification.v2",
                 "SlovakMovieReviewSentimentClassification.v2",
