@@ -18,7 +18,7 @@ class SlovakParlaSentClassification(AbsTaskClassification):
         category="s2s",
         modalities=["text"],
         date=("2018-01-01", "2018-12-31"),
-        eval_splits=["train"],
+        eval_splits=["test"],
         eval_langs=["slk-Latn"],
         main_score="accuracy",
         domains=["Government", "Spoken"],
@@ -38,5 +38,21 @@ class SlovakParlaSentClassification(AbsTaskClassification):
     )
 
     def dataset_transform(self) -> None:
+        """Transform the ParlaSent dataset for classification.
+
+        Note: MTEB classification requires both train and test splits.
+        The train split is used to train a logistic regression classifier,
+        and test is for evaluation.
+        """
         # Rename 'sentence' column to 'text' as expected by MTEB
-        self.dataset = self.dataset.rename_columns({"sentence": "text"})
+        dataset = self.dataset["train"].rename_columns({"sentence": "text"})
+
+        # Encode label column as ClassLabel for stratification
+        dataset = dataset.class_encode_column("label")
+
+        # Create train/test split (80/20) with stratification to avoid data leakage
+        self.dataset = dataset.train_test_split(
+            test_size=0.2,
+            seed=self.seed,
+            stratify_by_column="label",
+        )
