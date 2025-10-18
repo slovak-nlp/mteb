@@ -732,8 +732,13 @@ MTEB_SLK = Benchmark(
                 "PravdaSKURLClustering",
                 "SlovakSumURLClustering",
                 # TODO: SMESumURLClustering
-                # BitexMining
+                # BitextMining
                 "OpusSlovakEnglishBitextMining",
+                "Tatoeba",
+                "FloresBitextMining",
+                "NTREXBitextMining",
+                "WebFAQBitextMiningQuestions",
+                "WebFAQBitextMiningQAs",
             ],
         )
     ),
