@@ -24,7 +24,7 @@ class SlovakSumURLClustering(AbsTaskClusteringFast):
         main_score="v_measure",
         domains=["News", "Written"],
         task_subtypes=["Thematic clustering", "Topic classification"],
-        license="not-specified",
+        license="not specified",
         annotations_creators="derived",
         dialect=[],
         sample_creation="found",
