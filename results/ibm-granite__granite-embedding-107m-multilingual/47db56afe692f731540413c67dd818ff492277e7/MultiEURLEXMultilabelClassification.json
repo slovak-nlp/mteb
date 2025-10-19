@@ -1,0 +1,73 @@
+{
+    "dataset_revision": "2aea5a6dc8fdcfeca41d0fb963c0a338930bde5c",
+    "task_name": "MultiEURLEXMultilabelClassification",
+    "mteb_version": "1.39.7",
+    "scores": {
+        "test": [
+            {
+                "accuracy": 0.03572,
+                "f1": 0.317704,
+                "lrap": 0.448644,
+                "scores_per_experiment": [
+                    {
+                        "accuracy": 0.0476,
+                        "f1": 0.348816,
+                        "lrap": 0.476603
+                    },
+                    {
+                        "accuracy": 0.0262,
+                        "f1": 0.328204,
+                        "lrap": 0.452005
+                    },
+                    {
+                        "accuracy": 0.0218,
+                        "f1": 0.261718,
+                        "lrap": 0.427981
+                    },
+                    {
+                        "accuracy": 0.024,
+                        "f1": 0.320902,
+                        "lrap": 0.440815
+                    },
+                    {
+                        "accuracy": 0.0474,
+                        "f1": 0.308397,
+                        "lrap": 0.446226
+                    },
+                    {
+                        "accuracy": 0.0332,
+                        "f1": 0.327483,
+                        "lrap": 0.438308
+                    },
+                    {
+                        "accuracy": 0.0348,
+                        "f1": 0.338398,
+                        "lrap": 0.432647
+                    },
+                    {
+                        "accuracy": 0.0512,
+                        "f1": 0.316842,
+                        "lrap": 0.45667
+                    },
+                    {
+                        "accuracy": 0.0402,
+                        "f1": 0.339269,
+                        "lrap": 0.471348
+                    },
+                    {
+                        "accuracy": 0.0308,
+                        "f1": 0.287005,
+                        "lrap": 0.443838
+                    }
+                ],
+                "main_score": 0.03572,
+                "hf_subset": "sk",
+                "languages": [
+                    "slk-Latn"
+                ]
+            }
+        ]
+    },
+    "evaluation_time": 40.386303663253784,
+    "kg_co2_emissions": null
+}

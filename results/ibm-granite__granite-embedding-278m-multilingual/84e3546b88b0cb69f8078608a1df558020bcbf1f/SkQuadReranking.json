@@ -1,0 +1,30 @@
+{
+    "dataset_revision": "7cfcb122006b33d150b485caac5aa41939b3ba37",
+    "task_name": "SkQuadReranking",
+    "mteb_version": "1.39.7",
+    "scores": {
+        "test": [
+            {
+                "map": 0.631897,
+                "mrr": 0.71042,
+                "recall_at_10": 0.961165,
+                "nAUC_map_max": 0.118489,
+                "nAUC_map_std": 0.189791,
+                "nAUC_map_diff1": 0.254742,
+                "nAUC_mrr_max": 0.192732,
+                "nAUC_mrr_std": 0.252263,
+                "nAUC_mrr_diff1": 0.285027,
+                "nAUC_recall_at_10_max": 0.003474,
+                "nAUC_recall_at_10_std": 0.068777,
+                "nAUC_recall_at_10_diff1": 0.228463,
+                "main_score": 0.631897,
+                "hf_subset": "default",
+                "languages": [
+                    "slk-Latn"
+                ]
+            }
+        ]
+    },
+    "evaluation_time": 13.693846702575684,
+    "kg_co2_emissions": null
+}
