@@ -11,14 +11,14 @@
                 "similarity_f1_threshold": 0.325097,
                 "similarity_precision": 0.484318,
                 "similarity_recall": 0.998756,
-                "similarity_ap": 0.372165,
+                "similarity_ap": 0.372166,
                 "cosine_accuracy": 0.51506,
                 "cosine_accuracy_threshold": 0.966006,
                 "cosine_f1": 0.652315,
                 "cosine_f1_threshold": 0.325097,
                 "cosine_precision": 0.484318,
                 "cosine_recall": 0.998756,
-                "cosine_ap": 0.372163,
+                "cosine_ap": 0.372166,
                 "manhattan_accuracy": 0.51506,
                 "manhattan_accuracy_threshold": 6.576476,
                 "manhattan_f1": 0.652315,
@@ -39,7 +39,7 @@
                 "dot_f1_threshold": 0.325097,
                 "dot_precision": 0.484318,
                 "dot_recall": 0.998756,
-                "dot_ap": 0.372163,
+                "dot_ap": 0.372166,
                 "max_accuracy": 0.51506,
                 "max_f1": 0.652315,
                 "max_precision": 0.484318,
@@ -53,6 +53,6 @@
             }
         ]
     },
-    "evaluation_time": 8.613436222076416,
+    "evaluation_time": 14.789594173431396,
     "kg_co2_emissions": null
 }

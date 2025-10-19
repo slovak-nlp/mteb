@@ -1,6 +1,6 @@
 {
-    "name": "TUKE-DeutscheTelekom/slovakbert-skquad-mnlr",
-    "revision": null,
+    "name": "local_models/Qwen3-Embedding-4B-8k",
+    "revision": "no_revision_available",
     "release_date": null,
     "languages": null,
     "n_parameters": null,

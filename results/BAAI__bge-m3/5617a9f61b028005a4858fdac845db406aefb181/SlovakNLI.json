@@ -20,9 +20,9 @@
                 "cosine_recall": 0.872549,
                 "cosine_ap": 0.799186,
                 "manhattan_accuracy": 0.743455,
-                "manhattan_accuracy_threshold": 18.930771,
+                "manhattan_accuracy_threshold": 18.930767,
                 "manhattan_f1": 0.772926,
-                "manhattan_f1_threshold": 19.963518,
+                "manhattan_f1_threshold": 19.963516,
                 "manhattan_precision": 0.69685,
                 "manhattan_recall": 0.867647,
                 "manhattan_ap": 0.798546,
@@ -53,6 +53,6 @@
             }
         ]
     },
-    "evaluation_time": 1.300703525543213,
+    "evaluation_time": 2.057023048400879,
     "kg_co2_emissions": null
 }
