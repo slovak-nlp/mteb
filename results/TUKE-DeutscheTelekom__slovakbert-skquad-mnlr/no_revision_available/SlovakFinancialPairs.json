@@ -1,0 +1,58 @@
+{
+  "dataset_revision": "6a028bbac0ee1558e43b535bba2b8ced09a127d9",
+  "task_name": "SlovakFinancialPairs",
+  "mteb_version": "1.38.61",
+  "scores": {
+    "test": [
+      {
+        "similarity_accuracy": 0.8,
+        "similarity_accuracy_threshold": 0.92802,
+        "similarity_f1": 0.333583,
+        "similarity_f1_threshold": -0.062832,
+        "similarity_precision": 0.20018,
+        "similarity_recall": 1.0,
+        "similarity_ap": 0.231817,
+        "cosine_accuracy": 0.8,
+        "cosine_accuracy_threshold": 0.92802,
+        "cosine_f1": 0.333583,
+        "cosine_f1_threshold": -0.062832,
+        "cosine_precision": 0.20018,
+        "cosine_recall": 1.0,
+        "cosine_ap": 0.231817,
+        "manhattan_accuracy": 0.80015,
+        "manhattan_accuracy_threshold": 64.315086,
+        "manhattan_f1": 0.333965,
+        "manhattan_f1_threshold": 210.485687,
+        "manhattan_precision": 0.21676,
+        "manhattan_recall": 0.727136,
+        "manhattan_ap": 0.238408,
+        "euclidean_accuracy": 0.80015,
+        "euclidean_accuracy_threshold": 2.962206,
+        "euclidean_f1": 0.335851,
+        "euclidean_f1_threshold": 9.519401,
+        "euclidean_precision": 0.219316,
+        "euclidean_recall": 0.716642,
+        "euclidean_ap": 0.238574,
+        "dot_accuracy": 0.79985,
+        "dot_accuracy_threshold": 67.689751,
+        "dot_f1": 0.333542,
+        "dot_f1_threshold": -4.230104,
+        "dot_precision": 0.20015,
+        "dot_recall": 1.0,
+        "dot_ap": 0.221664,
+        "max_accuracy": 0.80015,
+        "max_f1": 0.335851,
+        "max_precision": 0.219316,
+        "max_recall": 1.0,
+        "max_ap": 0.238574,
+        "main_score": 0.238574,
+        "hf_subset": "default",
+        "languages": [
+          "slk-Latn"
+        ]
+      }
+    ]
+  },
+  "evaluation_time": 3.3901896476745605,
+  "kg_co2_emissions": null
+}

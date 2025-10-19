@@ -1,0 +1,73 @@
+{
+  "dataset_revision": "257ee340c1399ab5e038a3aea38877f67940774d",
+  "task_name": "CSFDSKMovieReviewSentimentClassification.v2",
+  "mteb_version": "1.39.7",
+  "scores": {
+    "test": [
+      {
+        "accuracy": 0.305322,
+        "f1": 0.304221,
+        "f1_weighted": 0.305041,
+        "scores_per_experiment": [
+          {
+            "accuracy": 0.308105,
+            "f1": 0.302666,
+            "f1_weighted": 0.302463
+          },
+          {
+            "accuracy": 0.30957,
+            "f1": 0.307574,
+            "f1_weighted": 0.308778
+          },
+          {
+            "accuracy": 0.321777,
+            "f1": 0.32372,
+            "f1_weighted": 0.324555
+          },
+          {
+            "accuracy": 0.316406,
+            "f1": 0.315833,
+            "f1_weighted": 0.316863
+          },
+          {
+            "accuracy": 0.314453,
+            "f1": 0.313846,
+            "f1_weighted": 0.315557
+          },
+          {
+            "accuracy": 0.297852,
+            "f1": 0.298293,
+            "f1_weighted": 0.298964
+          },
+          {
+            "accuracy": 0.287598,
+            "f1": 0.288786,
+            "f1_weighted": 0.288774
+          },
+          {
+            "accuracy": 0.293457,
+            "f1": 0.292344,
+            "f1_weighted": 0.293521
+          },
+          {
+            "accuracy": 0.304688,
+            "f1": 0.297181,
+            "f1_weighted": 0.298307
+          },
+          {
+            "accuracy": 0.299316,
+            "f1": 0.301969,
+            "f1_weighted": 0.302625
+          }
+        ],
+        "main_score": 0.305322,
+        "hf_subset": "default",
+        "languages": [
+          "slk-Latn"
+        ]
+      }
+    ]
+  },
+  "evaluation_time": 11.91394829750061,
+  "kg_co2_emissions": null
+}
