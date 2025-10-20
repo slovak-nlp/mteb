@@ -1,0 +1,143 @@
+{
+    "dataset_revision": "a1bc0e8fd36c3d5015bd64c14ca098596774784a",
+    "task_name": "WebFAQBitextMiningQAs",
+    "mteb_version": "1.39.7",
+    "scores": {
+        "default": [
+            {
+                "precision": 0.99119,
+                "recall": 0.993934,
+                "f1": 0.992057,
+                "accuracy": 0.993934,
+                "main_score": 0.992057,
+                "hf_subset": "bul-slk",
+                "languages": [
+                    "bul-Cyrl",
+                    "slk-Latn"
+                ]
+            },
+            {
+                "precision": 0.992487,
+                "recall": 0.994904,
+                "f1": 0.993271,
+                "accuracy": 0.994904,
+                "main_score": 0.993271,
+                "hf_subset": "ces-slk",
+                "languages": [
+                    "ces-Latn",
+                    "slk-Latn"
+                ]
+            },
+            {
+                "precision": 0.990415,
+                "recall": 0.99361,
+                "f1": 0.99148,
+                "accuracy": 0.99361,
+                "main_score": 0.99148,
+                "hf_subset": "hrv-slk",
+                "languages": [
+                    "hrv-Latn",
+                    "slk-Latn"
+                ]
+            },
+            {
+                "precision": 0.977186,
+                "recall": 0.984791,
+                "f1": 0.979721,
+                "accuracy": 0.984791,
+                "main_score": 0.979721,
+                "hf_subset": "lav-slk",
+                "languages": [
+                    "lav-Latn",
+                    "slk-Latn"
+                ]
+            },
+            {
+                "precision": 0.979045,
+                "recall": 0.98603,
+                "f1": 0.981374,
+                "accuracy": 0.98603,
+                "main_score": 0.981374,
+                "hf_subset": "lit-slk",
+                "languages": [
+                    "lit-Latn",
+                    "slk-Latn"
+                ]
+            },
+            {
+                "precision": 0.991241,
+                "recall": 0.993743,
+                "f1": 0.992006,
+                "accuracy": 0.993743,
+                "main_score": 0.992006,
+                "hf_subset": "pol-slk",
+                "languages": [
+                    "pol-Latn",
+                    "slk-Latn"
+                ]
+            },
+            {
+                "precision": 0.983109,
+                "recall": 0.987332,
+                "f1": 0.984391,
+                "accuracy": 0.987332,
+                "main_score": 0.984391,
+                "hf_subset": "rus-slk",
+                "languages": [
+                    "rus-Cyrl",
+                    "slk-Latn"
+                ]
+            },
+            {
+                "precision": 0.984114,
+                "recall": 0.98888,
+                "f1": 0.985703,
+                "accuracy": 0.98888,
+                "main_score": 0.985703,
+                "hf_subset": "slk-slv",
+                "languages": [
+                    "slk-Latn",
+                    "slv-Latn"
+                ]
+            },
+            {
+                "precision": 0.918449,
+                "recall": 0.942959,
+                "f1": 0.926144,
+                "accuracy": 0.942959,
+                "main_score": 0.926144,
+                "hf_subset": "slk-srp",
+                "languages": [
+                    "slk-Latn",
+                    "srp-Cyrl"
+                ]
+            },
+            {
+                "precision": 0.996822,
+                "recall": 0.997881,
+                "f1": 0.997175,
+                "accuracy": 0.997881,
+                "main_score": 0.997175,
+                "hf_subset": "slk-ukr",
+                "languages": [
+                    "slk-Latn",
+                    "ukr-Cyrl"
+                ]
+            },
+            {
+                "precision": 0.996709,
+                "recall": 0.997806,
+                "f1": 0.997074,
+                "accuracy": 0.997806,
+                "main_score": 0.997074,
+                "hf_subset": "eng-slk",
+                "languages": [
+                    "eng-Latn",
+                    "slk-Latn"
+                ]
+            }
+        ]
+    },
+    "evaluation_time": 513.5312330722809,
+    "kg_co2_emissions": null
+}
