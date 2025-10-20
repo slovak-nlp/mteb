@@ -705,7 +705,7 @@ MTEB_SLK = Benchmark(
                 # Retrieval
                 "BelebeleRetrieval",
                 "SlovakSumRetrieval",
-                # TODO: SMESum
+                "SMESumRetrieval",
                 "SKQuadRetrieval",
                 "WebFAQRetrieval",
                 # STS
@@ -732,7 +732,7 @@ MTEB_SLK = Benchmark(
                 "PravdaSKTagClustering",
                 "PravdaSKURLClustering",
                 "SlovakSumURLClustering",
-                # TODO: SMESumURLClustering
+                "SMESumCategoryClustering",
                 # BitextMining
                 "OpusSlovakEnglishBitextMining",
                 "Tatoeba",
