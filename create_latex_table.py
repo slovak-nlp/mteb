@@ -6,69 +6,73 @@ import numpy as np
 # Define MTEB task type mappings
 TASK_TYPE_MAPPING = {
     # Retrieval tasks
-    'BelebeleRetrieval': 'Retrieval',
-    'SlovakSumRetrieval': 'Retrieval',
-    'SMESumRetrieval': 'Retrieval',
-    'SKQuadRetrieval': 'Retrieval',
-    'WebFAQRetrieval': 'Retrieval',
+    'BelebeleRetrieval': 'Rtrvl',
+    'SlovakSumRetrieval': 'Rtrvl',
+    'SMESumRetrieval': 'Rtrvl',
+    'SKQuadRetrieval': 'Rtrvl',
+    'WebFAQRetrieval': 'Rtrvl',
 
     # Classification tasks
-    'SlovakHateSpeechClassification.v2': 'Classification',
-    'SlovakMovieReviewSentimentClassification.v2': 'Classification',
-    'SIB200Classification': 'Classification',
-    'MultilingualSentimentClassification': 'Classification',
-    'MultiEURLEXMultilabelClassification': 'Classification',
-    'DGurgurovSlovakSentiment': 'Classification',
-    'SlovakParlaSentClassification': 'Classification',
-    'MultiEupSlovakPartyClassification': 'Classification',
-    'MultiEupSlovakGenderClassification': 'Classification',
+    'SlovakHateSpeechClassification.v2': 'Clf',
+    'SlovakMovieReviewSentimentClassification.v2': 'Clf',
+    'SIB200Classification': 'Clf',
+    'MultilingualSentimentClassification': 'Clf',
+    'DGurgurovSlovakSentiment': 'Clf',
+    'SlovakParlaSentClassification': 'Clf',
+    'MultiEupSlovakPartyClassification': 'Clf',
+    'MultiEupSlovakGenderClassification': 'Clf',
+
+    # MultilabelClassification tasks
+    # 'MultiEURLEXMultilabelClassification': 'MClf',
 
     # Clustering tasks
-    'SIB200ClusteringS2S': 'Clustering',
-    'PravdaSKTagClustering': 'Clustering',
-    'PravdaSKURLClustering': 'Clustering',
-    'SlovakSumURLClustering': 'Clustering',
-    'SMESumCategoryClustering': 'Clustering',
+    'SIB200ClusteringS2S': 'Clust',
+    'PravdaSKTagClustering': 'Clust',
+    'PravdaSKURLClustering': 'Clust',
+    'SlovakSumURLClustering': 'Clust',
+    'SMESumCategoryClustering': 'Clust',
 
     # Reranking tasks
-    'SkQuadReranking': 'Reranking',
-    'SlovakFactCheckReranking': 'Reranking',
+    'SkQuadReranking': 'Rrnk',
+    'SlovakFactCheckReranking': 'Rrnk',
 
     # STS tasks
     'SlovakSTS': 'STS',
 
     # Pair Classification
-    'SlovakNLI': 'PairClassification',
-    'SlovakRTE': 'PairClassification',
-    'DemagogSKNLI': 'PairClassification',
+    'SlovakNLI': 'PrClf',
+    'SlovakRTE': 'PrClf',
+    'DemagogSKNLI': 'PrClf',
 
     # BitextMining
-    'OpusSlovakEnglishBitextMining': 'BitextMining',
-    'Tatoeba': 'BitextMining',
-    'FloresBitextMining': 'BitextMining',
-    'NTREXBitextMining': 'BitextMining',
-    'WebFAQBitextMiningQuestions': 'BitextMining',
-    'WebFAQBitextMiningQAs': 'BitextMining',
+    'OpusSlovakEnglishBitextMining': 'Btxt',
+    'Tatoeba': 'Btxt',
+    'FloresBitextMining': 'Btxt',
+    'NTREXBitextMining': 'Btxt',
+    'WebFAQBitextMiningQuestions': 'Btxt',
+    'WebFAQBitextMiningQAs': 'Btxt',
 }
 
 SPLITS = set()
-def extract_main_score(task_data):
+def extract_main_score(task_data, model_name: None):
     """Extract the main score from a task result"""
     scores = task_data.get('scores', {})
 
     for split in scores:
         SPLITS.add(split)
-    
-    for split in ['test', 'devtest', 'default']:
-        if split in scores:
+
+    relevant_splits = set.intersection(set(scores), ['test', 'devtest', 'default'])
+
+    if not relevant_splits:
+        print(f"Err: Missing split scores data for task: {task_data['task_name']} ({model_name})")
+    else:
+        for split in relevant_splits:
             split_scores = scores[split]
             if isinstance(split_scores, list):
                 main_scores = [entry.get('main_score', np.nan) for entry in split_scores]
                 return np.nanmean(main_scores) if main_scores else np.nan
             elif isinstance(split_scores, dict):
                 return split_scores.get('main_score', np.nan)
-        else:
-            print(f"Err: Missing split scores for task: {task_data['task_name']}")
     
     return np.nan
 
@@ -97,7 +101,7 @@ def load_results_from_directory(results_dir='results'):
                     with open(json_file, 'r', encoding='utf-8') as f:
                         task_data = json.load(f)
                     
-                    main_score = extract_main_score(task_data)
+                    main_score = extract_main_score(task_data, model_name=model_name)
                     task_type = TASK_TYPE_MAPPING.get(task_name, 'Unknown')
                     
                     if not np.isnan(main_score) and task_type != 'Unknown':
@@ -111,10 +115,26 @@ def load_results_from_directory(results_dir='results'):
 def format_model_name(model_name):
     """Format model name for LaTeX (escape underscores)"""
     # Replace double underscores with a formatted version
-    return model_name.replace('__', '/').replace('_', '\\_')
+    return model_name.replace('__', '/').replace('_', '\\_').split('/')[-1]
 
-def create_latex_table(model_results):
-    """Create a LaTeX table with models as rows and task type averages as columns"""
+
+def latex_escape(text: str) -> str:
+    """Escape underscores for LaTeX in arbitrary text (e.g., task names)."""
+    return text.replace('_', '\\_')
+
+
+def create_latex_table(model_results, caption=None, label=None):
+    """Create a LaTeX table with models as rows and task type averages as columns, plus overall averages by type and by task.
+    
+    Parameters:
+    - caption: Optional custom caption for the LaTeX table.
+    - label: Optional custom label for the LaTeX table.
+    """
+    if caption is None:
+        caption = "skMTEB Results Summary - Average Scores by Task Type (\\%)"
+    if label is None:
+        label = "tab:mteb_results"
+
     # Prepare data
     table_data = []
     
@@ -126,45 +146,66 @@ def create_latex_table(model_results):
             avg_score = np.mean(scores) * 100  # Convert to percentage
             row[task_type] = avg_score
         
-        # Calculate overall average
+        # Calculate overall averages
         all_scores = [score for scores in task_types.values() for score in scores]
         if all_scores:
-            row['Average'] = np.mean(all_scores) * 100
+            # Average over tasks (each task equally weighted)
+            row['AvgTasks'] = np.mean(all_scores) * 100
+        
+        # Average over task types (each type equally weighted)
+        type_avg_values = [row[tt] for tt in task_types.keys() if tt in row]
+        if type_avg_values:
+            row['AvgTypes'] = np.mean(type_avg_values)
         
         table_data.append(row)
     
     # Sort by average score (descending)
-    table_data.sort(key=lambda x: x.get('Average', 0), reverse=True)
+    table_data.sort(key=lambda x: x.get('AvgTasks', 0), reverse=True)
     
     # Get all task types (columns)
     all_task_types = sorted(set(
         task_type 
         for row in table_data 
         for task_type in row.keys() 
-        if task_type not in ['Model', 'Average']
+        if task_type not in ['Model', 'AvgTasks', 'AvgTypes']
     ))
     
     # Build LaTeX table
-    # Build LaTeX table
     latex = list()
-    latex.append("\\begin{sidewaystable*}[p]")  # Changed from table* to sidewaystable*
+    latex.append("\\begin{table*}[p]")
     latex.append("\\centering")
-    latex.append("\\caption{MTEB Results Summary - Average Scores by Task Type (\\%)}")
-    latex.append("\\label{tab:mteb_results}")
     latex.append("\\small")
 
     # Column specification
-    num_cols = 2 + len(all_task_types)  # Model + Average + task types
+    num_task_types = len(all_task_types)
+    num_cols = 3 + num_task_types  # Model + AvgTasks + AvgTypes + task types
     col_spec = "l" + "r" * (num_cols - 1)
     latex.append(f"\\begin{{tabular}}{{{col_spec}}}")
     latex.append("\\toprule")
 
     # Header
-    header = ["\\textbf{Model}", "\\textbf{Avg}"] + [f"\\textbf{{{tt}}}" for tt in all_task_types]
-    latex.append(" & ".join(header) + " \\\\")
-    latex.append("\\midrule")
+    header_0 = f"& \\multicolumn{{2}}{{c}}{{\\textbf{{Average Across}}}} & \\multicolumn{{{num_task_types}}}{{c}}{{\\textbf{{Average per Task Type}}}}"
+    header_1 = ["\\textbf{Model} (\\(\\downarrow\\))", "\\textbf{All}", "\\textbf{Type}"] + [f"\\textbf{{{tt}}}" for tt in all_task_types]
+    latex.append(header_0 + " \\\\")
+    latex.append("\\cmidrule(lr){2-3} \\cmidrule(lr){4-10}" + " \\\\")
+    latex.append(" & ".join(header_1) + " \\\\")
+    latex.append("\\midrule \n")
 
-    # Determine the best score per task type (for bolding one value per column)
+    # Number of datasets per category
+    task_types_size = [len([x for x in TASK_TYPE_MAPPING.values() if x == task_type]) for task_type in all_task_types]
+    format_size = lambda x: f'\\textcolor{{gray!75}}{{({x})}}'
+    type_count = len(all_task_types)
+    datasets_cells = [
+        "\\textcolor{gray!75}{Number of datasets (\\(\\rightarrow\\))}",
+        format_size(sum(task_types_size)),
+        format_size(type_count),
+        *list(map(format_size, task_types_size)),
+    ]
+    datasets_line = " & ".join(datasets_cells) + " \\\\" 
+    latex.append(datasets_line)
+    latex.append("\\midrule \n")
+
+    # Determine the best score per category (for bolding one value per column)
     best_per_type = {}
     for tt in all_task_types:
         col_values = [r.get(tt, np.nan) for r in table_data]
@@ -175,15 +216,15 @@ def create_latex_table(model_results):
     bolded_done = {tt: False for tt in all_task_types}
     for i, row in enumerate(table_data):
         model_name = row['Model']
-        avg = row.get('Average', np.nan)
+        avg_tasks = row.get('AvgTasks', np.nan)
+        avg_types = row.get('AvgTypes', np.nan)
 
         # Build row
         row_str = f"{model_name} & "
 
-        if not np.isnan(avg):
-            row_str += f"{avg:.2f}"
-        else:
-            row_str += "-"
+        row_str += f"{avg_tasks:.2f}" if not np.isnan(avg_tasks) else "-"
+        row_str += " & "
+        row_str += f"{avg_types:.2f}" if not np.isnan(avg_types) else "-"
 
         for task_type in all_task_types:
             score = row.get(task_type, np.nan)
@@ -207,9 +248,125 @@ def create_latex_table(model_results):
 
     latex.append("\\bottomrule")
     latex.append("\\end{tabular}")
-    latex.append("\\end{sidewaystable*}")  # Changed from table* to sidewaystable*
+    latex.append(f"\\caption{{{caption}}}")
+    latex.append(f"\\label{{{label}}}")
+    latex.append("\\end{table*}")
 
     return "\n".join(latex)
+
+def load_classification_task_results(results_dir='results'):
+    """Load per-task results for classification tasks (Clf) only.
+    Returns: dict[model_name][task_name] = main_score (raw, 0-1)
+    """
+    results_dir = Path(results_dir)
+    clf_results = defaultdict(dict)
+
+    for model_dir in results_dir.iterdir():
+        if not model_dir.is_dir():
+            continue
+        model_name = model_dir.name
+
+        for revision_dir in model_dir.iterdir():
+            if not revision_dir.is_dir():
+                continue
+
+            for json_file in revision_dir.glob('*.json'):
+                if json_file.name == 'model_meta.json':
+                    continue
+                task_name = json_file.stem
+                try:
+                    with open(json_file, 'r', encoding='utf-8') as f:
+                        task_data = json.load(f)
+                    main_score = extract_main_score(task_data, model_name=model_name)
+                    if not np.isnan(main_score) and TASK_TYPE_MAPPING.get(task_name) == 'Clf':
+                        clf_results[model_name][task_name] = main_score
+                except (json.JSONDecodeError, KeyError) as e:
+                    print(f"Error reading {json_file}: {e}")
+
+    return clf_results
+
+
+def create_classification_table(model_task_results, caption=None, label=None):
+    """Create a LaTeX table for Classification tasks only with per-task columns and overall average.
+    model_task_results: dict[model][task] = score (0-1)
+    """
+    if caption is None:
+        caption = "skMTEB Classification Results - Per-Task Scores (\\%)"
+    if label is None:
+        label = "tab:mteb_results_clf"
+
+    # Collect all classification tasks present in results
+    all_tasks = sorted({task for tasks in model_task_results.values() for task in tasks.keys()})
+
+    # Compute best per task for bolding
+    best_per_task = {}
+    for t in all_tasks:
+        vals = [model_task_results[m].get(t, np.nan) for m in model_task_results]
+        vals = [v for v in vals if not np.isnan(v)]
+        best_per_task[t] = max(vals) * 100 if vals else np.nan
+
+    # Build table rows
+    rows = []
+    for model_name, tasks in model_task_results.items():
+        row = {'Model': format_model_name(model_name)}
+        # Per task scores (percent)
+        for t in all_tasks:
+            v = tasks.get(t, np.nan)
+            row[t] = (v * 100) if not np.isnan(v) else np.nan
+        # Average over available tasks for this model
+        available = [tasks[t] for t in all_tasks if t in tasks and not np.isnan(tasks[t])]
+        row['AvgTasks'] = (np.mean(available) * 100) if available else np.nan
+        rows.append(row)
+
+    # Sort by average descending
+    rows.sort(key=lambda x: x.get('AvgTasks', 0), reverse=True)
+
+    # LaTeX build
+    latex = []
+    latex.append("\\begin{table*}[p]")
+    latex.append("\\centering")
+    latex.append("\\small")
+
+    num_cols = 2 + len(all_tasks)  # Model + tasks + Avg
+    col_spec = "l" + "r" * (num_cols - 1)
+    latex.append(f"\\begin{{tabular}}{{{col_spec}}}")
+    latex.append("\\toprule")
+
+    headers = ["\\textbf{Model} (\\(\\downarrow\\))"] + [f"\\rotatebox{{90}}{{\\textbf{{{latex_escape(t)}}}}}" for t in all_tasks] + ["\\textbf{Avg}"]
+    latex.append(" & ".join(headers) + " \\\\")
+    latex.append("\\midrule \n")
+
+    # Bold tracking per task
+    bolded_done = {t: False for t in all_tasks}
+
+    for i, row in enumerate(rows):
+        parts = [row['Model']]
+        for t in all_tasks:
+            val = row.get(t, np.nan)
+            if np.isnan(val):
+                parts.append("-")
+            else:
+                formatted = f"{val:.2f}"
+                is_best = (not np.isnan(best_per_task[t])) and (abs(val - best_per_task[t]) < 1e-9)
+                if is_best and not bolded_done[t]:
+                    parts.append(f"\\textbf{{{formatted}}}")
+                    bolded_done[t] = True
+                else:
+                    parts.append(formatted)
+        avg_val = row.get('AvgTasks', np.nan)
+        parts.append(f"{avg_val:.2f}" if not np.isnan(avg_val) else "-")
+        latex.append(" & ".join(parts) + " \\\\")
+        if (i + 1) % 5 == 0 and i < len(rows) - 1:
+            latex.append("\\midrule")
+
+    latex.append("\\bottomrule")
+    latex.append("\\end{tabular}")
+    latex.append(f"\\caption{{{caption}}}")
+    latex.append(f"\\label{{{label}}}")
+    latex.append("\\end{table*}")
+
+    return "\n".join(latex)
+
 
 
 def main():
@@ -232,6 +389,21 @@ def main():
     print("LaTeX Table Preview:")
     print("=" * 80)
     print(latex_table)
+    print("=" * 80)
+
+    # Create Classification-only LaTeX table (per-task columns)
+    print("\nCreating classification-only table (per-task) ...")
+    clf_results = load_classification_task_results('results')
+    latex_table_clf = create_classification_table(clf_results)
+
+    output_file_clf = 'mteb_results_table_clf.tex'
+    with open(output_file_clf, 'w', encoding='utf-8') as f:
+        f.write(latex_table_clf)
+    print(f"\n✓ LaTeX classification table saved to '{output_file_clf}'")
+    print("\n" + "=" * 80)
+    print("Classification LaTeX Table Preview:")
+    print("=" * 80)
+    print(latex_table_clf)
     print("=" * 80)
 
     # Also print some statistics
