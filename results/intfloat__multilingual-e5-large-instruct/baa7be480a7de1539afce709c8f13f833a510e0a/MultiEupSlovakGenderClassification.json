@@ -1,0 +1,95 @@
+{
+    "dataset_revision": "382817850e097286b3fa9d874fb1b5128d0a430c",
+    "task_name": "MultiEupSlovakGenderClassification",
+    "mteb_version": "1.39.7",
+    "scores": {
+        "test": [
+            {
+                "accuracy": 0.628125,
+                "f1": 0.544601,
+                "f1_weighted": 0.675202,
+                "ap": 0.89318,
+                "ap_weighted": 0.89318,
+                "scores_per_experiment": [
+                    {
+                        "accuracy": 0.492188,
+                        "f1": 0.451151,
+                        "f1_weighted": 0.556673,
+                        "ap": 0.876667,
+                        "ap_weighted": 0.876667
+                    },
+                    {
+                        "accuracy": 0.539062,
+                        "f1": 0.480427,
+                        "f1_weighted": 0.603153,
+                        "ap": 0.878105,
+                        "ap_weighted": 0.878105
+                    },
+                    {
+                        "accuracy": 0.703125,
+                        "f1": 0.565714,
+                        "f1_weighted": 0.737478,
+                        "ap": 0.880208,
+                        "ap_weighted": 0.880208
+                    },
+                    {
+                        "accuracy": 0.59375,
+                        "f1": 0.520599,
+                        "f1_weighted": 0.652271,
+                        "ap": 0.887097,
+                        "ap_weighted": 0.887097
+                    },
+                    {
+                        "accuracy": 0.578125,
+                        "f1": 0.509091,
+                        "f1_weighted": 0.63853,
+                        "ap": 0.884517,
+                        "ap_weighted": 0.884517
+                    },
+                    {
+                        "accuracy": 0.820312,
+                        "f1": 0.652133,
+                        "f1_weighted": 0.822202,
+                        "ap": 0.893019,
+                        "ap_weighted": 0.893019
+                    },
+                    {
+                        "accuracy": 0.671875,
+                        "f1": 0.579474,
+                        "f1_weighted": 0.718075,
+                        "ap": 0.90011,
+                        "ap_weighted": 0.90011
+                    },
+                    {
+                        "accuracy": 0.6875,
+                        "f1": 0.606759,
+                        "f1_weighted": 0.732047,
+                        "ap": 0.916184,
+                        "ap_weighted": 0.916184
+                    },
+                    {
+                        "accuracy": 0.492188,
+                        "f1": 0.46854,
+                        "f1_weighted": 0.547364,
+                        "ap": 0.903869,
+                        "ap_weighted": 0.903869
+                    },
+                    {
+                        "accuracy": 0.703125,
+                        "f1": 0.612121,
+                        "f1_weighted": 0.744223,
+                        "ap": 0.91202,
+                        "ap_weighted": 0.91202
+                    }
+                ],
+                "main_score": 0.628125,
+                "hf_subset": "default",
+                "languages": [
+                    "slk-Latn"
+                ]
+            }
+        ]
+    },
+    "evaluation_time": 19.526187658309937,
+    "kg_co2_emissions": null
+}
