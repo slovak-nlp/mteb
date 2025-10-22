@@ -1,0 +1,58 @@
+{
+  "dataset_revision": "2e428d17ae4178dae14f6643785647fc9f30edaa",
+  "task_name": "SlovakRTE",
+  "mteb_version": "1.39.7",
+  "scores": {
+    "test": [
+      {
+        "similarity_accuracy": 0.51506,
+        "similarity_accuracy_threshold": 0.937272,
+        "similarity_f1": 0.653128,
+        "similarity_f1_threshold": 0.193735,
+        "similarity_precision": 0.484922,
+        "similarity_recall": 1.0,
+        "similarity_ap": 0.40004,
+        "cosine_accuracy": 0.51506,
+        "cosine_accuracy_threshold": 0.937272,
+        "cosine_f1": 0.653128,
+        "cosine_f1_threshold": 0.193735,
+        "cosine_precision": 0.484922,
+        "cosine_recall": 1.0,
+        "cosine_ap": 0.40004,
+        "manhattan_accuracy": 0.51506,
+        "manhattan_accuracy_threshold": 11.039913,
+        "manhattan_f1": 0.653128,
+        "manhattan_f1_threshold": 39.242073,
+        "manhattan_precision": 0.484922,
+        "manhattan_recall": 1.0,
+        "manhattan_ap": 0.400607,
+        "euclidean_accuracy": 0.51506,
+        "euclidean_accuracy_threshold": 0.354179,
+        "euclidean_f1": 0.653128,
+        "euclidean_f1_threshold": 1.269855,
+        "euclidean_precision": 0.484922,
+        "euclidean_recall": 1.0,
+        "euclidean_ap": 0.40004,
+        "dot_accuracy": 0.51506,
+        "dot_accuracy_threshold": 0.937272,
+        "dot_f1": 0.653128,
+        "dot_f1_threshold": 0.193734,
+        "dot_precision": 0.484922,
+        "dot_recall": 1.0,
+        "dot_ap": 0.40004,
+        "max_accuracy": 0.51506,
+        "max_f1": 0.653128,
+        "max_precision": 0.484922,
+        "max_recall": 1.0,
+        "max_ap": 0.400607,
+        "main_score": 0.400607,
+        "hf_subset": "default",
+        "languages": [
+          "slk-Latn"
+        ]
+      }
+    ]
+  },
+  "evaluation_time": 42.185553312301636,
+  "kg_co2_emissions": null
+}

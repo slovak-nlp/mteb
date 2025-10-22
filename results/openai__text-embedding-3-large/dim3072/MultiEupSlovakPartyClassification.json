@@ -1,0 +1,73 @@
+{
+  "dataset_revision": "382817850e097286b3fa9d874fb1b5128d0a430c",
+  "task_name": "MultiEupSlovakPartyClassification",
+  "mteb_version": "1.39.7",
+  "scores": {
+    "test": [
+      {
+        "accuracy": 0.479365,
+        "f1": 0.478841,
+        "f1_weighted": 0.476823,
+        "scores_per_experiment": [
+          {
+            "accuracy": 0.460317,
+            "f1": 0.466486,
+            "f1_weighted": 0.462618
+          },
+          {
+            "accuracy": 0.468254,
+            "f1": 0.456755,
+            "f1_weighted": 0.475728
+          },
+          {
+            "accuracy": 0.412698,
+            "f1": 0.433797,
+            "f1_weighted": 0.411176
+          },
+          {
+            "accuracy": 0.603175,
+            "f1": 0.585359,
+            "f1_weighted": 0.603145
+          },
+          {
+            "accuracy": 0.47619,
+            "f1": 0.482917,
+            "f1_weighted": 0.468116
+          },
+          {
+            "accuracy": 0.531746,
+            "f1": 0.53639,
+            "f1_weighted": 0.525375
+          },
+          {
+            "accuracy": 0.484127,
+            "f1": 0.463757,
+            "f1_weighted": 0.483876
+          },
+          {
+            "accuracy": 0.507937,
+            "f1": 0.519812,
+            "f1_weighted": 0.515101
+          },
+          {
+            "accuracy": 0.452381,
+            "f1": 0.457183,
+            "f1_weighted": 0.447844
+          },
+          {
+            "accuracy": 0.396825,
+            "f1": 0.385952,
+            "f1_weighted": 0.375247
+          }
+        ],
+        "main_score": 0.479365,
+        "hf_subset": "default",
+        "languages": [
+          "slk-Latn"
+        ]
+      }
+    ]
+  },
+  "evaluation_time": 38.02422904968262,
+  "kg_co2_emissions": null
+}

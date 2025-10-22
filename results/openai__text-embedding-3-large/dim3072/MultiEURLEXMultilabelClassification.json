@@ -1,0 +1,73 @@
+{
+  "dataset_revision": "2aea5a6dc8fdcfeca41d0fb963c0a338930bde5c",
+  "task_name": "MultiEURLEXMultilabelClassification",
+  "mteb_version": "1.39.7",
+  "scores": {
+    "test": [
+      {
+        "accuracy": 0.04042,
+        "f1": 0.339281,
+        "lrap": 0.459641,
+        "scores_per_experiment": [
+          {
+            "accuracy": 0.0482,
+            "f1": 0.365372,
+            "lrap": 0.478556
+          },
+          {
+            "accuracy": 0.0314,
+            "f1": 0.335532,
+            "lrap": 0.445731
+          },
+          {
+            "accuracy": 0.0516,
+            "f1": 0.33056,
+            "lrap": 0.485727
+          },
+          {
+            "accuracy": 0.0312,
+            "f1": 0.33314,
+            "lrap": 0.450456
+          },
+          {
+            "accuracy": 0.0314,
+            "f1": 0.324928,
+            "lrap": 0.451755
+          },
+          {
+            "accuracy": 0.0282,
+            "f1": 0.32485,
+            "lrap": 0.443334
+          },
+          {
+            "accuracy": 0.0314,
+            "f1": 0.339268,
+            "lrap": 0.43361
+          },
+          {
+            "accuracy": 0.0566,
+            "f1": 0.336449,
+            "lrap": 0.463405
+          },
+          {
+            "accuracy": 0.0488,
+            "f1": 0.36045,
+            "lrap": 0.467372
+          },
+          {
+            "accuracy": 0.0454,
+            "f1": 0.342257,
+            "lrap": 0.476464
+          }
+        ],
+        "main_score": 0.04042,
+        "hf_subset": "sk",
+        "languages": [
+          "slk-Latn"
+        ]
+      }
+    ]
+  },
+  "evaluation_time": 1485.1636369228363,
+  "kg_co2_emissions": null
+}
