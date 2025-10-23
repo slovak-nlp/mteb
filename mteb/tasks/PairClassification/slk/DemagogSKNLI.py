@@ -65,7 +65,7 @@ class DemagogSKNLI(AbsTaskPairClassification):
             _dataset[split] = [
                 {
                     "sentence1": hf_dataset["analysis_text"],  # Evidence/reasoning
-                    "sentence2": hf_dataset["statement"],      # Claim to verify
+                    "sentence2": hf_dataset["statement"],  # Claim to verify
                     "labels": hf_dataset["label"],
                 }
             ]

@@ -66,10 +66,7 @@ class SMESumRetrieval(AbsTaskRetrieval):
                 dataset_path, split=f"{split}[:{n_sample}]"
             )
             # Use introduction only as query to avoid title overlap with corpus
-            queries = {
-                f"q{e + 1}": x['introduction']
-                for e, x in enumerate(split_ds)
-            }
+            queries = {f"q{e + 1}": x["introduction"] for e, x in enumerate(split_ds)}
             corpus = {
                 f"d{e + 1}": {"title": x["title"], "text": x["document"]}
                 for e, x in enumerate(split_ds)

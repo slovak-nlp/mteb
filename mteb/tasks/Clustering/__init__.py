@@ -52,8 +52,8 @@ from .rus.GeoreviewClusteringP2P import *
 from .rus.RuSciBenchGRNTIClusteringP2P import *
 from .rus.RuSciBenchOECDClusteringP2P import *
 from .slk.PravdaSKClustering import *
-from .slk.SMESumCategoryClustering import *
 from .slk.SlovakSumURLClustering import *
+from .slk.SMESumCategoryClustering import *
 from .spa.SpanishNewsClusteringP2P import *
 from .swe.swedn_clustering import *
 from .swe.SwednClustering import *
