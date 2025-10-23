@@ -20,14 +20,14 @@ from mteb.abstasks.TaskMetadata import TaskMetadata
 
 _BIBTEX = r"""
 @inproceedings{yang-etal-2024-language-bias,
-  title     = {Language Bias in Multilingual Information Retrieval: The Nature of the Beast and Mitigation Methods},
-  author    = {Yang, Jinrui and Jiang, Fan and Baldwin, Timothy},
+  author = {Yang, Jinrui and Jiang, Fan and Baldwin, Timothy},
   booktitle = {Proceedings of the Fourth Workshop on Multilingual Representation Learning (MRL 2024)},
-  year      = {2024},
-  pages     = {280--292},
+  doi = {10.18653/v1/2024.mrl-1.23},
+  pages = {280--292},
   publisher = {Association for Computational Linguistics},
-  url       = {https://aclanthology.org/2024.mrl-1.23/},
-  doi       = {10.18653/v1/2024.mrl-1.23}
+  title = {Language Bias in Multilingual Information Retrieval: The Nature of the Beast and Mitigation Methods},
+  url = {https://aclanthology.org/2024.mrl-1.23/},
+  year = {2024},
 }
 """
 

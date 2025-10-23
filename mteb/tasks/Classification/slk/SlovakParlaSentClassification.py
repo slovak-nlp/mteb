@@ -29,10 +29,10 @@ class SlovakParlaSentClassification(AbsTaskClassification):
         sample_creation="found",
         bibtex_citation=r"""
 @article{antunovic2022parlasent,
-  title={ParlaSent: A multilingual sentiment analysis dataset of parliamentary debates},
-  author={Antunovi{\'c}, Matej and Bra{\v{z}}inskas, Rytis and {\v{Z}}agar, Bojan and Haddow, Barry and Birch, Alexandra and Ljube{\v{s}}i{\'c}, Nikola},
-  journal={arXiv preprint arXiv:2210.03068},
-  year={2022}
+  author = {Antunovi{\'c}, Matej and Bra{\v{z}}inskas, Rytis and {\v{Z}}agar, Bojan and Haddow, Barry and Birch, Alexandra and Ljube{\v{s}}i{\'c}, Nikola},
+  journal = {arXiv preprint arXiv:2210.03068},
+  title = {ParlaSent: A multilingual sentiment analysis dataset of parliamentary debates},
+  year = {2022},
 }
 """,
     )

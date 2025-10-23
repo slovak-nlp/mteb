@@ -17,12 +17,18 @@ class SlovakNLI(AbsTaskPairClassification):
         },
         type="PairClassification",
         category="s2s",
+        modalities=["text"],
+        date=("2024-10-01", "2025-07-31"),
         domains=["News", "Web", "Written"],
         eval_splits=["test"],
         eval_langs=["slk-Latn"],
         main_score="max_ap",
+        task_subtypes=["Textual Entailment"],
         license="not specified",
         annotations_creators="human-annotated",
+        dialect=[],
+        sample_creation="created",
+        bibtex_citation="",
     )
 
     def dataset_transform(self):

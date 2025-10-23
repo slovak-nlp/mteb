@@ -28,15 +28,15 @@ class DGurgurovSlovakSentiment(AbsTaskClassification):
         sample_creation="found",
         bibtex_citation=r"""
 @inproceedings{pecar-etal-2019-improving,
-    title = "Improving Sentiment Classification in {S}lovak Language",
-    author = "Pecar, Samuel and Simko, Marian and Bielikova, Maria",
-    booktitle = "Proceedings of the 7th Workshop on Balto-Slavic Natural Language Processing",
-    month = aug,
-    year = "2019",
-    address = "Florence, Italy",
-    publisher = "Association for Computational Linguistics",
-    pages = "114--119",
-    doi = "10.18653/v1/W19-3716"
+  address = {Florence, Italy},
+  author = {Pecar, Samuel and Simko, Marian and Bielikova, Maria},
+  booktitle = {Proceedings of the 7th Workshop on Balto-Slavic Natural Language Processing},
+  doi = {10.18653/v1/W19-3716},
+  month = aug,
+  pages = {114--119},
+  publisher = {Association for Computational Linguistics},
+  title = {Improving Sentiment Classification in {S}lovak Language},
+  year = {2019},
 }
 """,
     )
