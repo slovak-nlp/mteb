@@ -34,7 +34,7 @@ TASK_TYPE_MAPPING = {
 
     # Reranking tasks
     'SkQuadReranking': 'Rrnk',
-    'SlovakFactCheckReranking': 'Rrnk',
+    # 'SlovakFactCheckReranking': 'Rrnk',
 
     # STS tasks
     'SlovakSTS': 'STS',
@@ -54,7 +54,7 @@ TASK_TYPE_MAPPING = {
 }
 
 SPLITS = set()
-def extract_main_score(task_data, model_name: None):
+def extract_main_score(task_data, model_name: str = None):
     """Extract the main score from a task result"""
     scores = task_data.get('scores', {})
 
@@ -368,6 +368,235 @@ def create_classification_table(model_task_results, caption=None, label=None):
     return "\n".join(latex)
 
 
+def load_model_parameters(results_dir='results'):
+    """Load number of parameters per model from model_meta.json files.
+    Returns: dict[model_name] = n_parameters (int)
+    """
+    results_dir = Path(results_dir)
+    model_params = {}
+
+    for model_dir in results_dir.iterdir():
+        if not model_dir.is_dir():
+            continue
+        # Find the first revision dir that contains model_meta.json
+        n_params_value = None
+        for revision_dir in model_dir.iterdir():
+            if not revision_dir.is_dir():
+                continue
+            meta_file = revision_dir / 'model_meta.json'
+            if meta_file.exists():
+                try:
+                    with open(meta_file, 'r', encoding='utf-8') as f:
+                        meta = json.load(f)
+                    n_params = meta.get('n_parameters')
+                    if isinstance(n_params, (int, float)):
+                        n_params_value = int(n_params)
+                        break
+                    else:
+                        print(f"Err: {model_dir}")
+                except (json.JSONDecodeError, OSError) as e:
+                    print(f"Error reading {meta_file}: {e}")
+        if n_params_value is not None:
+            model_params[model_dir.name] = n_params_value
+
+    return model_params
+
+
+def load_model_max_tokens(results_dir='results'):
+    """Load max_tokens per model from model_meta.json files.
+    Returns: dict[model_name] = max_tokens (float)
+    """
+    results_dir = Path(results_dir)
+    model_tokens = {}
+
+    for model_dir in results_dir.iterdir():
+        if not model_dir.is_dir():
+            continue
+        max_toks_value = None
+        for revision_dir in model_dir.iterdir():
+            if not revision_dir.is_dir():
+                continue
+            meta_file = revision_dir / 'model_meta.json'
+            if meta_file.exists():
+                try:
+                    with open(meta_file, 'r', encoding='utf-8') as f:
+                        meta = json.load(f)
+                    max_toks = meta.get('max_tokens')
+                    if isinstance(max_toks, (int, float)):
+                        max_toks_value = float(max_toks)
+                        break
+                except (json.JSONDecodeError, OSError) as e:
+                    print(f"Error reading {meta_file}: {e}")
+        if max_toks_value is not None:
+            model_tokens[model_dir.name] = max_toks_value
+
+    return model_tokens
+
+
+def create_model_size_scatter(model_results, results_dir='results', output_file='model_size_vs_avg.png', annotate=False, log_x=True, annotate_top_n=6, annotate_names=None):
+    """Create a scatter plot (seaborn) of model size (n_parameters) vs average across all tasks (%).
+    - x-axis: n_parameters from model_meta.json
+    - y-axis: Avg across all tasks for the model (percent)
+    - color: max_tokens from model_meta.json (log-scaled colorbar)
+    Each point represents a model.
+    Parameters:
+    - annotate: if True and annotate_names is None, will label all points (can be cluttered)
+    - annotate_top_n: if > 0, label the top-N models by Avg across tasks
+    - annotate_names: optional list of model base names to label (directory names or formatted names)
+    """
+    try:
+        import seaborn as sns  # local import to avoid hard dependency if not used
+        import matplotlib.pyplot as plt
+        from matplotlib.colors import LogNorm
+    except ImportError:
+        print("seaborn (and/or matplotlib) is not installed; skipping scatter plot generation.")
+        return
+
+    model_params = load_model_parameters(results_dir)
+    model_tokens = load_model_max_tokens(results_dir)
+
+    xs, ys, labels, toks, raw_names = [], [], [], [], []
+    for model_name, task_types in model_results.items():
+        # Compute average across all tasks for this model
+        all_scores = [score for scores in task_types.values() for score in scores]
+        if not all_scores:
+            continue
+        avg_percent = float(np.mean(all_scores) * 100.0)
+        n_params = model_params.get(model_name)
+        max_toks = model_tokens.get(model_name)
+        if n_params is None or max_toks is None:
+            continue
+        xs.append(n_params)
+        ys.append(avg_percent)
+        labels.append(format_model_name(model_name))
+        toks.append(max_toks)
+        raw_names.append(model_name)
+
+    if not xs:
+        print("No data available to plot model size vs average.")
+        return
+
+    sns.set_theme(style="whitegrid")
+    fig, ax = plt.subplots(figsize=(14, 5))
+
+    # Colors by max_tokens (log scale)
+    cmap = sns.color_palette("Spectral", as_cmap=True)
+    vmin = min(500.0, float(min(toks)))
+    vmax = max(50000.0, float(max(toks)))
+    norm = LogNorm(vmin=vmin, vmax=vmax)
+
+    # Use seaborn for styling but disable legend; we add a colorbar instead
+    sns.scatterplot(x=xs, y=ys, hue=toks, palette=cmap, hue_norm=norm, ax=ax,
+                    s=70, alpha=0.95, edgecolor='black', linewidth=0.5, legend=False)
+
+    # Colorbar
+    import matplotlib as mpl
+    sm = mpl.cm.ScalarMappable(norm=norm, cmap=cmap)
+    sm.set_array([])
+    cbar = fig.colorbar(sm, ax=ax)
+    cbar.set_label('Max Tokens')
+
+    # Human-readable ticks on the Max Tokens colorbar (log scale)
+    try:
+        from matplotlib.ticker import LogLocator, FuncFormatter
+        # Ticks at 1, 2, 5 per decade
+        cbar.locator = LogLocator(base=10, subs=(1.0, 2.0, 5.0), numticks=10)
+
+        def _human_tokens(val, pos=None):
+            # Format decade ticks as 1k/10k/100k etc., and inter-decade ticks as 2 and 5
+            if val <= 0:
+                return ""
+            import math
+            exp = int(math.floor(math.log10(val)))
+            mant = val / (10 ** exp)
+            if abs(mant - 1.0) < 1e-8:
+                if exp >= 9:
+                    suffix = 'B'; base = 9
+                elif exp >= 6:
+                    suffix = 'M'; base = 6
+                elif exp >= 3:
+                    suffix = 'K'; base = 3
+                else:
+                    suffix = ''; base = 0
+                num = int(round(val / (10 ** base)))
+                return f"{num}{suffix}" if suffix else f"{num}"
+            elif abs(mant - 2.0) < 1e-8 or abs(mant - 5.0) < 1e-8:
+                return '2' if abs(mant - 2.0) < 1e-8 else '5'
+            return ""
+
+        cbar.formatter = FuncFormatter(_human_tokens)
+        cbar.update_ticks()
+    except Exception:
+        # If anything goes wrong, fall back silently to default formatting
+        pass
+
+    # Annotations
+    indices_to_annotate = set()
+    if annotate_names:
+        # Allow matching by raw dir name or formatted label
+        name_set = set(annotate_names)
+        for i, (raw, lbl) in enumerate(zip(raw_names, labels)):
+            if raw in name_set or lbl in name_set:
+                indices_to_annotate.add(i)
+    elif annotate_top_n and annotate_top_n > 0:
+        # annotate top-N by y
+        top_idx = np.argsort(-np.array(ys))[:annotate_top_n]
+        indices_to_annotate.update(map(int, top_idx))
+    elif annotate:
+        indices_to_annotate.update(range(len(xs)))
+
+    for i in indices_to_annotate:
+        ax.annotate(labels[i], (xs[i], ys[i]), textcoords="offset points", xytext=(-10, 6),
+                    fontsize=8, alpha=0.9)
+
+    if log_x:
+        ax.set_xscale('log')
+        from matplotlib.ticker import LogLocator, FuncFormatter
+        # Place ticks at 1, 2, and 5 within each decade
+        ax.xaxis.set_major_locator(LogLocator(base=10, subs=(1.0, 2.0, 5.0)))
+        
+        def _human_fmt(val, pos=None):
+            # Format decade ticks as 100M/1B/10B etc., and inter-decade ticks as 2 and 5
+            if val <= 0:
+                return ""
+            import math
+            exp = int(math.floor(math.log10(val)))
+            mant = val / (10 ** exp)
+            # Only label intended mantissas 1, 2, 5
+            if abs(mant - 1.0) < 1e-8:
+                # Choose suffix
+                if exp >= 9:
+                    suffix = 'B'; base = 9
+                elif exp >= 6:
+                    suffix = 'M'; base = 6
+                elif exp >= 3:
+                    suffix = 'K'; base = 3
+                else:
+                    suffix = ''; base = 0
+                num = int(round(val / (10 ** base)))
+                return f"{num}{suffix}" if suffix else f"{num}"
+            elif abs(mant - 2.0) < 1e-8 or abs(mant - 5.0) < 1e-8:
+                # Show just 2 or 5 between decades
+                if abs(mant - 2.0) < 1e-8:
+                    return '2'
+                else:
+                    return '5'
+            return ""
+        ax.xaxis.set_major_formatter(FuncFormatter(_human_fmt))
+
+    # Fix the max X-axis value to 10B (10^10 parameters)
+    ax.set_xlim(left=100_000_000, right=10_000_000_000)
+
+    ax.set_xlabel('Number of Parameters')
+    ax.set_ylabel('Average across all tasks (%)')
+    # ax.set_title('Model Size vs. Average Performance')
+    sns.despine(ax=ax)
+    fig.tight_layout()
+    fig.savefig(output_file, dpi=220)
+    plt.close(fig)
+    print(f"\n✓ Scatter plot saved to '{output_file}'")
+
+
 
 def main():
     print("Loading results from 'results/' directory...")
@@ -405,6 +634,36 @@ def main():
     print("=" * 80)
     print(latex_table_clf)
     print("=" * 80)
+
+    # Create model size vs average scatter plot
+    print("\nCreating model size vs average scatter plot ...")
+    create_model_size_scatter(
+        model_results, 'results', 'model_size_vs_avg.png',
+        annotate=True, log_x=True, annotate_top_n=30,
+        annotate_names=[
+            'Qwen3-Embedding-8B',
+            'Qwen3-Embedding-4B',
+            'Qwen3-Embedding-4B-8k',
+            'Qwen3-Embedding-0.6B',
+            'multilingual-e5-large-instruct',
+            'multilingual-e5-large',
+            'multilingual-e5-base',
+            'multilingual-e5-small',
+            'bge-m3',
+            # 'nomic-embed-text-v2-moe',
+            # 'gte-multilingual-base',
+            'jina-embeddings-v4',
+            # 'jina-embeddings-v3',
+            'embeddinggemma-300m',
+            # 'paraphrase-multilingual-mpnet-base-v2',
+            # 'paraphrase-multilingual-MiniLM-L12-v2',
+            'LaBSE',
+            'granite-embedding-278m-multilingual ',
+            'slovakbert-skquad-mnlr',
+            'slovakbert-sts-stsb',
+            'nomic-embed-text-v1.5',
+        ]
+    )
 
     # Also print some statistics
     print("\nTask Type Statistics:")
