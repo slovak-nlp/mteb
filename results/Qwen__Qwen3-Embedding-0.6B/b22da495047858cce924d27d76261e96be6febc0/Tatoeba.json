@@ -1,0 +1,23 @@
+{
+    "dataset_revision": "69e8f12da6e31d59addadda9a9c8a2e601a0e282",
+    "task_name": "Tatoeba",
+    "mteb_version": "1.39.7",
+    "scores": {
+        "test": [
+            {
+                "precision": 0.735983,
+                "recall": 0.789,
+                "f1": 0.751771,
+                "accuracy": 0.789,
+                "main_score": 0.751771,
+                "hf_subset": "slk-eng",
+                "languages": [
+                    "slk-Latn",
+                    "eng-Latn"
+                ]
+            }
+        ]
+    },
+    "evaluation_time": 32.783642292022705,
+    "kg_co2_emissions": null
+}

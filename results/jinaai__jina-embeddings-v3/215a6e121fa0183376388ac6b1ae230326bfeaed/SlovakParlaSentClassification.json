@@ -66,8 +66,72 @@
                     "slk-Latn"
                 ]
             }
+        ],
+        "test": [
+            {
+                "accuracy": 0.575192,
+                "f1": 0.5397,
+                "f1_weighted": 0.579194,
+                "scores_per_experiment": [
+                    {
+                        "accuracy": 0.628846,
+                        "f1": 0.598251,
+                        "f1_weighted": 0.633593
+                    },
+                    {
+                        "accuracy": 0.592308,
+                        "f1": 0.553731,
+                        "f1_weighted": 0.603122
+                    },
+                    {
+                        "accuracy": 0.548077,
+                        "f1": 0.515301,
+                        "f1_weighted": 0.562747
+                    },
+                    {
+                        "accuracy": 0.596154,
+                        "f1": 0.566332,
+                        "f1_weighted": 0.601682
+                    },
+                    {
+                        "accuracy": 0.551923,
+                        "f1": 0.51937,
+                        "f1_weighted": 0.546204
+                    },
+                    {
+                        "accuracy": 0.576923,
+                        "f1": 0.546911,
+                        "f1_weighted": 0.579262
+                    },
+                    {
+                        "accuracy": 0.588462,
+                        "f1": 0.572413,
+                        "f1_weighted": 0.590763
+                    },
+                    {
+                        "accuracy": 0.559615,
+                        "f1": 0.513525,
+                        "f1_weighted": 0.563765
+                    },
+                    {
+                        "accuracy": 0.505769,
+                        "f1": 0.454977,
+                        "f1_weighted": 0.508987
+                    },
+                    {
+                        "accuracy": 0.603846,
+                        "f1": 0.556193,
+                        "f1_weighted": 0.601817
+                    }
+                ],
+                "main_score": 0.575192,
+                "hf_subset": "default",
+                "languages": [
+                    "slk-Latn"
+                ]
+            }
         ]
     },
-    "evaluation_time": 124.54210662841797,
+    "evaluation_time": 172.3402600288391,
     "kg_co2_emissions": null
 }
