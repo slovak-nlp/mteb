@@ -725,7 +725,6 @@ MTEB_SLK = Benchmark(
                 "MultiEupSlovakGenderClassification",
                 # Reranking
                 "SkQuadReranking",
-                "SlovakFactCheckReranking",
                 # Clustering
                 "SIB200ClusteringS2S",
                 "PravdaSKTagClustering",
