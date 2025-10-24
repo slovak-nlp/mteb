@@ -719,7 +719,6 @@ MTEB_SLK = Benchmark(
                 "SlovakMovieReviewSentimentClassification.v2",
                 "SIB200Classification",
                 "MultilingualSentimentClassification",
-                "DGurgurovSlovakSentiment",
                 "SlovakParlaSentClassification",
                 "MultiEupSlovakPartyClassification",
                 "MultiEupSlovakGenderClassification",
