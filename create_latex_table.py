@@ -76,37 +76,45 @@ def extract_main_score(task_data, model_name: str = None):
     
     return np.nan
 
-def load_results_from_directory(results_dir='results'):
-    """Load all evaluation results from the results directory"""
+def load_results_from_directory(results_dir='results', task_types: list[str] = None):
+    """Load evaluation results from the results directory.
+
+    Args:
+        results_dir: Directory containing the results
+        task_types: Optional list of task types to extract (e.g. ['Clf', 'STS']). 
+                   If None, extract all known task types.
+    """
     results_dir = Path(results_dir)
-    model_results = defaultdict(lambda: defaultdict(list))
-    
+    model_results = defaultdict(lambda: defaultdict(dict))
+
     for model_dir in results_dir.iterdir():
         if not model_dir.is_dir():
             continue
-            
+
         model_name = model_dir.name
-        
+
         for revision_dir in model_dir.iterdir():
             if not revision_dir.is_dir():
                 continue
-            
+
             for json_file in revision_dir.glob('*.json'):
                 if json_file.name == 'model_meta.json':
                     continue
-                
+
                 task_name = json_file.stem
-                
+
                 try:
                     with open(json_file, 'r', encoding='utf-8') as f:
                         task_data = json.load(f)
-                    
+
                     main_score = extract_main_score(task_data, model_name=model_name)
                     task_type = TASK_TYPE_MAPPING.get(task_name, 'Unknown')
-                    
+
+                    # Only include tasks of requested types (if specified) and with valid scores
                     if not np.isnan(main_score) and task_type != 'Unknown':
-                        model_results[model_name][task_type].append(main_score)
-                        
+                        if task_types is None or task_type in task_types:
+                            model_results[model_name][task_type][task_name] = main_score
+
                 except (json.JSONDecodeError, KeyError) as e:
                     print(f"Error reading {json_file}: {e}")
     
@@ -142,12 +150,12 @@ def create_latex_table(model_results, caption=None, label=None):
         row = {'Model': format_model_name(model_name)}
         
         # Calculate an average for each task type
-        for task_type, scores in task_types.items():
-            avg_score = np.mean(scores) * 100  # Convert to percentage
+        for task_type, task_scores in task_types.items():
+            avg_score = np.mean(list(task_scores.values())) * 100  # Convert to percentage
             row[task_type] = avg_score
         
         # Calculate overall averages
-        all_scores = [score for scores in task_types.values() for score in scores]
+        all_scores = [score for task_scores in task_types.values() for score in task_scores.values()]
         if all_scores:
             # Average over tasks (each task equally weighted)
             row['AvgTasks'] = np.mean(all_scores) * 100
@@ -172,7 +180,7 @@ def create_latex_table(model_results, caption=None, label=None):
     
     # Build LaTeX table
     latex = list()
-    latex.append("\\begin{table*}[p]")
+    latex.append("\\begin{table*}[t]")
     latex.append("\\centering")
     latex.append("\\small")
 
@@ -254,37 +262,6 @@ def create_latex_table(model_results, caption=None, label=None):
 
     return "\n".join(latex)
 
-def load_classification_task_results(results_dir='results'):
-    """Load per-task results for classification tasks (Clf) only.
-    Returns: dict[model_name][task_name] = main_score (raw, 0-1)
-    """
-    results_dir = Path(results_dir)
-    clf_results = defaultdict(dict)
-
-    for model_dir in results_dir.iterdir():
-        if not model_dir.is_dir():
-            continue
-        model_name = model_dir.name
-
-        for revision_dir in model_dir.iterdir():
-            if not revision_dir.is_dir():
-                continue
-
-            for json_file in revision_dir.glob('*.json'):
-                if json_file.name == 'model_meta.json':
-                    continue
-                task_name = json_file.stem
-                try:
-                    with open(json_file, 'r', encoding='utf-8') as f:
-                        task_data = json.load(f)
-                    main_score = extract_main_score(task_data, model_name=model_name)
-                    if not np.isnan(main_score) and TASK_TYPE_MAPPING.get(task_name) == 'Clf':
-                        clf_results[model_name][task_name] = main_score
-                except (json.JSONDecodeError, KeyError) as e:
-                    print(f"Error reading {json_file}: {e}")
-
-    return clf_results
-
 
 def create_classification_table(model_task_results, caption=None, label=None):
     """Create a LaTeX table for Classification tasks only with per-task columns and overall average.
@@ -296,18 +273,20 @@ def create_classification_table(model_task_results, caption=None, label=None):
         label = "tab:mteb_results_clf"
 
     # Collect all classification tasks present in results
-    all_tasks = sorted({task for tasks in model_task_results.values() for task in tasks.keys()})
+    task_type = 'Clf'
+    all_tasks = sorted({task for tasks in model_task_results.values() for task in tasks[task_type].keys()})
 
     # Compute best per task for bolding
     best_per_task = {}
     for t in all_tasks:
-        vals = [model_task_results[m].get(t, np.nan) for m in model_task_results]
+        vals = [model_task_results[m][task_type].get(t, np.nan) for m in model_task_results]
         vals = [v for v in vals if not np.isnan(v)]
         best_per_task[t] = max(vals) * 100 if vals else np.nan
 
     # Build table rows
     rows = []
-    for model_name, tasks in model_task_results.items():
+    for model_name, task_types in model_task_results.items():
+        tasks = task_types[task_type]
         row = {'Model': format_model_name(model_name)}
         # Per task scores (percent)
         for t in all_tasks:
@@ -323,7 +302,7 @@ def create_classification_table(model_task_results, caption=None, label=None):
 
     # LaTeX build
     latex = []
-    latex.append("\\begin{table*}[p]")
+    latex.append("\\begin{table*}[t]")
     latex.append("\\centering")
     latex.append("\\small")
 
@@ -368,18 +347,22 @@ def create_classification_table(model_task_results, caption=None, label=None):
     return "\n".join(latex)
 
 
-def load_model_parameters(results_dir='results'):
-    """Load number of parameters per model from model_meta.json files.
-    Returns: dict[model_name] = n_parameters (int)
+def load_model_metadata(metadata_type: str, results_dir='results'):
+    """Load requested metadata field from model_meta.json files.
+    Args:
+        metadata_type: Key to extract from model_meta.json (e.g. 'n_parameters', 'max_tokens')
+        results_dir: Directory containing model results
+    Returns: dict[model_name] = metadata_value
     """
     results_dir = Path(results_dir)
-    model_params = {}
+    model_metadata = {}
 
     for model_dir in results_dir.iterdir():
         if not model_dir.is_dir():
             continue
+
         # Find the first revision dir that contains model_meta.json
-        n_params_value = None
+        metadata_value = None
         for revision_dir in model_dir.iterdir():
             if not revision_dir.is_dir():
                 continue
@@ -388,49 +371,18 @@ def load_model_parameters(results_dir='results'):
                 try:
                     with open(meta_file, 'r', encoding='utf-8') as f:
                         meta = json.load(f)
-                    n_params = meta.get('n_parameters')
-                    if isinstance(n_params, (int, float)):
-                        n_params_value = int(n_params)
+                    value = meta.get(metadata_type)
+                    if isinstance(value, (int, float, str, bool)):
+                        metadata_value = value
                         break
                     else:
-                        print(f"Err: {model_dir}")
+                        print(f"Warn: Invalid {metadata_type} value in {model_dir}")
                 except (json.JSONDecodeError, OSError) as e:
                     print(f"Error reading {meta_file}: {e}")
-        if n_params_value is not None:
-            model_params[model_dir.name] = n_params_value
+        if metadata_value is not None:
+            model_metadata[model_dir.name] = metadata_value
 
-    return model_params
-
-
-def load_model_max_tokens(results_dir='results'):
-    """Load max_tokens per model from model_meta.json files.
-    Returns: dict[model_name] = max_tokens (float)
-    """
-    results_dir = Path(results_dir)
-    model_tokens = {}
-
-    for model_dir in results_dir.iterdir():
-        if not model_dir.is_dir():
-            continue
-        max_toks_value = None
-        for revision_dir in model_dir.iterdir():
-            if not revision_dir.is_dir():
-                continue
-            meta_file = revision_dir / 'model_meta.json'
-            if meta_file.exists():
-                try:
-                    with open(meta_file, 'r', encoding='utf-8') as f:
-                        meta = json.load(f)
-                    max_toks = meta.get('max_tokens')
-                    if isinstance(max_toks, (int, float)):
-                        max_toks_value = float(max_toks)
-                        break
-                except (json.JSONDecodeError, OSError) as e:
-                    print(f"Error reading {meta_file}: {e}")
-        if max_toks_value is not None:
-            model_tokens[model_dir.name] = max_toks_value
-
-    return model_tokens
+    return model_metadata
 
 
 def create_model_size_scatter(model_results, results_dir='results', output_file='model_size_vs_avg.png', annotate=False, log_x=True, annotate_top_n=6, annotate_names=None):
@@ -452,19 +404,23 @@ def create_model_size_scatter(model_results, results_dir='results', output_file=
         print("seaborn (and/or matplotlib) is not installed; skipping scatter plot generation.")
         return
 
-    model_params = load_model_parameters(results_dir)
-    model_tokens = load_model_max_tokens(results_dir)
+    model_params = load_model_metadata('n_parameters', results_dir)
+    model_tokens = load_model_metadata('max_tokens', results_dir)
 
     xs, ys, labels, toks, raw_names = [], [], [], [], []
     for model_name, task_types in model_results.items():
         # Compute average across all tasks for this model
-        all_scores = [score for scores in task_types.values() for score in scores]
+        all_scores = [score for task_scores in task_types.values() for score in task_scores.values()]
         if not all_scores:
             continue
         avg_percent = float(np.mean(all_scores) * 100.0)
         n_params = model_params.get(model_name)
         max_toks = model_tokens.get(model_name)
-        if n_params is None or max_toks is None:
+
+        if max_toks is None:
+            max_toks = max(model_tokens.values())
+        if n_params is None:
+            print(f"Err: Missing metadata for {model_name} (n_params={n_params})")
             continue
         xs.append(n_params)
         ys.append(avg_percent)
@@ -605,10 +561,10 @@ def main():
 
     print(f"Found results for {len(model_results)} models")
 
-    # Create a LaTeX table
+    # Create a LaTeX summary table
+    print("\nCreating summary table (per task type) ...")
     latex_table = create_latex_table(model_results)
 
-    # Save to file
     output_file = 'mteb_results_table.tex'
     with open(output_file, 'w', encoding='utf-8') as f:
         f.write(latex_table)
@@ -622,8 +578,7 @@ def main():
 
     # Create Classification-only LaTeX table (per-task columns)
     print("\nCreating classification-only table (per-task) ...")
-    clf_results = load_classification_task_results('results')
-    latex_table_clf = create_classification_table(clf_results)
+    latex_table_clf = create_classification_table(model_results)
 
     output_file_clf = 'mteb_results_table_clf.tex'
     with open(output_file_clf, 'w', encoding='utf-8') as f:
@@ -649,8 +604,9 @@ def main():
             'multilingual-e5-large',
             'multilingual-e5-base',
             'multilingual-e5-small',
-            'bge-m3',
+            # 'bge-m3',
             # 'nomic-embed-text-v2-moe',
+            'nomic-embed-text-v1.5',
             # 'gte-multilingual-base',
             'jina-embeddings-v4',
             # 'jina-embeddings-v3',
@@ -658,10 +614,11 @@ def main():
             # 'paraphrase-multilingual-mpnet-base-v2',
             # 'paraphrase-multilingual-MiniLM-L12-v2',
             'LaBSE',
-            'granite-embedding-278m-multilingual ',
+            # 'granite-embedding-278m-multilingual',
+            'granite-embedding-107m-multilingual',
             'slovakbert-skquad-mnlr',
             'slovakbert-sts-stsb',
-            'nomic-embed-text-v1.5',
+            # 'static-similarity-mrl-multilingual-v1',
         ]
     )
 
