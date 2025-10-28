@@ -28,6 +28,7 @@ class SlovakNLI(AbsTaskPairClassification):
         annotations_creators="human-annotated",
         dialect=[],
         sample_creation="created",
+        prompt="Given a premise, retrieve a hypothesis that is entailed by the premise",
         bibtex_citation="",
     )
 
