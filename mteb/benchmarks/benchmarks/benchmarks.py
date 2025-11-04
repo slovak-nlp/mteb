@@ -733,12 +733,13 @@ MTEB_SLK = Benchmark(
                 # BitextMining
                 "OpusSlovakEnglishBitextMining",
                 "Tatoeba",
-                "FloresBitextMining",
-                "NTREXBitextMining",
-                "WebFAQBitextMiningQuestions",
-                "WebFAQBitextMiningQAs",
             ],
         )
+        + (get_task("FloresBitextMining", hf_subsets=["eng_Latn-slk_Latn", "ces_Latn-slk_Latn"]),)
+        + (get_task("NTREXBitextMining", hf_subsets=["eng_Latn-slk_Latn", "ces_Latn-slk_Latn"]),)
+        + (get_task("WebFAQBitextMiningQuestions", hf_subsets=["eng-slk", "ces-slk"]),)
+        + (get_task("WebFAQBitextMiningQAs", hf_subsets=["eng-slk", "ces-slk"]),)
+
     ),
     description="""Slovak Massive Text Embedding Benchmark (SK-MTEB), ...""",
     reference=None,
