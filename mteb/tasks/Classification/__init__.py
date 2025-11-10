@@ -149,7 +149,7 @@ from .san.SanskritShlokasClassification import *
 from .sin.SinhalaNewsClassification import *
 from .sin.SinhalaNewsSourceClassification import *
 from .slk.CSFDSKMovieReviewSentimentClassification import *
-from .slk.DGurgurovSlovakSentiment import *
+from .slk.MultiEupSlovakClassification import *
 from .slk.SlovakHateSpeechClassification import *
 from .slk.SlovakMovieReviewSentimentClassification import *
 from .slk.SlovakParlaSentClassification import *

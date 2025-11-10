@@ -215,6 +215,7 @@ from .rus.RiaNewsRetrieval import *
 from .rus.RuBQRetrieval import *
 from .slk.SKQuadRetrieval import *
 from .slk.SlovakSumRetrieval import *
+from .slk.SMESumRetrieval import *
 from .spa.SpanishPassageRetrievalS2P import *
 from .spa.SpanishPassageRetrievalS2S import *
 from .swe.SwednRetrieval import *

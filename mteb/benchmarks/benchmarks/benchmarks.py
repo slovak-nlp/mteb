@@ -694,6 +694,59 @@ two novel clustering tasks.""",  # Rephrased from the abstract
     contacts=["rafalposwiata"],
 )
 
+MTEB_SLK = Benchmark(
+    name="MTEB(slk, v1)",
+    display_name="Slovak",
+    icon="https://github.com/lipis/flag-icons/raw/59d15a43b2e643fc94e519904d148c616dec20e7/flags/4x3/sk.svg",
+    tasks=MTEBTasks(
+        get_tasks(
+            languages=["slk"],
+            tasks=[
+                # Retrieval
+                "BelebeleRetrieval",
+                "SlovakSumRetrieval",
+                "SMESumRetrieval",
+                "SKQuadRetrieval",
+                "WebFAQRetrieval",
+                # STS
+                "SlovakSTS",
+                # Pair Classification
+                "SlovakNLI",
+                "SlovakRTE",
+                "DemagogSKNLI",
+                # Classification
+                "SlovakHateSpeechClassification.v2",
+                "SlovakMovieReviewSentimentClassification.v2",
+                "SIB200Classification",
+                "MultilingualSentimentClassification",
+                "SlovakParlaSentClassification",
+                "MultiEupSlovakPartyClassification",
+                "MultiEupSlovakGenderClassification",
+                # Reranking
+                "SkQuadReranking",
+                # Clustering
+                "SIB200ClusteringS2S",
+                "PravdaSKTagClustering",
+                "PravdaSKURLClustering",
+                "SlovakSumURLClustering",
+                "SMESumCategoryClustering",
+                # BitextMining
+                "OpusSlovakEnglishBitextMining",
+                "Tatoeba",
+            ],
+        )
+        + (get_task("FloresBitextMining", hf_subsets=["eng_Latn-slk_Latn", "ces_Latn-slk_Latn"]),)
+        + (get_task("NTREXBitextMining", hf_subsets=["eng_Latn-slk_Latn", "ces_Latn-slk_Latn"]),)
+        + (get_task("WebFAQBitextMiningQuestions", hf_subsets=["eng-slk", "ces-slk"]),)
+        + (get_task("WebFAQBitextMiningQAs", hf_subsets=["eng-slk", "ces-slk"]),)
+
+    ),
+    description="""Slovak Massive Text Embedding Benchmark (SK-MTEB), ...""",
+    reference=None,
+    citation=None,
+    contacts=[],
+)
+
 MTEB_code = Benchmark(
     name="MTEB(Code, v1)",
     display_name="Code",
