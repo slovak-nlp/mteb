@@ -356,6 +356,7 @@ extend-ignore-words-re = [
     "ba",
     "creen",
     "Accademia",
+    "SME",
 ]
 extend-ignore-re = [
     "author.*",  # ignore authors in citations
