@@ -35,6 +35,7 @@ class SlovakParlaSentClassification(AbsTaskClassification):
   year = {2022},
 }
 """,
+       prompt="Classify the sentiment expressed in the given text as negative, neutral or positive"
     )
 
     def dataset_transform(self) -> None:

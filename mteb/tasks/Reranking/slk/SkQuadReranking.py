@@ -25,6 +25,15 @@ class SkQuadReranking(AbsTaskReranking):
         sample_creation="created",
         domains=["Encyclopaedic"],
         task_subtypes=["Article retrieval"],
-        bibtex_citation=r"""
+        bibtex_citation="""@article{hladek2023slovak,
+  title={Slovak dataset for multilingual question answering},
+  author={Hl{\'a}dek, Daniel and Sta{\v{s}}, J{\'a}n and Juh{\'a}r, Jozef and Koct{\'u}r, Tom{\'a}{\v{s}}},
+  journal={IEEE Access},
+  volume={11},
+  pages={32869--32881},
+  year={2023},
+  publisher={IEEE}
+}"
 """,
+        prompt="Given a query, rerank the documents by their relevance to the query",
     )

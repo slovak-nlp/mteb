@@ -54,4 +54,5 @@ Bielikova, Maria},
   year = {2023},
 }
 """,
+   prompt="Given a query, rerank the documents by their relevance to the query",
     )

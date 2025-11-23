@@ -52,6 +52,7 @@ class SMESumRetrieval(AbsTaskRetrieval):
   year = {2020},
 }
 """,
+        prompt={"query": "Retrieve the text that belongs to the given summary"}
     )
 
     def load_data(self, **kwargs):

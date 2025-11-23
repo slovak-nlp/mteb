@@ -34,6 +34,7 @@ class SKQuadRetrieval(AbsTaskRetrieval):
         dialect=[],
         sample_creation="found",
         bibtex_citation="",
+        prompt={"query": "Retrieve the answer to the question."}
     )
 
     def load_data(self, eval_splits=None, **kwargs):

@@ -42,6 +42,7 @@ class SlovakSumRetrieval(AbsTaskRetrieval):
   title = {SlovakSum: A Large Scale Slovak Summarization Dataset},
 }
 """,
+        prompt={"query": "Retrieve the text that belongs to the given summary"}
     )
 
     def load_data(self, **kwargs):
