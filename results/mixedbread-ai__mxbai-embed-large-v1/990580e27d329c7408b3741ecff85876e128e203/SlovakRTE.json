@@ -1,0 +1,58 @@
+{
+    "dataset_revision": "2e428d17ae4178dae14f6643785647fc9f30edaa",
+    "task_name": "SlovakRTE",
+    "mteb_version": "1.39.7",
+    "scores": {
+        "test": [
+            {
+                "similarity_accuracy": 0.515663,
+                "similarity_accuracy_threshold": 0.978675,
+                "similarity_f1": 0.652298,
+                "similarity_f1_threshold": 0.485199,
+                "similarity_precision": 0.484592,
+                "similarity_recall": 0.997512,
+                "similarity_ap": 0.408462,
+                "cosine_accuracy": 0.515663,
+                "cosine_accuracy_threshold": 0.978675,
+                "cosine_f1": 0.652298,
+                "cosine_f1_threshold": 0.485199,
+                "cosine_precision": 0.484592,
+                "cosine_recall": 0.997512,
+                "cosine_ap": 0.408462,
+                "manhattan_accuracy": 0.51506,
+                "manhattan_accuracy_threshold": 83.366089,
+                "manhattan_f1": 0.65205,
+                "manhattan_f1_threshold": 483.744415,
+                "manhattan_precision": 0.484027,
+                "manhattan_recall": 0.998756,
+                "manhattan_ap": 0.407636,
+                "euclidean_accuracy": 0.515663,
+                "euclidean_accuracy_threshold": 3.620032,
+                "euclidean_f1": 0.65205,
+                "euclidean_f1_threshold": 18.867348,
+                "euclidean_precision": 0.484027,
+                "euclidean_recall": 0.998756,
+                "euclidean_ap": 0.407692,
+                "dot_accuracy": 0.516265,
+                "dot_accuracy_threshold": 323.446106,
+                "dot_f1": 0.65258,
+                "dot_f1_threshold": 133.547455,
+                "dot_precision": 0.484611,
+                "dot_recall": 0.998756,
+                "dot_ap": 0.423013,
+                "max_accuracy": 0.516265,
+                "max_f1": 0.65258,
+                "max_precision": 0.484611,
+                "max_recall": 0.998756,
+                "max_ap": 0.423013,
+                "main_score": 0.423013,
+                "hf_subset": "default",
+                "languages": [
+                    "slk-Latn"
+                ]
+            }
+        ]
+    },
+    "evaluation_time": 21.84869909286499,
+    "kg_co2_emissions": null
+}
