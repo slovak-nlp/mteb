@@ -62,7 +62,11 @@ class ResultCache:
         Returns:
             The path to the results of the task.
         """
-        results_folder = "results" if not remote else "remote"
+        results_folder = (
+            self.cache_path / "results"
+            if not remote
+            else self.cache_path / "remote" / "results"
+        )
 
         if isinstance(model_name, ModelMeta):
             if model_revision is not None:
@@ -74,7 +78,7 @@ class ResultCache:
         elif isinstance(model_name, str):
             model_name = model_name.replace("/", "__").replace(" ", "_")
 
-        model_path = self.cache_path / results_folder / model_name
+        model_path = results_folder / model_name
 
         if model_revision is None:
             logger.warning(
@@ -495,7 +499,7 @@ class ResultCache:
             if validate_and_filter:
                 task = task_names[task_result.task_name]
                 try:
-                    task_result.validate_and_filter_scores(task=task)
+                    task_result = task_result.validate_and_filter_scores(task=task)
                 except Exception as e:
                     logger.info(
                         f"Validation failed for {task_result.task_name} in {model_name} {revision}: {e}"

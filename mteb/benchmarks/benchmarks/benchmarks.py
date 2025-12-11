@@ -2,7 +2,7 @@ from mteb.benchmarks.benchmark import (
     Benchmark,
     HUMEBenchmark,
     MIEBBenchmark,
-    Vidore3Benchmark,
+    VidoreBenchmark,
 )
 from mteb.get_tasks import MTEBTasks, get_task, get_tasks
 
@@ -1709,7 +1709,7 @@ MTEB_NL = Benchmark(
             exclusive_language_filter=True,
             tasks=[
                 # Classification
-                "DutchBookReviewSentimentClassification",
+                "DutchBookReviewSentimentClassification.v2",
                 "MassiveIntentClassification",
                 "MassiveScenarioClassification",
                 "SIB200Classification",
@@ -1740,10 +1740,10 @@ MTEB_NL = Benchmark(
                 # # Reranking
                 "WikipediaRerankingMultilingual",
                 # # Retrieval
-                "ArguAna-NL",
-                "SCIDOCS-NL",
-                "SciFact-NL",
-                "NFCorpus-NL",
+                "ArguAna-NL.v2",
+                "SCIDOCS-NL.v2",
+                "SciFact-NL.v2",
+                "NFCorpus-NL.v2",
                 "BelebeleRetrieval",
                 "WebFAQRetrieval",
                 "DutchNewsArticlesRetrieval",
@@ -2281,7 +2281,7 @@ VIDORE_V2 = Benchmark(
 """,
 )
 
-VIDORE_V3 = Vidore3Benchmark(
+VIDORE_V3 = VidoreBenchmark(
     name="ViDoRe(v3)",
     display_name="ViDoRe V3",
     icon="https://cdn-uploads.huggingface.co/production/uploads/66e16a677c2eb2da5109fb5c/x99xqw__fl2UaPbiIdC_f.png",
@@ -2315,10 +2315,9 @@ VIDORE_V3 = Vidore3Benchmark(
 """,
 )
 
-VISUAL_DOCUMENT_RETRIEVAL = Benchmark(
-    name="VisualDocumentRetrieval",
-    display_name="Visual Document Retrieval",
-    icon="https://github.com/DennisSuitters/LibreICONS/raw/2d2172d15e3c6ca03c018629d60050e4b99e5c55/svg-color/libre-gui-picture.svg",
+VISUAL_DOCUMENT_RETRIEVAL = VidoreBenchmark(
+    name="ViDoRe(v1&v2)",
+    display_name="ViDoRe (V1&V2)",
     tasks=get_tasks(
         tasks=[
             # v1
