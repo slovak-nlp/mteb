@@ -743,6 +743,7 @@ MTEB_SLK = Benchmark(
                 "MultiEupSlovakGenderClassification",
                 # Reranking
                 "SkQuadReranking",
+                "SlovakPharmacyDrMaxReranking",
                 # Clustering
                 "SIB200ClusteringS2S",
                 "PravdaSKTagClustering",
