@@ -13,10 +13,21 @@ DEFAULT_BENCHMARK_NAME = MTEB_multilingual_v2.name
 
 @dataclass
 class MenuEntry:
+    """A menu entry for the benchmark selector.
+
+    Attributes:
+        name: The name of the menu entry.
+        benchmarks: A list of benchmarks or nested menu entries.
+        description: An optional description of the menu entry.
+        open: Whether the accordion is open by default.
+        size: The size of the buttons. Can be "sm" or "md".
+    """
+
     name: str | None
     benchmarks: list[Benchmark | MenuEntry]
     description: str | None = None
     open: bool = False
+    size: str = "sm"
 
 
 GP_BENCHMARK_ENTRIES = [
@@ -62,8 +73,10 @@ GP_BENCHMARK_ENTRIES = [
                         "MTEB(fra, v1)",
                         "MTEB(jpn, v1)",
                         "MTEB(kor, v1)",
+                        "MTEB(nld, v1)",
                         "MTEB(pol, v1)",
                         "MTEB(rus, v1)",
+                        "MTEB(slk, v1)",
                         "MTEB(fas, v2)",
                         "VN-MTEB (vie, v1)",
                     ]
@@ -98,10 +111,11 @@ R_BENCHMARK_ENTRIES = [
             MenuEntry(
                 "Image",
                 description=None,
-                open=False,
+                open=True,
                 benchmarks=[
-                    mteb.get_benchmark("VisualDocumentRetrieval"),
+                    mteb.get_benchmark("ViDoRe(v3)"),
                     mteb.get_benchmark("JinaVDR"),
+                    MenuEntry("Other", [mteb.get_benchmark("ViDoRe(v1&v2)")]),
                 ],
             ),
             MenuEntry(
@@ -181,7 +195,7 @@ def _create_button(
     return button
 
 
-def make_selector(entries: list[MenuEntry]) -> tuple[gr.State, gr.Column]:
+def _make_selector(entries: list[MenuEntry]) -> tuple[gr.State, gr.Column]:
     """Creates a UI selector from menu entries with up to 3 levels of nesting.
 
     Args:
@@ -245,5 +259,5 @@ def _render_benchmark_item(
 
 if __name__ == "__main__":
     with gr.Blocks() as b:
-        selector = make_selector(GP_BENCHMARK_ENTRIES)
+        selector = _make_selector(GP_BENCHMARK_ENTRIES)
     b.launch()
