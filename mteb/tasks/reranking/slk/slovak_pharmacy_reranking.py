@@ -6,7 +6,7 @@ class SlovakPharmacyDrMaxReranking(AbsTaskRetrieval):
     metadata = TaskMetadata(
         name="SlovakPharmacyDrMaxReranking",
         description=(
-            "A reranking dataset created from Q&A content collected across multiple pharmacy websites. "
+            "A reranking dataset created from Q&A content collected from DrMax pharmacy website. "
             "The dataset consists of questions about medications, health conditions, and pharmaceutical advice, "
             "with answers provided by qualified pharmacists. This dataset is designed to evaluate models' "
             "ability to rank relevant pharmaceutical information and expert responses."
