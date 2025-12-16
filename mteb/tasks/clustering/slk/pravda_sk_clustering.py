@@ -65,7 +65,7 @@ class PravdaSKURLClustering(AbsTaskClustering):
         reference="https://huggingface.co/datasets/NaiveNeuron/pravda-sk-url-clustering",
         dataset={
             "path": "NaiveNeuron/pravda-sk-url-clustering",
-            "revision": "90acfb72391c5952e9da8233d42fbbc49182cd20",
+            "revision": "5d84298de8b27f3d915621e8e079fe97ba08321c",
         },
         type="Clustering",
         category="t2c",
