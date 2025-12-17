@@ -166,7 +166,7 @@ class MultiEupSlovakPartyClassification(_MultiEupSlovakMixin, AbsTaskClassificat
         dialect=[],
         sample_creation="found",
         bibtex_citation=_BIBTEX,
-        prompt="Given a European Parliament deputy utterance as query, find the deputy's political group" 
+        prompt="Given a European Parliament deputy utterance as query, find the deputy's political group",
     )
 
 
@@ -195,5 +195,5 @@ class MultiEupSlovakGenderClassification(_MultiEupSlovakMixin, AbsTaskClassifica
         dialect=[],
         sample_creation="found",
         bibtex_citation=_BIBTEX,
-        prompt="Given a European Parliament deputy utterance as query, find if the deputy is male or female" 
+        prompt="Given a European Parliament deputy utterance as query, find if the deputy is male or female",
     )

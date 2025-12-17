@@ -35,7 +35,7 @@ class SlovakMovieReviewSentimentClassification(AbsTaskClassification):
   year = {2023},
 }
 """,
-         prompt="Classify the sentiment expressed in the given movie review text as positive or negative"
+        prompt="Classify the sentiment expressed in the given movie review text as positive or negative",
     )
 
     def dataset_transform(self) -> None:
