@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import math
 import re
 from collections import defaultdict
@@ -7,8 +5,9 @@ from collections import defaultdict
 import numpy as np
 import pandas as pd
 
-from mteb.load_results.benchmark_results import BenchmarkResults
-from mteb.overview import get_task, get_tasks
+import mteb
+from mteb.get_tasks import get_task, get_tasks
+from mteb.results.benchmark_results import BenchmarkResults
 
 
 def _borda_count(scores: pd.Series) -> pd.Series:
@@ -25,7 +24,11 @@ def _get_borda_rank(score_table: pd.DataFrame) -> pd.Series:
 
 
 def _split_on_capital(s: str) -> str:
-    """Splits on capital letters and joins with spaces"""
+    """Splits on capital letters and joins with spaces
+
+    Returns:
+        The input string split on capital letters and joined with spaces as a string.
+    """
     return " ".join(re.findall(r"[A-Z]?[a-z]+|[A-Z]+(?=[A-Z]|$)", s))
 
 
@@ -49,15 +52,6 @@ def _format_max_tokens(max_tokens: float | None) -> str:
     if max_tokens == np.inf:
         return "Infinite"
     return str(int(max_tokens))
-
-
-def _failsafe_get_model_meta(model_name):
-    try:
-        from mteb.models.overview import get_model_meta
-
-        return get_model_meta(model_name)
-    except Exception:
-        return None
 
 
 def _get_means_per_types(per_task: pd.DataFrame):
@@ -137,7 +131,7 @@ def _create_summary_table_from_benchmark_results(
     joint_table = joint_table.reset_index()
 
     # Add model metadata
-    model_metas = joint_table["model_name"].map(_failsafe_get_model_meta)
+    model_metas = joint_table["model_name"].map(mteb.get_model_meta)
     joint_table = joint_table[model_metas.notna()]
     joint_table["model_link"] = model_metas.map(lambda m: m.reference)
 
@@ -277,8 +271,8 @@ def _create_summary_table_mean_public_private(
             {"No results": ["You can try relaxing your criteria"]}
         )
         return no_results_frame
-    public_task_name = benchmark_results.filter_tasks(is_public=True).task_names
-    private_task_name = benchmark_results.filter_tasks(is_public=False).task_names
+    public_task_name = benchmark_results._filter_tasks(is_public=True).task_names
+    private_task_name = benchmark_results._filter_tasks(is_public=False).task_names
     # Convert to DataFrame and pivot
     per_task = data.pivot(index="model_name", columns="task_name", values="score")
 
@@ -316,7 +310,7 @@ def _create_summary_table_mean_public_private(
     joint_table = joint_table.reset_index()
 
     # Add model metadata
-    model_metas = joint_table["model_name"].map(_failsafe_get_model_meta)
+    model_metas = joint_table["model_name"].map(mteb.get_model_meta)
     joint_table = joint_table[model_metas.notna()]
     joint_table["model_link"] = model_metas.map(lambda m: m.reference)
 
@@ -364,9 +358,7 @@ def _create_summary_table_mean_public_private(
         "mean(public)": "Mean (Public)",
         "mean(private)": "Mean (Private)",
     }
-    # For RTEB: all tasks are Retrieval type, so Retrieval column = Mean (Task)
-    if "Retrieval" in joint_table.columns:
-        rename_dict["Retrieval"] = "Mean (Task)"
+
     joint_table = joint_table.rename(columns=rename_dict)
 
     # Move borda rank to front
@@ -440,7 +432,7 @@ def _create_summary_table_mean_subset(
     joint_table = joint_table.reset_index()
 
     # Add model metadata
-    model_metas = joint_table["model_name"].map(_failsafe_get_model_meta)
+    model_metas = joint_table["model_name"].map(mteb.get_model_meta)
     joint_table = joint_table[model_metas.notna()]
     joint_table["model_link"] = model_metas.map(lambda m: m.reference)
 
@@ -560,7 +552,7 @@ def _create_summary_table_mean_task_type(
     joint_table = joint_table.reset_index()
 
     # Add model metadata
-    model_metas = joint_table["model_name"].map(_failsafe_get_model_meta)
+    model_metas = joint_table["model_name"].map(mteb.get_model_meta)
     joint_table = joint_table[model_metas.notna()]
     joint_table["model_link"] = model_metas.map(lambda m: m.reference)
 
