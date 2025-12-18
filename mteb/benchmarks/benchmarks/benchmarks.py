@@ -729,6 +729,7 @@ MTEB_SLK = Benchmark(
                 "WebFAQRetrieval",
                 # STS
                 "SlovakSTS",
+                "SlovakSumSTS",
                 # Pair Classification
                 "SlovakNLI",
                 "SlovakRTE",
