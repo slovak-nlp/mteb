@@ -1,10 +1,10 @@
 {
     "test": {
-        "num_samples": 15000,
+        "num_samples": 14534,
         "text_statistics": {
-            "total_text_length": 4237813,
+            "total_text_length": 4183738,
             "min_text_length": 13,
-            "average_text_length": 282.5208666666667,
+            "average_text_length": 287.85867620751344,
             "max_text_length": 934,
             "unique_texts": 14534
         },
@@ -25,52 +25,52 @@
                     "count": 300
                 },
                 "cestovanie/cestovny-ruch": {
-                    "count": 300
+                    "count": 298
                 },
                 "vat/tlac": {
-                    "count": 300
+                    "count": 275
                 },
                 "sportweb/zimne-sporty": {
-                    "count": 300
+                    "count": 297
                 },
                 "zdravie/zdravie-a-prevencia": {
-                    "count": 300
+                    "count": 297
                 },
                 "vat/zem": {
-                    "count": 300
+                    "count": 299
                 },
                 "ekonomika/tlac": {
-                    "count": 300
+                    "count": 287
                 },
                 "sportweb/tlac": {
-                    "count": 300
+                    "count": 288
                 },
                 "sportweb/tenis": {
-                    "count": 300
+                    "count": 298
                 },
                 "ekonomika/energetika": {
-                    "count": 300
+                    "count": 296
                 },
                 "zurnal/rozhovory": {
                     "count": 300
                 },
                 "uzitocna/praca-a-kariera": {
-                    "count": 300
+                    "count": 299
                 },
                 "cestovanie/hory": {
-                    "count": 300
+                    "count": 295
                 },
                 "spravy/cierna-kronika": {
                     "count": 300
                 },
                 "sportweb/kalendar": {
-                    "count": 300
+                    "count": 1
                 },
                 "ekonomika/firmy-a-trhy": {
-                    "count": 300
+                    "count": 299
                 },
                 "cestovanie/tlac": {
-                    "count": 300
+                    "count": 277
                 },
                 "spravy/regiony": {
                     "count": 300
@@ -79,16 +79,16 @@
                     "count": 300
                 },
                 "zdravie/zdrava-vyziva": {
-                    "count": 300
+                    "count": 294
                 },
                 "zdravie/tlac": {
-                    "count": 300
+                    "count": 292
                 },
                 "kultura/divadlo": {
                     "count": 300
                 },
                 "koktail/sexi-soubiznis": {
-                    "count": 300
+                    "count": 299
                 },
                 "kultura/film-a-televizia": {
                     "count": 300
@@ -97,19 +97,19 @@
                     "count": 300
                 },
                 "cestovanie/exotika": {
-                    "count": 300
+                    "count": 298
                 },
                 "vat/clovek": {
-                    "count": 300
+                    "count": 294
                 },
                 "koktail/miss-a-modelky": {
-                    "count": 300
+                    "count": 298
                 },
                 "sportweb/ofsajd": {
-                    "count": 300
+                    "count": 296
                 },
                 "koktail/tlac": {
-                    "count": 300
+                    "count": 294
                 },
                 "spravy/svet": {
                     "count": 300
@@ -118,10 +118,10 @@
                     "count": 300
                 },
                 "sportweb/cyklistika": {
-                    "count": 300
+                    "count": 297
                 },
                 "vat/vesmir": {
-                    "count": 300
+                    "count": 294
                 },
                 "kultura/galeria": {
                     "count": 300
@@ -130,16 +130,16 @@
                     "count": 300
                 },
                 "cestovanie/more": {
-                    "count": 300
+                    "count": 295
                 },
                 "ekonomika/krajina": {
-                    "count": 300
+                    "count": 296
                 },
                 "koktail/hviezdne-kauzy": {
-                    "count": 300
+                    "count": 298
                 },
                 "koktail/na-cervenom-koberci": {
-                    "count": 300
+                    "count": 298
                 },
                 "kultura/hudba": {
                     "count": 300
@@ -148,22 +148,22 @@
                     "count": 300
                 },
                 "spravy/domace": {
-                    "count": 300
+                    "count": 299
                 },
                 "koktail/z-obrazovky-i-spoza-nej": {
                     "count": 300
                 },
                 "vat/komunikacia": {
-                    "count": 300
+                    "count": 299
                 },
                 "cestovanie/mesta": {
-                    "count": 300
+                    "count": 294
                 },
                 "sportweb/ostatne-sporty": {
-                    "count": 300
+                    "count": 295
                 },
                 "vat/technologie": {
-                    "count": 300
+                    "count": 298
                 }
             }
         }

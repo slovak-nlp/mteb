@@ -1,10 +1,10 @@
 {
     "test": {
-        "num_samples": 10952,
+        "num_samples": 10871,
         "text_statistics": {
-            "total_text_length": 2332594,
+            "total_text_length": 2315552,
             "min_text_length": 57,
-            "average_text_length": 212.98338203067934,
+            "average_text_length": 213.00266764787048,
             "max_text_length": 1072,
             "unique_texts": 10871
         },
@@ -16,40 +16,40 @@
             "unique_labels": 12,
             "labels": {
                 "auto": {
-                    "count": 361
+                    "count": 356
                 },
                 "crime": {
-                    "count": 1179
+                    "count": 1172
                 },
                 "culture": {
-                    "count": 202
+                    "count": 201
                 },
                 "economy": {
-                    "count": 1276
+                    "count": 1271
                 },
                 "health": {
-                    "count": 689
+                    "count": 686
                 },
                 "home": {
-                    "count": 1025
+                    "count": 1020
                 },
                 "politics": {
-                    "count": 1815
+                    "count": 1800
                 },
                 "sport": {
-                    "count": 363
+                    "count": 361
                 },
                 "tech": {
-                    "count": 511
+                    "count": 508
                 },
                 "travel": {
                     "count": 279
                 },
                 "weather": {
-                    "count": 39
+                    "count": 38
                 },
                 "world": {
-                    "count": 3213
+                    "count": 3179
                 }
             }
         }
