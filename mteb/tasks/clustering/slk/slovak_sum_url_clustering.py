@@ -11,7 +11,7 @@ class SlovakSumURLClustering(AbsTaskClustering):
         reference="https://aclanthology.org/2024.lrec-main.1298/",
         dataset={
             "path": "kiviki/slovaksum-url-clustering",
-            "revision": "ac3b8aafe34e9ee47f5db377aec524dfcdf885c5",
+            "revision": "6ac67c0a18a641c611c49224a82012cd749000e2",
         },
         type="Clustering",
         category="t2c",
