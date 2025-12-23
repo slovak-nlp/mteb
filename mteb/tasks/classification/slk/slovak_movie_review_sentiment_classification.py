@@ -32,6 +32,7 @@ class SlovakMovieReviewSentimentClassification(AbsTaskClassification):
   year = {2023},
 }
 """,
+        prompt="Classify the sentiment expressed in the given movie review text as positive or negative",
         superseded_by="SlovakMovieReviewSentimentClassification.v2",
     )
 

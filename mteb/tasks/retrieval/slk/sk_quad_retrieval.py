@@ -31,7 +31,18 @@ class SKQuadRetrieval(AbsTaskRetrieval):
         annotations_creators="human-annotated",
         dialect=[],
         sample_creation="found",
-        bibtex_citation="",
+        bibtex_citation=r"""
+@article{hladek2023slovak,
+  author = {Hl{\'a}dek, Daniel and Sta{\v{s}}, J{\'a}n and Juh{\'a}r, Jozef and Koct{\'u}r, Tom{\'a}{\v{s}}},
+  journal = {IEEE Access},
+  pages = {32869--32881},
+  publisher = {IEEE},
+  title = {Slovak dataset for multilingual question answering},
+  volume = {11},
+  year = {2023},
+}
+""",
+        prompt={"query": "Retrieve the answer to the question."},
     )
 
     def load_data(self, eval_splits=None, **kwargs):
