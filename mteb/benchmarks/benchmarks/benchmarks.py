@@ -744,6 +744,7 @@ MTEB_SLK = Benchmark(
                 # Reranking
                 "SkQuadReranking",
                 "SlovakPharmacyDrMaxReranking",
+                "SlovakPharmacyMojaLekarenReranking",
                 # Clustering
                 "SIB200ClusteringS2S",
                 "PravdaSKTagClustering",
