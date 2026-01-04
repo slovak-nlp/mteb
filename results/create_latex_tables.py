@@ -38,9 +38,11 @@ TASK_TYPE_MAPPING = {
     # Reranking tasks
     'SkQuadReranking': 'Rrnk',
     'SlovakPharmacyDrMaxReranking': 'Rrnk',
+    'SlovakPharmacyMojaLekarenReranking': 'Rrnk',
 
     # STS tasks
     'SlovakSTS': 'STS',
+    'SlovakSumSTS': 'STS',
 
     # Pair Classification
     'SlovakNLI': 'PrClf',
