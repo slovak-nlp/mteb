@@ -1,0 +1,35 @@
+{
+  "dataset_revision": "a1bc0e8fd36c3d5015bd64c14ca098596774784a",
+  "task_name": "WebFAQBitextMiningQAs",
+  "mteb_version": "1.39.7",
+  "scores": {
+    "default": [
+      {
+        "precision": 0.998824,
+        "recall": 0.999216,
+        "f1": 0.998955,
+        "accuracy": 0.999216,
+        "main_score": 0.998955,
+        "hf_subset": "ces-slk",
+        "languages": [
+          "ces-Latn",
+          "slk-Latn"
+        ]
+      },
+      {
+        "precision": 0.99424,
+        "recall": 0.99616,
+        "f1": 0.99488,
+        "accuracy": 0.99616,
+        "main_score": 0.99488,
+        "hf_subset": "eng-slk",
+        "languages": [
+          "eng-Latn",
+          "slk-Latn"
+        ]
+      }
+    ]
+  },
+  "evaluation_time": 41.11671257019043,
+  "kg_co2_emissions": null
+}

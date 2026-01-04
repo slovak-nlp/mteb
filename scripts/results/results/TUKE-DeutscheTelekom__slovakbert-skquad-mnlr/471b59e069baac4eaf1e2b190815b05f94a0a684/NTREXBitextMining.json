@@ -1,0 +1,35 @@
+{
+  "dataset_revision": "66b8b27efc99658903127730575e9fa0cb9f075c",
+  "task_name": "NTREXBitextMining",
+  "mteb_version": "1.39.7",
+  "scores": {
+    "test": [
+      {
+        "precision": 0.975672,
+        "recall": 0.982974,
+        "f1": 0.978,
+        "accuracy": 0.982974,
+        "main_score": 0.978,
+        "hf_subset": "ces_Latn-slk_Latn",
+        "languages": [
+          "ces-Latn",
+          "slk-Latn"
+        ]
+      },
+      {
+        "precision": 0.899432,
+        "recall": 0.930396,
+        "f1": 0.909264,
+        "accuracy": 0.930396,
+        "main_score": 0.909264,
+        "hf_subset": "eng_Latn-slk_Latn",
+        "languages": [
+          "eng-Latn",
+          "slk-Latn"
+        ]
+      }
+    ]
+  },
+  "evaluation_time": 22.71123194694519,
+  "kg_co2_emissions": null
+}
