@@ -159,14 +159,16 @@ class RetrievalDatasetLoader:
     def _load_qrels(self) -> RelevantDocumentsType:
         logger.info("Loading qrels...")
 
-        config = f"{self.config}-qrels" if self.config is not None else "default"
-        if config == "default" and config not in self.dataset_configs:
-            if "qrels" in self.dataset_configs:
-                config = "qrels"
-            else:
-                raise ValueError(
-                    "No qrels or default config found. Please specify a valid config or ensure the dataset has qrels."
-                )
+        if self.config is not None:
+            config = f"{self.config}-qrels"
+        elif "qrels" in self.dataset_configs:
+            config = "qrels"
+        elif "default" in self.dataset_configs:
+            config = "default"
+        else:
+            raise ValueError(
+                "No qrels or default config found. Please specify a valid config or ensure the dataset has qrels."
+            )
 
         qrels_ds = self._load_dataset_split(config)
         qrels_ds = qrels_ds.select_columns(["query-id", "corpus-id", "score"])

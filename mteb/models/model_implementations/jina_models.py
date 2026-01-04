@@ -364,20 +364,21 @@ class JinaV4Wrapper(AbsEncoder):
             task_metadata, prompt_type
         )
 
-        if task_type.startswith("DocumentUnderstanding"):
+        if task_type and task_type.startswith("DocumentUnderstanding"):
             self.vector_type = "multi_vector"
         else:
             self.vector_type = "single_vector"
 
         with torch.no_grad():
-            return self.model.encode_text(
+            embeddings = self.model.encode_text(
                 texts=sentences,
                 batch_size=batch_size,
                 return_multivector=self.vector_type == "multi_vector",
                 prompt_name=prompt_name_param,
                 task=base_task,
-                return_numpy=return_numpy,
+                return_numpy=True,
             )
+        return self._convert_to_numpy_if_needed(embeddings)
 
     def get_image_embeddings(
         self,
@@ -394,7 +395,7 @@ class JinaV4Wrapper(AbsEncoder):
             task_metadata, prompt_type
         )
 
-        if task_type.startswith("DocumentUnderstanding"):
+        if task_type and task_type.startswith("DocumentUnderstanding"):
             self.vector_type = "multi_vector"
         else:
             self.vector_type = "single_vector"
@@ -402,14 +403,15 @@ class JinaV4Wrapper(AbsEncoder):
         all_images = [text for batch in inputs for text in batch["image"]]
 
         batch_size = 1
-        return self.model.encode_image(
+        embeddings = self.model.encode_image(
             images=all_images,
             batch_size=batch_size,
             max_pixels=max_pixels,
             return_multivector=self.vector_type == "multi_vector",
             task=base_task,
-            return_numpy=return_numpy,
+            return_numpy=True,
         )
+        return self._convert_to_numpy_if_needed(embeddings)
 
     def get_fused_embeddings(
         self,
@@ -419,6 +421,17 @@ class JinaV4Wrapper(AbsEncoder):
         raise NotImplementedError(
             "Fused embeddings are not supported yet. Please use get_text_embeddings or get_image_embeddings."
         )
+
+    @staticmethod
+    def _convert_to_numpy_if_needed(embeddings):
+        """Convert torch tensors (or a list of them) to numpy for downstream evaluators."""
+        if isinstance(embeddings, torch.Tensor):
+            return embeddings.detach().cpu().float().numpy()
+        if isinstance(embeddings, list):
+            return [
+                JinaV4Wrapper._convert_to_numpy_if_needed(emb) for emb in embeddings
+            ]
+        return embeddings
 
     @staticmethod
     def _convert_to_torch_if_needed(embeddings):

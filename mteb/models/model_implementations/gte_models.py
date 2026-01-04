@@ -287,6 +287,9 @@ gte_multi_training_data = {
 
 gte_multilingual_base = ModelMeta(
     loader=sentence_transformers_loader,
+    loader_kwargs=dict(
+        trust_remote_code=True,
+    ),
     name="Alibaba-NLP/gte-multilingual-base",
     languages=gte_multilingual_langs,
     open_weights=True,

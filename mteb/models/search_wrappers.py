@@ -355,6 +355,8 @@ class SearchEncoderWrapper:
                 query_doc_embeddings,
             )
             scores = torch.as_tensor(scores)
+            if scores.ndim == 1:
+                scores = scores.unsqueeze(0)
 
             # Handle NaN values
             is_nan = torch.isnan(scores)

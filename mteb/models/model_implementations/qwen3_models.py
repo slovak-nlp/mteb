@@ -133,6 +133,9 @@ def q3e_instruct_loader(
 
 Qwen3_Embedding_0B6 = ModelMeta(
     loader=q3e_instruct_loader,
+    loader_kwargs=dict(
+        device="cpu",
+    ),
     name="Qwen/Qwen3-Embedding-0.6B",
     languages=multilingual_langs,
     open_weights=True,

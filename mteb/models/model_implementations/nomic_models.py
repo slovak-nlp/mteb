@@ -55,7 +55,7 @@ class NomicWrapper(SentenceTransformerEncoderWrapper):
     ) -> Array:
         # default to search_document if input_type and prompt_name are not provided
         prompt_name = (
-            self.get_prompt_name(self.model_prompts, task_metadata, prompt_type)
+            self.get_prompt_name(task_metadata, prompt_type)
             or PromptType.document.value
         )
         sentences = [text for batch in inputs for text in batch["text"]]
@@ -300,6 +300,45 @@ nomic_embed_v1_unsupervised = ModelMeta(
     public_training_code="https://github.com/nomic-ai/contrastors/blob/5f7b461e5a13b5636692d1c9f1141b27232fe966/src/contrastors/configs/train/contrastive_finetune.yaml",
     training_datasets=nomic_training_data,
     public_training_data=None,
+)
+
+nomic_embed_v2_moe = ModelMeta(
+    loader=NomicWrapper,
+    loader_kwargs=dict(
+        trust_remote_code=True,
+        model_prompts=model_prompts,
+    ),
+    name="nomic-ai/nomic-embed-text-v2-moe",
+    languages=[
+        "eng-Latn",
+        "ces-Latn",
+        "slk-Latn",
+        "deu-Latn",
+        "fra-Latn",
+        "spa-Latn",
+        "por-Latn",
+        "ita-Latn",
+        "jpn-Jpan",
+        "zho-Hans",
+    ],
+    open_weights=True,
+    revision="1066b6599d099fbb93dfcb64f9c37a7c9e503e85",
+    release_date="2025-02-07",  # initial HF release
+    n_parameters=330_000_000,
+    memory_usage_mb=950,
+    max_tokens=32768,
+    embed_dim=1024,
+    license="apache-2.0",
+    reference="https://huggingface.co/nomic-ai/nomic-embed-text-v2-moe",
+    similarity_fn_name=ScoringFunction.COSINE,
+    framework=["Sentence Transformers", "PyTorch"],
+    use_instructions=True,
+    citation=NOMIC_CITATION,
+    adapted_from="nomic-ai/nomic-embed-text-v1.5",
+    superseded_by=None,
+    public_training_code="https://github.com/nomic-ai/contrastors/blob/main/src/contrastors/configs/train/contrastive_finetune_v2.yaml",
+    public_training_data=None,
+    training_datasets=nomic_training_data,
 )
 
 nomic_modern_bert_embed = ModelMeta(
