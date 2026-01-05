@@ -1,0 +1,36 @@
+{
+    "loader_kwargs": {
+        "model_prompts": {
+            "query": "query: ",
+            "document": "passage: "
+        }
+    },
+    "name": "/mnt/big/sturovec/outputs/e5-large-instruct-trim-sk-sklep-multitask-3ep-instruct",
+    "revision": null,
+    "release_date": null,
+    "languages": null,
+    "n_parameters": 365330432,
+    "memory_usage_mb": null,
+    "max_tokens": null,
+    "embed_dim": 1024,
+    "license": null,
+    "open_weights": true,
+    "public_training_code": null,
+    "public_training_data": null,
+    "framework": [
+        "Sentence Transformers"
+    ],
+    "reference": null,
+    "similarity_fn_name": null,
+    "use_instructions": true,
+    "training_datasets": null,
+    "adapted_from": null,
+    "superseded_by": null,
+    "modalities": [
+        "text"
+    ],
+    "is_cross_encoder": null,
+    "citation": null,
+    "contacts": null,
+    "loader": "sentence_transformers_loader"
+}
