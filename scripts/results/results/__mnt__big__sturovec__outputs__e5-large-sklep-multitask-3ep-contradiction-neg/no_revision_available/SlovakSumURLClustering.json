@@ -1,0 +1,34 @@
+{
+    "dataset_revision": "6ac67c0a18a641c611c49224a82012cd749000e2",
+    "task_name": "SlovakSumURLClustering",
+    "mteb_version": "1.39.7",
+    "scores": {
+        "test": [
+            {
+                "v_measures": {
+                    "Level 0": [
+                        0.224421,
+                        0.186828,
+                        0.16551,
+                        0.205224,
+                        0.202008,
+                        0.23157,
+                        0.223138,
+                        0.204012,
+                        0.181009,
+                        0.226586
+                    ]
+                },
+                "v_measure": 0.205031,
+                "v_measure_std": 0.020865,
+                "main_score": 0.205031,
+                "hf_subset": "default",
+                "languages": [
+                    "slk-Latn"
+                ]
+            }
+        ]
+    },
+    "evaluation_time": 8.32375979423523,
+    "kg_co2_emissions": null
+}
