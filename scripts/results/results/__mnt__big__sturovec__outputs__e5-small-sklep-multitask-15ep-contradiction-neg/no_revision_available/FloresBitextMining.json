@@ -1,0 +1,35 @@
+{
+    "dataset_revision": "2144d16cc15edd22d4a9237d12bff5f31f5c07fc",
+    "task_name": "FloresBitextMining",
+    "mteb_version": "1.39.7",
+    "scores": {
+        "devtest": [
+            {
+                "precision": 0.95164,
+                "recall": 0.965415,
+                "f1": 0.955847,
+                "accuracy": 0.965415,
+                "main_score": 0.955847,
+                "hf_subset": "eng_Latn-slk_Latn",
+                "languages": [
+                    "eng-Latn",
+                    "slk-Latn"
+                ]
+            },
+            {
+                "precision": 0.998518,
+                "recall": 0.999012,
+                "f1": 0.998682,
+                "accuracy": 0.999012,
+                "main_score": 0.998682,
+                "hf_subset": "ces_Latn-slk_Latn",
+                "languages": [
+                    "ces-Latn",
+                    "slk-Latn"
+                ]
+            }
+        ]
+    },
+    "evaluation_time": 1.7636752128601074,
+    "kg_co2_emissions": null
+}
