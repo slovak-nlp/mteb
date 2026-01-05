@@ -7,24 +7,24 @@
             {
                 "scores_per_experiment": [
                     {
-                        "accuracy": 0.723252,
-                        "f1": 0.711219,
-                        "f1_weighted": 0.722796,
-                        "precision": 0.710361,
-                        "precision_weighted": 0.737512,
-                        "recall": 0.73073,
-                        "recall_weighted": 0.723252,
+                        "accuracy": 0.724679,
+                        "f1": 0.713141,
+                        "f1_weighted": 0.724408,
+                        "precision": 0.712141,
+                        "precision_weighted": 0.73958,
+                        "recall": 0.732927,
+                        "recall_weighted": 0.724679,
                         "ap": null,
                         "ap_weighted": null
                     },
                     {
-                        "accuracy": 0.659058,
-                        "f1": 0.644821,
-                        "f1_weighted": 0.65798,
-                        "precision": 0.647133,
-                        "precision_weighted": 0.677741,
-                        "recall": 0.660834,
-                        "recall_weighted": 0.659058,
+                        "accuracy": 0.657632,
+                        "f1": 0.642671,
+                        "f1_weighted": 0.656123,
+                        "precision": 0.64552,
+                        "precision_weighted": 0.675414,
+                        "recall": 0.658636,
+                        "recall_weighted": 0.657632,
                         "ap": null,
                         "ap_weighted": null
                     },
@@ -41,23 +41,23 @@
                     },
                     {
                         "accuracy": 0.676177,
-                        "f1": 0.662863,
-                        "f1_weighted": 0.680077,
-                        "precision": 0.676767,
-                        "precision_weighted": 0.7145,
+                        "f1": 0.662476,
+                        "f1_weighted": 0.679887,
+                        "precision": 0.675359,
+                        "precision_weighted": 0.713737,
                         "recall": 0.680227,
                         "recall_weighted": 0.676177,
                         "ap": null,
                         "ap_weighted": null
                     },
                     {
-                        "accuracy": 0.741797,
-                        "f1": 0.726329,
-                        "f1_weighted": 0.740231,
-                        "precision": 0.74718,
-                        "precision_weighted": 0.759774,
-                        "recall": 0.726429,
-                        "recall_weighted": 0.741797,
+                        "accuracy": 0.743224,
+                        "f1": 0.728009,
+                        "f1_weighted": 0.741869,
+                        "precision": 0.748477,
+                        "precision_weighted": 0.761628,
+                        "recall": 0.728284,
+                        "recall_weighted": 0.743224,
                         "ap": null,
                         "ap_weighted": null
                     },
@@ -117,16 +117,16 @@
                         "ap_weighted": null
                     }
                 ],
-                "accuracy": 0.697718,
-                "f1": 0.686729,
-                "f1_weighted": 0.697146,
-                "precision": 0.689839,
-                "precision_weighted": 0.716502,
-                "recall": 0.703829,
-                "recall_weighted": 0.697718,
+                "accuracy": 0.69786,
+                "f1": 0.686835,
+                "f1_weighted": 0.697266,
+                "precision": 0.689845,
+                "precision_weighted": 0.716585,
+                "recall": 0.704015,
+                "recall_weighted": 0.69786,
                 "ap": NaN,
                 "ap_weighted": NaN,
-                "main_score": 0.697718,
+                "main_score": 0.69786,
                 "hf_subset": "slk_Latn",
                 "languages": [
                     "slk-Latn"
@@ -311,13 +311,13 @@
                         "ap_weighted": null
                     },
                     {
-                        "accuracy": 0.77451,
-                        "f1": 0.761997,
-                        "f1_weighted": 0.774276,
-                        "precision": 0.774683,
-                        "precision_weighted": 0.785327,
-                        "recall": 0.764961,
-                        "recall_weighted": 0.77451,
+                        "accuracy": 0.779412,
+                        "f1": 0.767432,
+                        "f1_weighted": 0.779262,
+                        "precision": 0.77913,
+                        "precision_weighted": 0.78976,
+                        "recall": 0.770675,
+                        "recall_weighted": 0.779412,
                         "ap": null,
                         "ap_weighted": null
                     },
@@ -377,16 +377,16 @@
                         "ap_weighted": null
                     }
                 ],
-                "accuracy": 0.680882,
-                "f1": 0.672036,
-                "f1_weighted": 0.67799,
-                "precision": 0.676405,
-                "precision_weighted": 0.697656,
-                "recall": 0.691809,
-                "recall_weighted": 0.680882,
+                "accuracy": 0.681373,
+                "f1": 0.672579,
+                "f1_weighted": 0.678489,
+                "precision": 0.67685,
+                "precision_weighted": 0.698099,
+                "recall": 0.692381,
+                "recall_weighted": 0.681373,
                 "ap": NaN,
                 "ap_weighted": NaN,
-                "main_score": 0.680882,
+                "main_score": 0.681373,
                 "hf_subset": "slk_Latn",
                 "languages": [
                     "slk-Latn"
@@ -394,6 +394,6 @@
             }
         ]
     },
-    "evaluation_time": 59.028013706207275,
+    "evaluation_time": 59.26883506774902,
     "kg_co2_emissions": null
 }

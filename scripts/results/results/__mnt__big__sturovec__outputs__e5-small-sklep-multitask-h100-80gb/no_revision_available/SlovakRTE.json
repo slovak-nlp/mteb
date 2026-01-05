@@ -14,7 +14,7 @@
                 "cosine_f1": 0.65205,
                 "cosine_precision": 0.484027,
                 "cosine_recall": 0.998756,
-                "cosine_ap": 0.389039,
+                "cosine_ap": 0.38904,
                 "manhattan_accuracy": 0.51506,
                 "manhattan_f1": 0.65205,
                 "manhattan_precision": 0.484027,
@@ -43,6 +43,6 @@
             }
         ]
     },
-    "evaluation_time": 1.0533208847045898,
+    "evaluation_time": 1.3548319339752197,
     "kg_co2_emissions": null
 }

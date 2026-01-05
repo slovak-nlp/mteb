@@ -9,7 +9,7 @@
                 "similarity_f1": 0.895255,
                 "similarity_precision": 0.810636,
                 "similarity_recall": 0.9996,
-                "similarity_ap": 0.83168,
+                "similarity_ap": 0.831679,
                 "cosine_accuracy": 0.810373,
                 "cosine_f1": 0.895255,
                 "cosine_precision": 0.810636,
@@ -43,6 +43,6 @@
             }
         ]
     },
-    "evaluation_time": 7.640074014663696,
+    "evaluation_time": 7.873729944229126,
     "kg_co2_emissions": null
 }

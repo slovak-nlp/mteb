@@ -1,5 +1,10 @@
 {
-    "loader_kwargs": {},
+    "loader_kwargs": {
+        "model_prompts": {
+            "query": "query: ",
+            "document": "passage: "
+        }
+    },
     "name": "/mnt/big/sturovec/outputs/e5-small-sklep-multitask-3ep-contradiction-neg",
     "revision": null,
     "release_date": null,

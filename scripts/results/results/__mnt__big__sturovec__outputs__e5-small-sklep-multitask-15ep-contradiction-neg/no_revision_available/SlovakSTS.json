@@ -6,7 +6,7 @@
         "test": [
             {
                 "pearson": 0.741078,
-                "spearman": 0.734831,
+                "spearman": 0.734829,
                 "cosine_pearson": 0.741078,
                 "cosine_spearman": 0.734833,
                 "manhattan_pearson": 0.732514,
@@ -21,6 +21,6 @@
             }
         ]
     },
-    "evaluation_time": 0.5486137866973877,
+    "evaluation_time": 0.8207452297210693,
     "kg_co2_emissions": null
 }
