@@ -1,35 +1,35 @@
 {
-  "dataset_revision": "66b8b27efc99658903127730575e9fa0cb9f075c",
-  "task_name": "NTREXBitextMining",
-  "mteb_version": "1.39.7",
-  "scores": {
-    "test": [
-      {
-        "precision": 0.967034,
-        "recall": 0.976465,
-        "f1": 0.970122,
-        "accuracy": 0.976465,
-        "main_score": 0.970122,
-        "hf_subset": "ces_Latn-slk_Latn",
-        "languages": [
-          "ces-Latn",
-          "slk-Latn"
+    "dataset_revision": "66b8b27efc99658903127730575e9fa0cb9f075c",
+    "task_name": "NTREXBitextMining",
+    "mteb_version": "1.39.7",
+    "scores": {
+        "test": [
+            {
+                "precision": 0.967034,
+                "recall": 0.976465,
+                "f1": 0.970122,
+                "accuracy": 0.976465,
+                "main_score": 0.970122,
+                "hf_subset": "ces_Latn-slk_Latn",
+                "languages": [
+                    "ces-Latn",
+                    "slk-Latn"
+                ]
+            },
+            {
+                "precision": 0.918144,
+                "recall": 0.943916,
+                "f1": 0.926456,
+                "accuracy": 0.943916,
+                "main_score": 0.926456,
+                "hf_subset": "eng_Latn-slk_Latn",
+                "languages": [
+                    "eng-Latn",
+                    "slk-Latn"
+                ]
+            }
         ]
-      },
-      {
-        "precision": 0.918144,
-        "recall": 0.943916,
-        "f1": 0.926456,
-        "accuracy": 0.943916,
-        "main_score": 0.926456,
-        "hf_subset": "eng_Latn-slk_Latn",
-        "languages": [
-          "eng-Latn",
-          "slk-Latn"
-        ]
-      }
-    ]
-  },
-  "evaluation_time": 271.63279151916504,
-  "kg_co2_emissions": null
+    },
+    "evaluation_time": 271.63279151916504,
+    "kg_co2_emissions": null
 }

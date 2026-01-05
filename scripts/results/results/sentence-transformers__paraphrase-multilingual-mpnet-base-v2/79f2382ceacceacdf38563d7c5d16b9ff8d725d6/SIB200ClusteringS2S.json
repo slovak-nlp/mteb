@@ -1,34 +1,34 @@
 {
-  "dataset_revision": "a74d7350ea12af010cfb1c21e34f1f81fd2e615b",
-  "task_name": "SIB200ClusteringS2S",
-  "mteb_version": "1.39.7",
-  "scores": {
-    "test": [
-      {
-        "v_measures": {
-          "Level 0": [
-            0.385443,
-            0.417674,
-            0.439925,
-            0.390745,
-            0.342288,
-            0.441375,
-            0.439168,
-            0.335482,
-            0.398182,
-            0.437415
-          ]
-        },
-        "v_measure": 0.40277,
-        "v_measure_std": 0.037775,
-        "main_score": 0.40277,
-        "hf_subset": "slk_Latn",
-        "languages": [
-          "slk-Latn"
+    "dataset_revision": "a74d7350ea12af010cfb1c21e34f1f81fd2e615b",
+    "task_name": "SIB200ClusteringS2S",
+    "mteb_version": "1.39.7",
+    "scores": {
+        "test": [
+            {
+                "v_measures": {
+                    "Level 0": [
+                        0.385443,
+                        0.417674,
+                        0.439925,
+                        0.390745,
+                        0.342288,
+                        0.441375,
+                        0.439168,
+                        0.335482,
+                        0.398182,
+                        0.437415
+                    ]
+                },
+                "v_measure": 0.40277,
+                "v_measure_std": 0.037775,
+                "main_score": 0.40277,
+                "hf_subset": "slk_Latn",
+                "languages": [
+                    "slk-Latn"
+                ]
+            }
         ]
-      }
-    ]
-  },
-  "evaluation_time": 10.240410327911377,
-  "kg_co2_emissions": null
+    },
+    "evaluation_time": 10.240410327911377,
+    "kg_co2_emissions": null
 }

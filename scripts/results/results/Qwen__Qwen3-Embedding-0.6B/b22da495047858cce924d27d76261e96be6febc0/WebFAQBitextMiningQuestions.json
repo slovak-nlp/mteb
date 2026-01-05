@@ -1,35 +1,35 @@
 {
-  "dataset_revision": "a1bc0e8fd36c3d5015bd64c14ca098596774784a",
-  "task_name": "WebFAQBitextMiningQuestions",
-  "mteb_version": "1.39.7",
-  "scores": {
-    "default": [
-      {
-        "precision": 0.96962,
-        "recall": 0.978832,
-        "f1": 0.972625,
-        "accuracy": 0.978832,
-        "main_score": 0.972625,
-        "hf_subset": "ces-slk",
-        "languages": [
-          "ces-Latn",
-          "slk-Latn"
+    "dataset_revision": "a1bc0e8fd36c3d5015bd64c14ca098596774784a",
+    "task_name": "WebFAQBitextMiningQuestions",
+    "mteb_version": "1.39.7",
+    "scores": {
+        "default": [
+            {
+                "precision": 0.96962,
+                "recall": 0.978832,
+                "f1": 0.972625,
+                "accuracy": 0.978832,
+                "main_score": 0.972625,
+                "hf_subset": "ces-slk",
+                "languages": [
+                    "ces-Latn",
+                    "slk-Latn"
+                ]
+            },
+            {
+                "precision": 0.941214,
+                "recall": 0.959408,
+                "f1": 0.947157,
+                "accuracy": 0.959408,
+                "main_score": 0.947157,
+                "hf_subset": "eng-slk",
+                "languages": [
+                    "eng-Latn",
+                    "slk-Latn"
+                ]
+            }
         ]
-      },
-      {
-        "precision": 0.941214,
-        "recall": 0.959408,
-        "f1": 0.947157,
-        "accuracy": 0.959408,
-        "main_score": 0.947157,
-        "hf_subset": "eng-slk",
-        "languages": [
-          "eng-Latn",
-          "slk-Latn"
-        ]
-      }
-    ]
-  },
-  "evaluation_time": 519.8873403072357,
-  "kg_co2_emissions": null
+    },
+    "evaluation_time": 519.8873403072357,
+    "kg_co2_emissions": null
 }
