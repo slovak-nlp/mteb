@@ -1,0 +1,26 @@
+{
+    "dataset_revision": "6aef0b0add40130b960936edcc704cbd0a03c0b7",
+    "task_name": "SlovakSumSTS",
+    "mteb_version": "1.39.7",
+    "scores": {
+        "test": [
+            {
+                "pearson": 0.93327,
+                "spearman": 0.905089,
+                "cosine_pearson": 0.93327,
+                "cosine_spearman": 0.905089,
+                "manhattan_pearson": 0.93196,
+                "manhattan_spearman": 0.906826,
+                "euclidean_pearson": 0.932214,
+                "euclidean_spearman": 0.907597,
+                "main_score": 0.905089,
+                "hf_subset": "default",
+                "languages": [
+                    "slk-Latn"
+                ]
+            }
+        ]
+    },
+    "evaluation_time": 0.23636507987976074,
+    "kg_co2_emissions": null
+}
