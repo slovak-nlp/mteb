@@ -1,0 +1,26 @@
+{
+    "dataset_revision": "2e428d17ae4178dae14f6643785647fc9f30edaa",
+    "task_name": "SlovakSTS",
+    "mteb_version": "1.39.7",
+    "scores": {
+        "test": [
+            {
+                "pearson": 0.838286,
+                "spearman": 0.828942,
+                "cosine_pearson": 0.838286,
+                "cosine_spearman": 0.828942,
+                "manhattan_pearson": 0.825219,
+                "manhattan_spearman": 0.82176,
+                "euclidean_pearson": 0.824987,
+                "euclidean_spearman": 0.821637,
+                "main_score": 0.828942,
+                "hf_subset": "default",
+                "languages": [
+                    "slk-Latn"
+                ]
+            }
+        ]
+    },
+    "evaluation_time": 1.9965710639953613,
+    "kg_co2_emissions": null
+}
