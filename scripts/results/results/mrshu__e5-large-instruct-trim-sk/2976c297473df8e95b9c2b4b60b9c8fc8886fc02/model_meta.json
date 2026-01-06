@@ -1,0 +1,37 @@
+{
+    "loader_kwargs": {
+        "model_prompts": {
+            "query": "query: ",
+            "document": "passage: "
+        }
+    },
+    "name": "mrshu/e5-large-instruct-trim-sk",
+    "revision": "2976c297473df8e95b9c2b4b60b9c8fc8886fc02",
+    "release_date": null,
+    "languages": null,
+    "n_parameters": 365330432,
+    "memory_usage_mb": null,
+    "max_tokens": null,
+    "embed_dim": 1024,
+    "license": null,
+    "open_weights": true,
+    "public_training_code": null,
+    "public_training_data": null,
+    "framework": [
+        "Sentence Transformers",
+        "PyTorch"
+    ],
+    "reference": null,
+    "similarity_fn_name": "cosine",
+    "use_instructions": true,
+    "training_datasets": null,
+    "adapted_from": null,
+    "superseded_by": null,
+    "modalities": [
+        "text"
+    ],
+    "is_cross_encoder": null,
+    "citation": null,
+    "contacts": null,
+    "loader": "sentence_transformers_loader"
+}

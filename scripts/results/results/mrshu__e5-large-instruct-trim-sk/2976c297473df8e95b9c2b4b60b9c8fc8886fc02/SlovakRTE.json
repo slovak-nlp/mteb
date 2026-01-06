@@ -1,0 +1,48 @@
+{
+    "dataset_revision": "2e428d17ae4178dae14f6643785647fc9f30edaa",
+    "task_name": "SlovakRTE",
+    "mteb_version": "1.39.7",
+    "scores": {
+        "test": [
+            {
+                "similarity_accuracy": 0.51506,
+                "similarity_f1": 0.652298,
+                "similarity_precision": 0.484592,
+                "similarity_recall": 0.997512,
+                "similarity_ap": 0.395866,
+                "cosine_accuracy": 0.51506,
+                "cosine_f1": 0.652298,
+                "cosine_precision": 0.484592,
+                "cosine_recall": 0.997512,
+                "cosine_ap": 0.395866,
+                "manhattan_accuracy": 0.51506,
+                "manhattan_f1": 0.65205,
+                "manhattan_precision": 0.484027,
+                "manhattan_recall": 0.998756,
+                "manhattan_ap": 0.413986,
+                "euclidean_accuracy": 0.51506,
+                "euclidean_f1": 0.65205,
+                "euclidean_precision": 0.484027,
+                "euclidean_recall": 0.998756,
+                "euclidean_ap": 0.412846,
+                "dot_accuracy": 0.515663,
+                "dot_f1": 0.652245,
+                "dot_precision": 0.485419,
+                "dot_recall": 0.993781,
+                "dot_ap": 0.43472,
+                "max_accuracy": 0.515663,
+                "max_f1": 0.652298,
+                "max_precision": 0.485419,
+                "max_recall": 0.998756,
+                "max_ap": 0.43472,
+                "main_score": 0.43472,
+                "hf_subset": "default",
+                "languages": [
+                    "slk-Latn"
+                ]
+            }
+        ]
+    },
+    "evaluation_time": 5.394888639450073,
+    "kg_co2_emissions": null
+}
