@@ -877,6 +877,7 @@ def load_model_metadata(metadata_type: str, results_dir=RESULTS_DIR):
         "embed_dim": {
             "kinit__slovakbert-sts-stsb": 768,
             "TUKE-DeutscheTelekom__slovakbert-skquad-mnlr": 768,
+            "cohere__embed-v4.0": 1536,
         },
     }
 
@@ -931,14 +932,17 @@ def split_model_results_by_size(model_results, model_sizes):
     return buckets, missing
 
 
-def sort_model_results_by_size(model_results, model_sizes):
-    """Return model_results ordered by ascending parameter count (missing sizes last)."""
+def sort_model_results_by_size(model_results, model_sizes, embed_dims=None):
+    """Return model_results ordered by ascending parameter count (missing sizes by embed dim, then name)."""
 
     def sort_key(item):
         name, _ = item
         size = model_sizes.get(name)
         if size is None or (isinstance(size, float) and np.isnan(size)):
-            return (1, float("inf"), name)
+            dim = None if embed_dims is None else embed_dims.get(name)
+            if dim is None or (isinstance(dim, float) and np.isnan(dim)):
+                return (1, float("inf"), name)
+            return (1, float(dim), name)
         return (0, float(size), name)
 
     return OrderedDict(sorted(model_results.items(), key=sort_key))
@@ -955,10 +959,12 @@ def create_size_grouped_tables(
 ):
     """Create a single LaTeX table with size buckets separated by titled sections."""
     api_prefix = "text-embedding"
+    api_exact = {"embed-4.0", "embed-v4.0"}
     api_models = {
         name
         for name in model_results.keys()
         if name.split("__")[-1].lower().startswith(api_prefix)
+        or name.split("__")[-1] in api_exact
     }
 
     buckets, missing = split_model_results_by_size(model_results, model_sizes)
@@ -982,7 +988,9 @@ def create_size_grouped_tables(
             continue
         ordered[f"__SECTION__:{_title}"] = None
         if sort_by_size:
-            bucket_results = sort_model_results_by_size(bucket_results, model_sizes)
+            bucket_results = sort_model_results_by_size(
+                bucket_results, model_sizes, embed_dims
+            )
         for model_name, task_types in bucket_results.items():
             ordered[model_name] = task_types
 
@@ -991,7 +999,7 @@ def create_size_grouped_tables(
     if api_results:
         ordered[f"__SECTION__:API access models"] = None
         if sort_by_size:
-            api_results = sort_model_results_by_size(api_results, model_sizes)
+            api_results = sort_model_results_by_size(api_results, model_sizes, embed_dims)
         for model_name, task_types in api_results.items():
             ordered[model_name] = task_types
 
