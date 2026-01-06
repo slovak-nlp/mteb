@@ -6,6 +6,28 @@ from collections import defaultdict, OrderedDict
 import numpy as np
 
 RESULTS_DIR = "../scripts/results/results"
+RENAME_MAP = {
+    "e5-small-trim-sk-sklep-multitask-3ep": "e5-sk-small",
+    "e5-large-trim-sk-sklep-multitask-3ep": "e5-sk-large",
+    "qwen3-embedding-4b": "Qwen3-Embedding-4B",
+    "qwen3-embedding-8b": "Qwen3-Embedding-8B",
+}
+HIGHLIGHT_BASE_NAMES = {
+    "e5-small-trim-sk-sklep-multitask-3ep",
+    "e5-large-trim-sk-sklep-multitask-3ep",
+    "sturovec-base",
+}
+ALLOWED_E5_BASE_NAMES = {
+    "multilingual-e5-small",
+    "multilingual-e5-base",
+    "multilingual-e5-large",
+    "multilingual-e5-large-instruct",
+    "e5-small-trim-sk-sklep-multitask-3ep",
+    "e5-large-trim-sk-sklep-multitask-3ep",
+}
+HIDE_BASE_NAMES = {
+    "sturovec-base-sk-sklep-multitask-v1-20ep",
+}
 
 # Define MTEB task type mappings
 TASK_TYPE_MAPPING = {
@@ -126,10 +148,36 @@ def load_results_from_directory(results_dir=RESULTS_DIR, task_types: list[str] =
     return model_results
 
 
-def format_model_name(model_name):
-    """Format model name for LaTeX (escape underscores)"""
-    # Replace double underscores with a formatted version
-    return model_name.replace("__", "/").replace("_", "\\_").split("/")[-1]
+def model_base_name(model_name: str) -> str:
+    return model_name.split("__")[-1]
+
+
+def format_model_name(model_name, rename_map=None):
+    """Format model name for LaTeX (escape underscores)."""
+    base = model_base_name(model_name)
+    if rename_map and base in rename_map:
+        base = rename_map[base]
+    return base.replace("__", "/").replace("_", "\\_").split("/")[-1]
+
+
+def format_model_display(
+    model_name,
+    model_sizes=None,
+    embed_dims=None,
+    rename_map=None,
+    annotate_meta=False,
+):
+    label = f"\\texttt{{{format_model_name(model_name, rename_map=rename_map)}}}"
+    if not annotate_meta:
+        return label
+    params = format_param_count(model_sizes.get(model_name)) if model_sizes else "-"
+    if params == "-":
+        return label
+    meta = f"({params})"
+    return (
+        f"{label} "
+        f"\\textsubscript{{\\textcolor{{gray!60}}{{\\tiny \\textbf{{{meta}}}}}}}"
+    )
 
 
 def latex_escape(text: str) -> str:
@@ -170,6 +218,10 @@ def create_latex_table(
     label=None,
     model_sizes=None,
     embed_dims=None,
+    rename_map=None,
+    highlight_base_names=None,
+    show_meta_cols=True,
+    annotate_meta_in_name=False,
     section_breaks=None,
 ):
     """Create a LaTeX table with models as rows and task type averages as columns, plus overall averages by type and by task.
@@ -191,10 +243,19 @@ def create_latex_table(
             title = model_name.split(":", 1)[1] if ":" in model_name else model_name
             table_data.append({"__section_title__": title})
             continue
-        row = {"Model": format_model_name(model_name)}
-        if model_sizes is not None:
+        row = {
+            "Model": format_model_display(
+                model_name,
+                model_sizes=model_sizes,
+                embed_dims=embed_dims,
+                rename_map=rename_map,
+                annotate_meta=annotate_meta_in_name,
+            ),
+            "__raw_model__": model_name,
+        }
+        if show_meta_cols and model_sizes is not None:
             row["Params"] = format_param_count(model_sizes.get(model_name))
-        if embed_dims is not None:
+        if show_meta_cols and embed_dims is not None:
             row["EmbedDim"] = format_embed_dim(embed_dims.get(model_name))
 
         # Calculate an average for each task type
@@ -232,7 +293,15 @@ def create_latex_table(
             task_type
             for row in table_data
             for task_type in row.keys()
-            if task_type not in ["Model", "Params", "EmbedDim", "AvgTasks", "AvgTypes"]
+            if task_type
+            not in [
+                "Model",
+                "Params",
+                "EmbedDim",
+                "AvgTasks",
+                "AvgTypes",
+                "__raw_model__",
+            ]
             and task_type != "__section_title__"
         )
     )
@@ -242,11 +311,12 @@ def create_latex_table(
     latex.append("\\begin{table*}[t]")
     latex.append("\\centering")
     latex.append("\\small")
+    latex.append("\\resizebox{\\textwidth}{!}{%")
 
     # Column specification
     num_task_types = len(all_task_types)
-    has_params = model_sizes is not None
-    has_embed_dim = embed_dims is not None
+    has_params = show_meta_cols and model_sizes is not None
+    has_embed_dim = show_meta_cols and embed_dims is not None
     num_cols = (
         3 + num_task_types + (1 if has_params else 0) + (1 if has_embed_dim else 0)
     )  # Model + Params? + EmbedDim? + AvgTasks + AvgTypes + task types
@@ -379,10 +449,11 @@ def create_latex_table(
             if not latex or latex[-1] != "\\midrule":
                 latex.append("\\midrule")
             latex.append(
-                f"\\multicolumn{{{num_cols}}}{{l}}{{\\textit{{{title}}}}} \\\\"
+                f"\\multicolumn{{{num_cols}}}{{c}}{{\\textit{{{title}}}}} \\\\"
             )
             continue
         model_name = row["Model"]
+        raw_name = row.get("__raw_model__", "")
         avg_tasks = row.get("AvgTasks", np.nan)
         avg_types = row.get("AvgTypes", np.nan)
 
@@ -453,12 +524,15 @@ def create_latex_table(
                 row_str += " & -"
 
         row_str += " \\\\"
+        if highlight_base_names and model_base_name(raw_name) in highlight_base_names:
+            row_str = "\\rowcolor{gray!15} " + row_str
         latex.append(row_str)
         if i in section_breaks:
             latex.append("\\midrule")
 
     latex.append("\\bottomrule")
     latex.append("\\end{tabular}")
+    latex.append("}")
     latex.append(f"\\caption{{{caption}}}")
     latex.append(f"\\label{{{label}}}")
     latex.append("\\end{table*}")
@@ -472,6 +546,10 @@ def create_classification_table(
     label=None,
     model_sizes=None,
     embed_dims=None,
+    rename_map=None,
+    highlight_base_names=None,
+    show_meta_cols=True,
+    annotate_meta_in_name=False,
     section_breaks=None,
 ):
     """Create a LaTeX table for Classification tasks only with per-task columns and overall average.
@@ -540,10 +618,19 @@ def create_classification_table(
         tasks = task_types.get(task_type) if task_types else None
         if not tasks:
             continue
-        row = {"Model": format_model_name(model_name)}
-        if model_sizes is not None:
+        row = {
+            "Model": format_model_display(
+                model_name,
+                model_sizes=model_sizes,
+                embed_dims=embed_dims,
+                rename_map=rename_map,
+                annotate_meta=annotate_meta_in_name,
+            ),
+            "__raw_model__": model_name,
+        }
+        if show_meta_cols and model_sizes is not None:
             row["Params"] = format_param_count(model_sizes.get(model_name))
-        if embed_dims is not None:
+        if show_meta_cols and embed_dims is not None:
             row["EmbedDim"] = format_embed_dim(embed_dims.get(model_name))
         # Per task scores (percent)
         for t in all_tasks:
@@ -566,9 +653,10 @@ def create_classification_table(
     latex.append("\\begin{table*}[t]")
     latex.append("\\centering")
     latex.append("\\small")
+    latex.append("\\resizebox{\\textwidth}{!}{%")
 
-    has_params = model_sizes is not None
-    has_embed_dim = embed_dims is not None
+    has_params = show_meta_cols and model_sizes is not None
+    has_embed_dim = show_meta_cols and embed_dims is not None
     num_cols = (
         2 + len(all_tasks) + (1 if has_params else 0) + (1 if has_embed_dim else 0)
     )  # Model + Params? + Dim? + tasks + Avg
@@ -599,10 +687,11 @@ def create_classification_table(
             if not latex or latex[-1] != "\\midrule":
                 latex.append("\\midrule")
             latex.append(
-                f"\\multicolumn{{{num_cols}}}{{l}}{{\\textit{{{row['__section_title__']}}}}} \\\\"
+                f"\\multicolumn{{{num_cols}}}{{c}}{{\\textit{{{row['__section_title__']}}}}} \\\\"
             )
             continue
         parts = [row["Model"]]
+        raw_name = row.get("__raw_model__", "")
         if has_params:
             parts.append(row.get("Params", "-"))
         if has_embed_dim:
@@ -646,12 +735,16 @@ def create_classification_table(
                 underlined_avg_done = True
             else:
                 parts.append(formatted_avg)
-        latex.append(" & ".join(parts) + " \\\\")
+        row_str = " & ".join(parts) + " \\\\"
+        if highlight_base_names and model_base_name(raw_name) in highlight_base_names:
+            row_str = "\\rowcolor{gray!15} " + row_str
+        latex.append(row_str)
         if i in section_breaks:
             latex.append("\\midrule")
 
     latex.append("\\bottomrule")
     latex.append("\\end{tabular}")
+    latex.append("}")
     latex.append(f"\\caption{{{caption}}}")
     latex.append(f"\\label{{{label}}}")
     latex.append("\\end{table*}")
@@ -665,6 +758,10 @@ def create_all_tasks_table(
     label=None,
     model_sizes=None,
     embed_dims=None,
+    rename_map=None,
+    highlight_base_names=None,
+    show_meta_cols=True,
+    annotate_meta_in_name=False,
     section_breaks=None,
 ):
     """Create a LaTeX table for all tasks (across all types) with per-task columns and overall average.
@@ -735,10 +832,19 @@ def create_all_tasks_table(
     for model_name, type_dict in model_task_results.items():
         if not type_dict:
             continue
-        row = {"Model": format_model_name(model_name)}
-        if model_sizes is not None:
+        row = {
+            "Model": format_model_display(
+                model_name,
+                model_sizes=model_sizes,
+                embed_dims=embed_dims,
+                rename_map=rename_map,
+                annotate_meta=annotate_meta_in_name,
+            ),
+            "__raw_model__": model_name,
+        }
+        if show_meta_cols and model_sizes is not None:
             row["Params"] = format_param_count(model_sizes.get(model_name))
-        if embed_dims is not None:
+        if show_meta_cols and embed_dims is not None:
             row["EmbedDim"] = format_embed_dim(embed_dims.get(model_name))
         available_vals = []
         for t in all_tasks:
@@ -762,9 +868,10 @@ def create_all_tasks_table(
     latex.append("\\begin{table*}[t]")
     latex.append("\\centering")
     latex.append("\\small")
+    latex.append("\\resizebox{\\textwidth}{!}{%")
 
-    has_params = model_sizes is not None
-    has_embed_dim = embed_dims is not None
+    has_params = show_meta_cols and model_sizes is not None
+    has_embed_dim = show_meta_cols and embed_dims is not None
     num_cols = (
         2 + len(all_tasks) + (1 if has_params else 0) + (1 if has_embed_dim else 0)
     )  # Model + Params? + Dim? + tasks + Avg
@@ -798,10 +905,11 @@ def create_all_tasks_table(
             if not latex or latex[-1] != "\\midrule":
                 latex.append("\\midrule")
             latex.append(
-                f"\\multicolumn{{{num_cols}}}{{l}}{{\\textit{{{row['__section_title__']}}}}} \\\\"
+                f"\\multicolumn{{{num_cols}}}{{c}}{{\\textit{{{row['__section_title__']}}}}} \\\\"
             )
             continue
         parts = [row["Model"]]
+        raw_name = row.get("__raw_model__", "")
         if has_params:
             parts.append(row.get("Params", "-"))
         if has_embed_dim:
@@ -845,12 +953,16 @@ def create_all_tasks_table(
                 underlined_avg_done = True
             else:
                 parts.append(formatted_avg)
-        latex.append(" & ".join(parts) + " \\\\")
+        row_str = " & ".join(parts) + " \\\\"
+        if highlight_base_names and model_base_name(raw_name) in highlight_base_names:
+            row_str = "\\rowcolor{gray!15} " + row_str
+        latex.append(row_str)
         if i in section_breaks:
             latex.append("\\midrule")
 
     latex.append("\\bottomrule")
     latex.append("\\end{tabular}")
+    latex.append("}")
     latex.append(f"\\caption{{{caption}}}")
     latex.append(f"\\label{{{label}}}")
     latex.append("\\end{table*}")
@@ -948,6 +1060,18 @@ def sort_model_results_by_size(model_results, model_sizes, embed_dims=None):
     return OrderedDict(sorted(model_results.items(), key=sort_key))
 
 
+def filter_model_results_for_publication(model_results):
+    filtered = OrderedDict()
+    for model_name, task_types in model_results.items():
+        base = model_base_name(model_name)
+        if base in HIDE_BASE_NAMES:
+            continue
+        if "e5" in base and base not in ALLOWED_E5_BASE_NAMES:
+            continue
+        filtered[model_name] = task_types
+    return filtered
+
+
 def create_size_grouped_tables(
     model_results,
     model_sizes,
@@ -956,10 +1080,14 @@ def create_size_grouped_tables(
     caption_base,
     label_base,
     sort_by_size=False,
+    rename_map=None,
+    highlight_base_names=None,
+    show_meta_cols=True,
+    annotate_meta_in_name=False,
 ):
     """Create a single LaTeX table with size buckets separated by titled sections."""
     api_prefix = "text-embedding"
-    api_exact = {"embed-4.0", "embed-v4.0"}
+    api_exact = {"embed-4.0", "embed-v4.0", "gemini-embedding-001"}
     api_models = {
         name
         for name in model_results.keys()
@@ -1009,8 +1137,100 @@ def create_size_grouped_tables(
         label=label_base,
         model_sizes=model_sizes,
         embed_dims=embed_dims,
+        rename_map=rename_map,
+        highlight_base_names=highlight_base_names,
+        show_meta_cols=show_meta_cols,
+        annotate_meta_in_name=annotate_meta_in_name,
         section_breaks=None,
     )
+
+
+def create_model_meta_table(
+    model_results,
+    model_sizes,
+    embed_dims,
+    caption,
+    label,
+    rename_map=None,
+    highlight_base_names=None,
+    sort_by_size=False,
+):
+    api_prefix = "text-embedding"
+    api_exact = {"embed-4.0", "embed-v4.0", "gemini-embedding-001"}
+    api_models = {
+        name
+        for name in model_results.keys()
+        if name.split("__")[-1].lower().startswith(api_prefix)
+        or name.split("__")[-1] in api_exact
+    }
+
+    buckets, missing = split_model_results_by_size(model_results, model_sizes)
+    if missing:
+        print(
+            f"Warn: {len(missing)} models missing n_parameters; defaulting them to 'base' bucket."
+        )
+
+    sections = [
+        ("small", "Small models (<130M)"),
+        ("base", "Base models (>=130M, <350M)"),
+        ("large", "Large models (>=350M)"),
+    ]
+
+    ordered = OrderedDict()
+    for key, _title in sections:
+        bucket_results = {
+            k: v for k, v in buckets[key].items() if k not in api_models
+        }
+        if not bucket_results:
+            continue
+        ordered[f"__SECTION__:{_title}"] = None
+        if sort_by_size:
+            bucket_results = sort_model_results_by_size(
+                bucket_results, model_sizes, embed_dims
+            )
+        for model_name, task_types in bucket_results.items():
+            ordered[model_name] = task_types
+
+    api_results = {k: v for k, v in model_results.items() if k in api_models}
+    if api_results:
+        ordered[f"__SECTION__:API access models"] = None
+        if sort_by_size:
+            api_results = sort_model_results_by_size(api_results, model_sizes, embed_dims)
+        for model_name, task_types in api_results.items():
+            ordered[model_name] = task_types
+
+    latex = []
+    latex.append("\\begin{table*}[t]")
+    latex.append("\\centering")
+    latex.append("\\small")
+    latex.append("\\resizebox{\\textwidth}{!}{%")
+    latex.append("\\begin{tabular}{lrr}")
+    latex.append("\\toprule")
+    latex.append("\\textbf{Model} (\\(\\downarrow\\)) & \\textbf{Params} & \\textbf{Dim} \\\\")
+    latex.append("\\midrule")
+
+    for model_name, task_types in ordered.items():
+        if task_types is None and model_name.startswith("__SECTION__"):
+            if not latex or latex[-1] != "\\midrule":
+                latex.append("\\midrule")
+            title = model_name.split(":", 1)[1] if ":" in model_name else model_name
+            latex.append(f"\\multicolumn{{3}}{{c}}{{\\textit{{{title}}}}} \\\\")
+            continue
+        label_name = format_model_name(model_name, rename_map=rename_map)
+        params = format_param_count(model_sizes.get(model_name))
+        dim = format_embed_dim(embed_dims.get(model_name))
+        row = f"{label_name} & {params} & {dim} \\\\"
+        if highlight_base_names and model_base_name(model_name) in highlight_base_names:
+            row = "\\rowcolor{gray!15} " + row
+        latex.append(row)
+
+    latex.append("\\bottomrule")
+    latex.append("\\end{tabular}")
+    latex.append("}")
+    latex.append(f"\\caption{{{caption}}}")
+    latex.append(f"\\label{{{label}}}")
+    latex.append("\\end{table*}")
+    return "\n".join(latex)
 
 
 def create_model_size_scatter(
@@ -1237,72 +1457,119 @@ def main():
     output_dir = Path("../sandbox")
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # Create a LaTeX summary table
-    print("\nCreating summary table (per task type) ...")
-    latex_table = create_size_grouped_tables(
-        model_results,
-        model_sizes,
-        embed_dims,
-        create_latex_table,
-        caption_base="skMTEB Results Summary - Average Scores by Task Type (\\%)",
-        label_base="tab:mteb_results",
-        sort_by_size=True,
-    )
+    def generate_tables(current_results, suffix=""):
+        # Create a LaTeX summary table
+        print(f"\nCreating summary table (per task type){suffix} ...")
+        latex_table = create_size_grouped_tables(
+            current_results,
+            model_sizes,
+            embed_dims,
+            create_latex_table,
+            caption_base=(
+                "skMTEB results summary (percent). The table reports the average "
+                "performance across all tasks (\\textbf{All}) and the unweighted "
+                "average across task types (\\textbf{Type}), followed by per-task-type "
+                "averages for Bitext Mining (Btxt), Classification (Clf), Clustering "
+                "(Clust), Pair Classification (PrClf), Reranking (Rrnk), Retrieval "
+                "(Rtrvl), and STS. The best result per task is \\textbf{bolded} "
+                "with the runner-up \\underline{underlined}."
+            ),
+            label_base="tab:mteb_results" + suffix,
+            sort_by_size=True,
+            rename_map=RENAME_MAP,
+            highlight_base_names=HIGHLIGHT_BASE_NAMES,
+            show_meta_cols=False,
+            annotate_meta_in_name=True,
+        )
 
-    output_file = output_dir / "mteb_results_table.tex"
-    with open(output_file, "w", encoding="utf-8") as f:
-        f.write(latex_table)
+        output_file = output_dir / f"mteb_results_table{suffix}.tex"
+        with open(output_file, "w", encoding="utf-8") as f:
+            f.write(latex_table)
 
-    print(f"\n✓ LaTeX table saved to '{output_file}'")
-    print("\n" + "=" * 80)
-    print("LaTeX Table Preview:")
-    print("=" * 80)
-    print(latex_table)
-    print("=" * 80)
+        print(f"\n✓ LaTeX table saved to '{output_file}'")
 
-    # Create Classification-only LaTeX table (per-task columns)
-    print("\nCreating classification-only table (per-task) ...")
-    latex_table_clf = create_size_grouped_tables(
-        model_results,
-        model_sizes,
-        embed_dims,
-        create_classification_table,
-        caption_base="skMTEB Classification Results - Per-Task Scores (\\%)",
-        label_base="tab:mteb_results_clf",
-        sort_by_size=True,
-    )
+        # Create Classification-only LaTeX table (per-task columns)
+        print(f"\nCreating classification-only table (per-task){suffix} ...")
+        latex_table_clf = create_size_grouped_tables(
+            current_results,
+            model_sizes,
+            embed_dims,
+            create_classification_table,
+            caption_base=(
+                "SkMTEB classification results (percent). Columns correspond to each "
+                "classification dataset; the final \\textbf{Avg} column is the unweighted "
+                "mean across available classification tasks for a model. Models are "
+                "grouped by size bucket (Small/Base/Large), followed by API-access "
+                "models. The best result per task is \\textbf{bolded} with the runner-up "
+                "\\underline{underlined}."
+            ),
+            label_base="tab:mteb_results_clf" + suffix,
+            sort_by_size=True,
+            rename_map=RENAME_MAP,
+            highlight_base_names=HIGHLIGHT_BASE_NAMES,
+            show_meta_cols=False,
+            annotate_meta_in_name=True,
+        )
 
-    output_file_clf = output_dir / "mteb_results_table_clf.tex"
-    with open(output_file_clf, "w", encoding="utf-8") as f:
-        f.write(latex_table_clf)
-    print(f"\n✓ LaTeX classification table saved to '{output_file_clf}'")
-    print("\n" + "=" * 80)
-    print("Classification LaTeX Table Preview:")
-    print("=" * 80)
-    print(latex_table_clf)
-    print("=" * 80)
+        output_file_clf = output_dir / f"mteb_results_table_clf{suffix}.tex"
+        with open(output_file_clf, "w", encoding="utf-8") as f:
+            f.write(latex_table_clf)
+        print(f"\n✓ LaTeX classification table saved to '{output_file_clf}'")
 
-    # Create All tasks LaTeX table
-    print("\nCreating complete table (per-task) ...")
-    latex_table_all = create_size_grouped_tables(
-        model_results,
-        model_sizes,
-        embed_dims,
-        create_all_tasks_table,
-        caption_base="skMTEB Results - Per-Task Scores Across All Tasks (\\%)",
-        label_base="tab:mteb_results_all_tasks",
-        sort_by_size=True,
-    )
+        # Create All tasks LaTeX table
+        print(f"\nCreating complete table (per-task){suffix} ...")
+        latex_table_all = create_size_grouped_tables(
+            current_results,
+            model_sizes,
+            embed_dims,
+            create_all_tasks_table,
+            caption_base=(
+                "skMTEB per-task results across all tasks (percent). Each column "
+                "corresponds to a dataset and is prefixed by its task type; the final "
+                "\\textbf{Avg} column is the unweighted mean across all tasks available "
+                "for a model. Models are grouped by parameter-size buckets and a final "
+                "API-access block. Model names are shown in \\texttt{} with a tiny gray "
+                "bold parameter-count subscript. Best and second-best per-column values "
+                "are bolded/underlined. Gray-highlighted rows mark our main Slovak models. "
+                "Standard tables omit most intermediate e5 variants (see *_total for all)."
+            ),
+            label_base="tab:mteb_results_all_tasks" + suffix,
+            sort_by_size=True,
+            rename_map=RENAME_MAP,
+            highlight_base_names=HIGHLIGHT_BASE_NAMES,
+            show_meta_cols=False,
+            annotate_meta_in_name=True,
+        )
 
-    output_file_all = output_dir / "mteb_results_table_all.tex"
-    with open(output_file_all, "w", encoding="utf-8") as f:
-        f.write(latex_table_all)
-    print(f"\n✓ LaTeX complete table saved to '{output_file_all}'")
-    print("\n" + "=" * 80)
-    print("Complete LaTeX Table Preview:")
-    print("=" * 80)
-    print(latex_table_all)
-    print("=" * 80)
+        output_file_all = output_dir / f"mteb_results_table_all{suffix}.tex"
+        with open(output_file_all, "w", encoding="utf-8") as f:
+            f.write(latex_table_all)
+        print(f"\n✓ LaTeX complete table saved to '{output_file_all}'")
+
+        print(f"\nCreating appendix model metadata table{suffix} ...")
+        latex_table_meta = create_model_meta_table(
+            current_results,
+            model_sizes,
+            embed_dims,
+            caption=(
+                "Model size and embedding dimension (appendix). Models are grouped by "
+                "parameter-size buckets with API-access models listed last. This table "
+                "is intended as a companion reference to the main results tables and "
+                "uses the same model ordering, naming, and highlighting conventions."
+            ),
+            label="tab:mteb_results_model_meta" + suffix,
+            rename_map=RENAME_MAP,
+            highlight_base_names=HIGHLIGHT_BASE_NAMES,
+            sort_by_size=True,
+        )
+        output_file_meta = output_dir / f"mteb_results_table_meta{suffix}.tex"
+        with open(output_file_meta, "w", encoding="utf-8") as f:
+            f.write(latex_table_meta)
+        print(f"\n✓ LaTeX metadata table saved to '{output_file_meta}'")
+
+    filtered_results = filter_model_results_for_publication(model_results)
+    generate_tables(filtered_results, suffix="")
+    generate_tables(model_results, suffix="_total")
 
     # Create model size vs average scatter plot
     print("\nCreating model size vs average scatter plot ...")
