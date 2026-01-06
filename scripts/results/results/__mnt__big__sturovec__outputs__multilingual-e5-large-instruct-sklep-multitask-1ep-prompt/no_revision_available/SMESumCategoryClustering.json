@@ -1,0 +1,34 @@
+{
+    "dataset_revision": "c5a6521a4ddce3450fb04ba218623681a9189c6d",
+    "task_name": "SMESumCategoryClustering",
+    "mteb_version": "1.39.7",
+    "scores": {
+        "test": [
+            {
+                "v_measures": {
+                    "Level 0": [
+                        0.27864,
+                        0.329497,
+                        0.353776,
+                        0.325162,
+                        0.261893,
+                        0.278473,
+                        0.353913,
+                        0.373383,
+                        0.305423,
+                        0.349088
+                    ]
+                },
+                "v_measure": 0.320925,
+                "v_measure_std": 0.03622,
+                "main_score": 0.320925,
+                "hf_subset": "default",
+                "languages": [
+                    "slk-Latn"
+                ]
+            }
+        ]
+    },
+    "evaluation_time": 5.955712556838989,
+    "kg_co2_emissions": null
+}
