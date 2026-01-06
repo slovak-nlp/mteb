@@ -187,6 +187,10 @@ def create_latex_table(
     table_data = []
 
     for model_name, task_types in model_results.items():
+        if task_types is None and model_name.startswith("__SECTION__"):
+            title = model_name.split(":", 1)[1] if ":" in model_name else model_name
+            table_data.append({"__section_title__": title})
+            continue
         row = {"Model": format_model_name(model_name)}
         if model_sizes is not None:
             row["Params"] = format_param_count(model_sizes.get(model_name))
@@ -218,7 +222,8 @@ def create_latex_table(
         table_data.append(row)
 
     # Sort by average score (descending) unless using sectioned ordering
-    if not section_breaks:
+    has_section_headers = any("__section_title__" in r for r in table_data)
+    if not section_breaks and not has_section_headers:
         table_data.sort(key=lambda x: x.get("AvgTasks", 0), reverse=True)
 
     # Get all task types (columns)
@@ -228,6 +233,7 @@ def create_latex_table(
             for row in table_data
             for task_type in row.keys()
             if task_type not in ["Model", "Params", "EmbedDim", "AvgTasks", "AvgTypes"]
+            and task_type != "__section_title__"
         )
     )
 
@@ -311,7 +317,11 @@ def create_latex_table(
     best_per_type = {}
     second_per_type = {}
     for tt in all_task_types:
-        col_values = [r.get(tt, np.nan) for r in table_data]
+        col_values = [
+            r.get(tt, np.nan)
+            for r in table_data
+            if "__section_title__" not in r
+        ]
         col_values = [v for v in col_values if not np.isnan(v)]
         if col_values:
             unique_sorted = sorted(set(col_values), reverse=True)
@@ -321,21 +331,35 @@ def create_latex_table(
             best_per_type[tt] = np.nan
             second_per_type[tt] = np.nan
     best_avg_tasks = max(
-        [r.get("AvgTasks", np.nan) for r in table_data if not np.isnan(r.get("AvgTasks", np.nan))],
+        [
+            r.get("AvgTasks", np.nan)
+            for r in table_data
+            if "__section_title__" not in r
+            and not np.isnan(r.get("AvgTasks", np.nan))
+        ],
         default=np.nan,
     )
     second_avg_tasks = np.nan
-    avg_tasks_vals = [r.get("AvgTasks", np.nan) for r in table_data]
+    avg_tasks_vals = [
+        r.get("AvgTasks", np.nan) for r in table_data if "__section_title__" not in r
+    ]
     avg_tasks_vals = [v for v in avg_tasks_vals if not np.isnan(v)]
     if avg_tasks_vals:
         uniq = sorted(set(avg_tasks_vals), reverse=True)
         second_avg_tasks = uniq[1] if len(uniq) > 1 else np.nan
     best_avg_types = max(
-        [r.get("AvgTypes", np.nan) for r in table_data if not np.isnan(r.get("AvgTypes", np.nan))],
+        [
+            r.get("AvgTypes", np.nan)
+            for r in table_data
+            if "__section_title__" not in r
+            and not np.isnan(r.get("AvgTypes", np.nan))
+        ],
         default=np.nan,
     )
     second_avg_types = np.nan
-    avg_types_vals = [r.get("AvgTypes", np.nan) for r in table_data]
+    avg_types_vals = [
+        r.get("AvgTypes", np.nan) for r in table_data if "__section_title__" not in r
+    ]
     avg_types_vals = [v for v in avg_types_vals if not np.isnan(v)]
     if avg_types_vals:
         uniq = sorted(set(avg_types_vals), reverse=True)
@@ -350,6 +374,14 @@ def create_latex_table(
     underlined_avg_types_done = False
     section_breaks = set(section_breaks or [])
     for i, row in enumerate(table_data):
+        if "__section_title__" in row:
+            title = row["__section_title__"]
+            if not latex or latex[-1] != "\\midrule":
+                latex.append("\\midrule")
+            latex.append(
+                f"\\multicolumn{{{num_cols}}}{{l}}{{\\textit{{{title}}}}} \\\\"
+            )
+            continue
         model_name = row["Model"]
         avg_tasks = row.get("AvgTasks", np.nan)
         avg_types = row.get("AvgTypes", np.nan)
@@ -456,6 +488,7 @@ def create_classification_table(
         {
             task
             for tasks in model_task_results.values()
+            if tasks is not None
             for task in tasks[task_type].keys()
         }
     )
@@ -465,7 +498,9 @@ def create_classification_table(
     second_per_task = {}
     for t in all_tasks:
         vals = [
-            model_task_results[m][task_type].get(t, np.nan) for m in model_task_results
+            model_task_results[m][task_type].get(t, np.nan)
+            for m in model_task_results
+            if model_task_results[m] is not None
         ]
         vals = [v for v in vals if not np.isnan(v)]
         if vals:
@@ -481,7 +516,9 @@ def create_classification_table(
     # Best/second-best for Avg column
     avg_vals = []
     for model_name, task_types in model_task_results.items():
-        tasks = task_types[task_type]
+        tasks = task_types.get(task_type) if task_types else None
+        if not tasks:
+            continue
         available = [
             tasks[t] for t in all_tasks if t in tasks and not np.isnan(tasks[t])
         ]
@@ -497,7 +534,12 @@ def create_classification_table(
     # Build table rows
     rows = []
     for model_name, task_types in model_task_results.items():
-        tasks = task_types[task_type]
+        if task_types is None and model_name.startswith("__SECTION__"):
+            rows.append({"__section_title__": model_name.split(":", 1)[1]})
+            continue
+        tasks = task_types.get(task_type) if task_types else None
+        if not tasks:
+            continue
         row = {"Model": format_model_name(model_name)}
         if model_sizes is not None:
             row["Params"] = format_param_count(model_sizes.get(model_name))
@@ -515,7 +557,8 @@ def create_classification_table(
         rows.append(row)
 
     # Sort by average descending unless using sectioned ordering
-    if not section_breaks:
+    has_section_headers = any("__section_title__" in r for r in rows)
+    if not section_breaks and not has_section_headers:
         rows.sort(key=lambda x: x.get("AvgTasks", 0), reverse=True)
 
     # LaTeX build
@@ -552,6 +595,13 @@ def create_classification_table(
 
     section_breaks = set(section_breaks or [])
     for i, row in enumerate(rows):
+        if "__section_title__" in row:
+            if not latex or latex[-1] != "\\midrule":
+                latex.append("\\midrule")
+            latex.append(
+                f"\\multicolumn{{{num_cols}}}{{l}}{{\\textit{{{row['__section_title__']}}}}} \\\\"
+            )
+            continue
         parts = [row["Model"]]
         if has_params:
             parts.append(row.get("Params", "-"))
@@ -628,6 +678,8 @@ def create_all_tasks_table(
     # Collect all tasks and their types
     task_to_type = {}
     for model_name, type_dict in model_task_results.items():
+        if not type_dict:
+            continue
         for ttype, tasks in type_dict.items():
             for tname in tasks.keys():
                 # Prefer known mapping but fall back to the observed type
@@ -643,6 +695,8 @@ def create_all_tasks_table(
         ttype = task_to_type[t]
         vals = []
         for m in model_task_results:
+            if model_task_results[m] is None:
+                continue
             v = model_task_results[m].get(ttype, {}).get(t, np.nan)
             if not np.isnan(v):
                 vals.append(v)
@@ -659,6 +713,8 @@ def create_all_tasks_table(
     # Best/second-best for Avg column
     avg_vals = []
     for model_name, type_dict in model_task_results.items():
+        if not type_dict:
+            continue
         available_vals = []
         for t in all_tasks:
             ttype = task_to_type[t]
@@ -677,6 +733,8 @@ def create_all_tasks_table(
     # Build table rows
     rows = []
     for model_name, type_dict in model_task_results.items():
+        if not type_dict:
+            continue
         row = {"Model": format_model_name(model_name)}
         if model_sizes is not None:
             row["Params"] = format_param_count(model_sizes.get(model_name))
@@ -695,7 +753,8 @@ def create_all_tasks_table(
         rows.append(row)
 
     # Sort by average descending unless using sectioned ordering
-    if not section_breaks:
+    has_section_headers = any("__section_title__" in r for r in rows)
+    if not section_breaks and not has_section_headers:
         rows.sort(key=lambda x: x.get("AvgTasks", 0), reverse=True)
 
     # LaTeX build
@@ -735,6 +794,13 @@ def create_all_tasks_table(
 
     section_breaks = set(section_breaks or [])
     for i, row in enumerate(rows):
+        if "__section_title__" in row:
+            if not latex or latex[-1] != "\\midrule":
+                latex.append("\\midrule")
+            latex.append(
+                f"\\multicolumn{{{num_cols}}}{{l}}{{\\textit{{{row['__section_title__']}}}}} \\\\"
+            )
+            continue
         parts = [row["Model"]]
         if has_params:
             parts.append(row.get("Params", "-"))
@@ -887,7 +953,14 @@ def create_size_grouped_tables(
     label_base,
     sort_by_size=False,
 ):
-    """Create a single LaTeX table with size buckets separated by midrules."""
+    """Create a single LaTeX table with size buckets separated by titled sections."""
+    api_prefix = "text-embedding"
+    api_models = {
+        name
+        for name in model_results.keys()
+        if name.split("__")[-1].lower().startswith(api_prefix)
+    }
+
     buckets, missing = split_model_results_by_size(model_results, model_sizes)
     if missing:
         print(
@@ -896,26 +969,31 @@ def create_size_grouped_tables(
 
     sections = [
         ("small", "Small models (<130M)"),
-        ("base", "Base models (<350M)"),
+        ("base", "Base models (>=130M, <350M)"),
         ("large", "Large models (>=350M)"),
     ]
 
     ordered = OrderedDict()
-    section_breaks = []
-    row_index = -1
     for key, _title in sections:
-        bucket_results = buckets[key]
+        bucket_results = {
+            k: v for k, v in buckets[key].items() if k not in api_models
+        }
         if not bucket_results:
             continue
+        ordered[f"__SECTION__:{_title}"] = None
         if sort_by_size:
             bucket_results = sort_model_results_by_size(bucket_results, model_sizes)
         for model_name, task_types in bucket_results.items():
             ordered[model_name] = task_types
-            row_index += 1
-        section_breaks.append(row_index)
 
-    if section_breaks and section_breaks[-1] == row_index:
-        section_breaks.pop()
+    # Append API access models as a final block
+    api_results = {k: v for k, v in model_results.items() if k in api_models}
+    if api_results:
+        ordered[f"__SECTION__:API access models"] = None
+        if sort_by_size:
+            api_results = sort_model_results_by_size(api_results, model_sizes)
+        for model_name, task_types in api_results.items():
+            ordered[model_name] = task_types
 
     return table_fn(
         ordered,
@@ -923,7 +1001,7 @@ def create_size_grouped_tables(
         label=label_base,
         model_sizes=model_sizes,
         embed_dims=embed_dims,
-        section_breaks=section_breaks,
+        section_breaks=None,
     )
 
 
