@@ -1,0 +1,48 @@
+{
+  "dataset_revision": "79914f425b59d8b9fabb6d38c37f6d81f9723f46",
+  "task_name": "SlovakNLI",
+  "mteb_version": "2.3.0",
+  "scores": {
+    "test": [
+      {
+        "similarity_accuracy": 0.743455,
+        "similarity_f1": 0.772414,
+        "similarity_precision": 0.727273,
+        "similarity_recall": 0.823529,
+        "similarity_ap": 0.80232,
+        "cosine_accuracy": 0.743455,
+        "cosine_f1": 0.772414,
+        "cosine_precision": 0.727273,
+        "cosine_recall": 0.823529,
+        "cosine_ap": 0.802306,
+        "manhattan_accuracy": 0.722513,
+        "manhattan_f1": 0.75576,
+        "manhattan_precision": 0.713043,
+        "manhattan_recall": 0.803922,
+        "manhattan_ap": 0.796604,
+        "euclidean_accuracy": 0.717277,
+        "euclidean_f1": 0.753425,
+        "euclidean_precision": 0.705128,
+        "euclidean_recall": 0.808824,
+        "euclidean_ap": 0.796499,
+        "dot_accuracy": 0.609948,
+        "dot_f1": 0.703833,
+        "dot_precision": 0.545946,
+        "dot_recall": 0.990196,
+        "dot_ap": 0.630839,
+        "max_accuracy": 0.743455,
+        "max_f1": 0.772414,
+        "max_precision": 0.727273,
+        "max_recall": 0.990196,
+        "max_ap": 0.80232,
+        "main_score": 0.80232,
+        "hf_subset": "default",
+        "languages": [
+          "slk-Latn"
+        ]
+      }
+    ]
+  },
+  "evaluation_time": 1.4434621334075928,
+  "kg_co2_emissions": null
+}
