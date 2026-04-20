@@ -1,0 +1,22 @@
+{
+  "dataset_revision": "805090dc28bf78897da9641cdf08b61287580df9",
+  "task_name": "OpusSlovakEnglishBitextMining",
+  "mteb_version": "2.3.0",
+  "scores": {
+    "test": [
+      {
+        "precision": 0.8585,
+        "recall": 0.893,
+        "f1": 0.868953,
+        "accuracy": 0.893,
+        "main_score": 0.868953,
+        "hf_subset": "default",
+        "languages": [
+          "slk-Latn"
+        ]
+      }
+    ]
+  },
+  "evaluation_time": 6.61187744140625,
+  "kg_co2_emissions": null
+}

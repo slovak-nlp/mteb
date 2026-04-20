@@ -3,6 +3,7 @@ from __future__ import annotations
 import difflib
 import logging
 from collections.abc import Iterable
+from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 from huggingface_hub import ModelCard
@@ -112,6 +113,10 @@ def get_model(
             meta.revision = _meta.revision if _meta.revision else meta.revision
         if not meta.similarity_fn_name:
             meta.similarity_fn_name = _meta.similarity_fn_name
+        if meta.embed_dim is None:
+            meta.embed_dim = _meta.embed_dim
+        if meta.n_parameters is None:
+            meta.n_parameters = _meta.n_parameters
 
     elif isinstance(model, CrossEncoder):
         _meta = _model_meta_from_cross_encoder(model.model)
@@ -143,6 +148,8 @@ def get_model_meta(
                 f"Model revision {revision} not found for model {model_name}. Expected {model_meta.revision}."
             )
         return model_meta
+    if _is_local_model_path(model_name):
+        return _model_meta_from_local_path(model_name, revision)
     if fetch_from_hf:
         logger.info(
             "Model not found in model registry. Attempting to extract metadata by loading the model ({model_name}) using HuggingFace."
@@ -203,6 +210,34 @@ def _model_meta_from_hf_hub(model_name: str) -> ModelMeta:
     )
 
 
+def _is_local_model_path(model_name: str) -> bool:
+    return Path(model_name).expanduser().exists()
+
+
+def _model_meta_from_local_path(
+    model_name: str, revision: str | None = None
+) -> ModelMeta:
+    return ModelMeta(
+        loader=sentence_transformers_loader,
+        name=model_name,
+        revision=revision,
+        release_date=None,
+        languages=None,
+        license=None,
+        framework=["PyTorch", "Sentence Transformers"],
+        training_datasets=None,
+        similarity_fn_name=None,
+        n_parameters=None,
+        memory_usage_mb=None,
+        max_tokens=None,
+        embed_dim=None,
+        open_weights=True,
+        public_training_code=None,
+        public_training_data=None,
+        use_instructions=None,
+    )
+
+
 def _model_meta_from_cross_encoder(model: CrossEncoder) -> ModelMeta:
     return ModelMeta(
         loader=CrossEncoderWrapper,
@@ -232,6 +267,7 @@ def _model_meta_from_sentence_transformers(model: SentenceTransformer) -> ModelM
         else model.model_card_data.base_model
     )
     embeddings_dim = model.get_sentence_embedding_dimension()
+    n_parameters = int(sum(p.numel() for p in model.parameters()))
     meta = ModelMeta(
         loader=sentence_transformers_loader,
         name=name,
@@ -240,7 +276,7 @@ def _model_meta_from_sentence_transformers(model: SentenceTransformer) -> ModelM
         languages=None,
         framework=["Sentence Transformers"],
         similarity_fn_name=None,
-        n_parameters=None,
+        n_parameters=n_parameters,
         memory_usage_mb=None,
         max_tokens=None,
         embed_dim=embeddings_dim,
