@@ -329,13 +329,25 @@ class JinaV4Wrapper(AbsEncoder):
                 raise ValueError(
                     "The number of texts and images must have the same length"
                 )
-            fused_embeddings = text_embeddings + image_embeddings
-            return fused_embeddings
+            embeddings = text_embeddings + image_embeddings
         elif text_embeddings is not None:
-            return text_embeddings
+            embeddings = text_embeddings
         elif image_embeddings is not None:
-            return image_embeddings
-        raise ValueError
+            embeddings = image_embeddings
+        else:
+            raise ValueError
+
+        if isinstance(embeddings, torch.Tensor):
+            embeddings = embeddings.cpu().detach().float().numpy()
+        elif (
+            isinstance(embeddings, (list, tuple))
+            and embeddings
+            and isinstance(embeddings[0], torch.Tensor)
+        ):
+            embeddings = np.stack(
+                [e.cpu().detach().float().numpy() for e in embeddings]
+            )
+        return embeddings
 
     def get_text_embeddings(
         self,
@@ -364,7 +376,7 @@ class JinaV4Wrapper(AbsEncoder):
             task_metadata, prompt_type
         )
 
-        if task_type.startswith("DocumentUnderstanding"):
+        if task_type and task_type.startswith("DocumentUnderstanding"):
             self.vector_type = "multi_vector"
         else:
             self.vector_type = "single_vector"
@@ -394,7 +406,7 @@ class JinaV4Wrapper(AbsEncoder):
             task_metadata, prompt_type
         )
 
-        if task_type.startswith("DocumentUnderstanding"):
+        if task_type and task_type.startswith("DocumentUnderstanding"):
             self.vector_type = "multi_vector"
         else:
             self.vector_type = "single_vector"
@@ -561,6 +573,7 @@ jina_embeddings_v4 = ModelMeta(
             "Retrieval-query": "retrieval.query",
             "Retrieval-document": "retrieval.passage",
             "STS": "text-matching",
+            "PairClassification": "text-matching",
             "DocumentUnderstanding": "retrieval.query",
         },
     ),
